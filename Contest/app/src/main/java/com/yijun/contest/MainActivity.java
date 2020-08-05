@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import com.yijun.contest.Favorite.FavoriteActivity;
 
 public class MainActivity extends AppCompatActivity {
 RecyclerView recyclerView_Hotplace;
@@ -47,7 +50,8 @@ Button btnWeather;
         btnfavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            Intent i = new Intent(MainActivity.this, FavoriteActivity.class);
+            startActivity(i);
             }
         });
         btnWeather.setOnClickListener(new View.OnClickListener() {
