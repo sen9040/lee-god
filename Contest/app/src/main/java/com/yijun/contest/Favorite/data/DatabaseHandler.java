@@ -31,10 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Util.KEY_TITLE + " text, " +
                 Util.KEY_ADDRESS + " text, "+
                 Util.KEY_IMG + " text )";
-        // create table contacts
-        // ( id integer not null autoincrement primary key,
-        //   name text,
-        //   phone_number text )
+
 
         // 2. 쿼리 실행
         db.execSQL(CREATE_FAVOTIE_TABLE);
@@ -52,9 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // 주소 저장하는 메소드 : 오버라이딩이 아니라, 우리가 만들어줘야 하는 메소드
     public void addContact(Favorite favorite) {
-        // 1. 주소를 저장하기 위해서, writable db 를 가져온다.
         SQLiteDatabase db = this.getWritableDatabase();
-        // 2. db에 저장하기 위해서는, ContentValues를 이용한다.
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TITLE, favorite.getTitle());
         values.put(Util.KEY_ADDRESS, favorite.getAddress());
@@ -66,7 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // 주소 1개 가져오는 메소드 : 우리가 만들어줘야 하는 메소드.
-    // select * from contacts where id = 3;
+
     public Favorite getContact(int id) {
 
         // 1. 데이터베이스 가져온다. 조회니까, readable 한 db로 가져온다.
@@ -92,6 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         favorite.setId(selectedId);
         favorite.setTitle(selectedTitle);
         favorite.setAddress(selectedAddress);
+        favorite.setImg(selectedImg);
 
         return favorite;
     }
@@ -129,7 +125,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // 데이터를 업데이트 하는 메서드.
-    public int updateContact(Favorite favorite) {
+    public int updateFavorite(Favorite favorite) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -147,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // 데이터 삭제 메서드
-    public void deleteContact(Favorite favorite) {
+    public void deletetFavorite(Favorite favorite) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Util.TABLE_NAME,  // 테이블 명
                 Util.KEY_ID + " = ?",   // where id = ?
