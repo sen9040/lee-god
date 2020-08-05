@@ -17,6 +17,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.yijun.contest.Favorite.FavoriteActivity;
+import com.yijun.contest.Weather.WeatherActivity;
 
 public class MainActivity extends AppCompatActivity {
 RecyclerView recyclerView_Hotplace;
@@ -54,10 +55,13 @@ Button btnWeather;
             startActivity(i);
             }
         });
+
+        // 날씨 화면
         btnWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                startActivity(intent);
             }
         });
     }
