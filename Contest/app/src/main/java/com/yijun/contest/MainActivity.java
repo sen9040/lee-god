@@ -3,27 +3,20 @@ package com.yijun.contest;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.yijun.contest.Favorite.FavoriteActivity;
+import com.yijun.contest.Ranking.RankingActivity;
 import com.yijun.contest.Weather.WeatherActivity;
 
 public class MainActivity extends AppCompatActivity {
 RecyclerView recyclerView_Hotplace;
 RecyclerView recyclerView_sports;
 Button btnHome;
-Button btnLank;
+Button btnRanking;
 Button btnfavorite;
 Button btnWeather;
     @Override
@@ -31,7 +24,7 @@ Button btnWeather;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnHome = findViewById(R.id.btnHome);
-        btnLank = findViewById(R.id.btnLank);
+        btnRanking = findViewById(R.id.btnRanking);
         btnfavorite = findViewById(R.id.btnfavorite);
         btnWeather = findViewById(R.id.btnWeather);
 
@@ -42,10 +35,11 @@ Button btnWeather;
             }
         });
 
-        btnLank.setOnClickListener(new View.OnClickListener() {
+        btnRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainActivity.this, RankingActivity.class);
+                startActivity(i);
             }
         });
         btnfavorite.setOnClickListener(new View.OnClickListener() {
