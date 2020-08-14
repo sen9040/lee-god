@@ -2,19 +2,21 @@ package com.yijun.contest.Favorite.model;
 
 public class Favorite {
     private int id;
-    private String Title;
+    private String title;
     private String address;
-    private String img;
+    private String priceTime;
+    private String img_url;
 
     public Favorite() {
 
     }
 
-    public Favorite(int id, String title, String address, String img) {
+    public Favorite(int id, String title, String address, String priceTime, String img_url) {
         this.id = id;
-        Title = title;
+        this.title = title;
         this.address = address;
-        this.img = img;
+        this.priceTime = priceTime;
+        this.img_url = img_url;
     }
 
     public int getId() {
@@ -26,11 +28,11 @@ public class Favorite {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getAddress() {
@@ -41,11 +43,19 @@ public class Favorite {
         this.address = address;
     }
 
-    public String getImg() {
-        return img;
+    public String getPriceTime() {
+        return priceTime;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setPriceTime(String priceTime) {
+        this.priceTime = priceTime;
+    }
+
+    public String getImg_url() {
+        return img_url;
+    }
+
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 }

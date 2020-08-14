@@ -1,21 +1,20 @@
-package com.yijun.contest.Favorite;
+package com.yijun.contest.MoveRecord;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.HorizontalScrollView;
 
 import com.yijun.contest.R;
 
-public class FavoriteActivity extends AppCompatActivity {
+public class MoveRecord extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
+        setContentView(R.layout.activity_move_record);
 
         recyclerView = findViewById(R.id.recyclerView);
 

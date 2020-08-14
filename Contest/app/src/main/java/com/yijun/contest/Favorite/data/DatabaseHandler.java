@@ -53,7 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TITLE, favorite.getTitle());
         values.put(Util.KEY_ADDRESS, favorite.getAddress());
-        values.put(Util.KEY_IMG, favorite.getImg());
+        values.put(Util.KEY_IMG, favorite.getImg_url());
         // 3. db에 실제로 저장한다.
         db.insert(Util.TABLE_NAME, null, values);
         db.close();
@@ -87,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         favorite.setId(selectedId);
         favorite.setTitle(selectedTitle);
         favorite.setAddress(selectedAddress);
-        favorite.setImg(selectedImg);
+        favorite.setImg_url(selectedImg);
 
         return favorite;
     }
@@ -114,7 +114,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 favorite.setId(selectedId);
                 favorite.setTitle(selectedTitle);
                 favorite.setAddress(selectedAddress);
-                favorite.setImg(selectedImg);
+                favorite.setImg_url(selectedImg);
 
                 // 4. 위의 빈 어레이리스트에 하나씩 추가를 시킨다.
                 favoriteList.add(favorite);
@@ -131,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TITLE, favorite.getTitle());
         values.put(Util.KEY_ADDRESS, favorite.getAddress());
-        values.put(Util.KEY_IMG, favorite.getImg());
+        values.put(Util.KEY_IMG, favorite.getImg_url());
 
         // 데이터베이스 테이블 업데이트.
         // update contacts set name="홍길동", phone="010-2222-2222" where id = 3;
@@ -207,7 +207,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 favorite.setId(selectedId);
                 favorite.setTitle(selectedTitle);
                 favorite.setAddress(selectedAddress);
-                favorite.setImg(selectedImg);
+                favorite.setImg_url(selectedImg);
 
                 // 4. 위의 빈 에레이 리스트에 하나씪 추가를 시킨다.
                 favoriteList.add(favorite);
