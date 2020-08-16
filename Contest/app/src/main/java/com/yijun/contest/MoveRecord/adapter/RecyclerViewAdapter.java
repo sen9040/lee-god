@@ -1,33 +1,50 @@
 package com.yijun.contest.MoveRecord.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yijun.contest.MoveRecord.model.MoveRecord;
 import com.yijun.contest.R;
+
+import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     Context context;
+    ArrayList<MoveRecord> moveRecordArrayList;
+
+    public RecyclerViewAdapter(Context context, ArrayList<MoveRecord> moveRecordArrayList) {
+        this.context = context;
+        this.moveRecordArrayList = moveRecordArrayList;
+    }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.move_record_row,parent,false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+        MoveRecord moveRecord = moveRecordArrayList.get(position);
+        String name = moveRecord.getName();
+        String address = moveRecord.getAddress();
 
+        holder.name.setText(name);
+        holder.address.setText(address);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return moveRecordArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
