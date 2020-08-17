@@ -1,4 +1,4 @@
-package com.yijun.contest.Weather.model;
+package com.yijun.contest.weather.model;
 
 import java.io.Serializable;
 

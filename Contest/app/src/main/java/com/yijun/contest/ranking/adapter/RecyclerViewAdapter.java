@@ -1,4 +1,4 @@
-package com.yijun.contest.Ranking.adapter;
+package com.yijun.contest.ranking.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
-import com.yijun.contest.Ranking.model.Ranking;
+import com.yijun.contest.ranking.model.Ranking;
 
 import java.util.ArrayList;
 

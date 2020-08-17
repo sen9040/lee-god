@@ -1,4 +1,4 @@
-package com.yijun.contest.Favorite.model;
+package com.yijun.contest.favorite.model;
 
 public class Favorite {
     private int id;

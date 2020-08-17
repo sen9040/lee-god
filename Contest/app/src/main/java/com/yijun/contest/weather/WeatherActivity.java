@@ -1,4 +1,4 @@
-package com.yijun.contest.Weather;
+package com.yijun.contest.weather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yijun.contest.R;
-import com.yijun.contest.Weather.model.Forecasts;
-import com.yijun.contest.Weather.model.Weather;
+import com.yijun.contest.weather.model.Forecasts;
+import com.yijun.contest.weather.model.Weather;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

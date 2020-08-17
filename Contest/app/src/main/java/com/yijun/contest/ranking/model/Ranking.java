@@ -1,4 +1,4 @@
-package com.yijun.contest.Ranking.model;
+package com.yijun.contest.ranking.model;
 
 public class Ranking {
     private String title;

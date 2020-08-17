@@ -1,4 +1,4 @@
-package com.yijun.contest.Ranking;
+package com.yijun.contest.ranking;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.yijun.contest.R;
-import com.yijun.contest.Ranking.adapter.RecyclerViewAdapter;
-import com.yijun.contest.Ranking.model.Ranking;
+import com.yijun.contest.ranking.adapter.RecyclerViewAdapter;
+import com.yijun.contest.ranking.model.Ranking;
 
 import java.util.ArrayList;
 

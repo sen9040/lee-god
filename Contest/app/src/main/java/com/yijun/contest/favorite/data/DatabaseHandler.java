@@ -1,4 +1,4 @@
-package com.yijun.contest.Favorite.data;
+package com.yijun.contest.favorite.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.yijun.contest.Favorite.model.Favorite;
-import com.yijun.contest.Favorite.util.Util;
+import com.yijun.contest.favorite.model.Favorite;
+import com.yijun.contest.favorite.util.Util;
 
 
 import java.util.ArrayList;

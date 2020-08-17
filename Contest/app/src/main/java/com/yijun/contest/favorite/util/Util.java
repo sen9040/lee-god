@@ -1,4 +1,4 @@
-package com.yijun.contest.Favorite.util;
+package com.yijun.contest.favorite.util;
 
 public class Util {
     public static final String DATABASE_NAME = "favorite_db";

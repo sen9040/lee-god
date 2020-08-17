@@ -8,25 +8,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.yijun.contest.Favorite.FavoriteActivity;
-import com.yijun.contest.Ranking.RankingActivity;
-import com.yijun.contest.Weather.WeatherActivity;
+import com.yijun.contest.favorite.FavoriteActivity;
+import com.yijun.contest.list.ListActivity;
+import com.yijun.contest.ranking.RankingActivity;
+import com.yijun.contest.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 RecyclerView recyclerView_Hotplace;
 RecyclerView recyclerView_sports;
 Button btnHome;
 Button btnRanking;
-Button btnfavorite;
-Button btnWeather;
+Button btnFavorite;
+Button btnSearch;
+Button btnList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         btnHome = findViewById(R.id.btnHome);
         btnRanking = findViewById(R.id.btnRanking);
-        btnfavorite = findViewById(R.id.btnfavorite);
-        btnWeather = findViewById(R.id.btnWeather);
+        btnFavorite = findViewById(R.id.btnFavorite);
+        btnSearch = findViewById(R.id.btnSearch);
+        btnList = findViewById(R.id.btnList);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +47,7 @@ Button btnWeather;
                 startActivity(i);
             }
         });
-        btnfavorite.setOnClickListener(new View.OnClickListener() {
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             Intent i = new Intent(MainActivity.this, FavoriteActivity.class);
@@ -50,12 +55,20 @@ Button btnWeather;
             }
         });
 
-        // 날씨 화면
-        btnWeather.setOnClickListener(new View.OnClickListener() {
+        // 검색 화면
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
-                startActivity(intent);
+                Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(i);
+            }
+        });
+        btnList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ListActivity.class);
+                startActivity(i);
+
             }
         });
     }

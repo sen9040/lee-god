@@ -1,4 +1,4 @@
-package com.yijun.contest.Favorite;
+package com.yijun.contest.favorite;
 
 import androidx.appcompat.app.AppCompatActivity;
 
