@@ -1,4 +1,4 @@
-package com.yijun.contest.Favorite.adapter;
+package com.yijun.contest.Icon.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,34 +10,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yijun.contest.Favorite.model.Favorite;
+import com.yijun.contest.Icon.model.Icon;
 import com.yijun.contest.R;
 
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     Context context;
-    ArrayList<Favorite> favoriteArrayList;
+    ArrayList<Icon> iconArrayList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Favorite> favoriteArrayList) {
+    public RecyclerViewAdapter(Context context, ArrayList<Icon> iconArrayList) {
         this.context = context;
-        this.favoriteArrayList = favoriteArrayList;
+        this.iconArrayList = iconArrayList;
     }
 
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_row,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        Favorite favorite = favoriteArrayList.get(position);
-        String title = favorite.getTitle();
-        String img = favorite.getImg_url();
-        String address = favorite.getAddress();
-        String priceTime = favorite.getPriceTime();
+        Icon icon = iconArrayList.get(position);
+        String title = icon.getTitle();
+        String address = icon.getAddress();
+        String img_url = icon.getImg_url();
+        String priceTime = icon.getPriceTime();
 
         holder.title.setText(title);
         holder.address.setText(address);
@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return favoriteArrayList.size();
+        return iconArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

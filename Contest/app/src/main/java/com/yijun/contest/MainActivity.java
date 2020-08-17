@@ -7,15 +7,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.yijun.contest.Favorite.FavoriteActivity;
+import com.yijun.contest.Icon.IconActivity;
 import com.yijun.contest.Weather.WeatherActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView_Hotplace;
-    RecyclerView recyclerView_sports;
+
+    ImageView img;
+
     Button btnSearch;
     Button btnHome;
     Button btnFavorite;
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        img = findViewById(R.id.img);
 
         btnSearch = findViewById(R.id.btnSearch);
         btnHome = findViewById(R.id.btnHome);
@@ -61,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, IconActivity.class);
+                startActivity(i);
             }
         });
 

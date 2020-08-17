@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="어디 축구장"
                 android:textColor="#000000"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <ImageView
                 android:id="@+id/img"
@@ -45,7 +45,7 @@
                 android:gravity="right"
                 android:text="주소"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/priceTime"
@@ -54,7 +54,7 @@
                 android:gravity="right"
                 android:text="가격/시간"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

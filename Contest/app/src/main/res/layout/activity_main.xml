@@ -11,15 +11,15 @@
         android:id="@+id/recyclerView_Hotplace"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="15dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_sports"
-        android:layout_width="match_parent"
-        android:layout_height="415dp"
         android:layout_marginTop="15dp" >
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -34,14 +34,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="#000000"
@@ -52,7 +53,8 @@
         <Button
             android:id="@+id/btnHome"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="#000000"
@@ -63,7 +65,8 @@
         <Button
             android:id="@+id/btnFavorite"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="#000000"
