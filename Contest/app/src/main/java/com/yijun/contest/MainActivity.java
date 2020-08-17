@@ -14,13 +14,12 @@ import com.yijun.contest.ranking.RankingActivity;
 import com.yijun.contest.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
-RecyclerView recyclerView_Hotplace;
-RecyclerView recyclerView_sports;
-Button btnHome;
-Button btnRanking;
-Button btnFavorite;
-Button btnSearch;
-Button btnList;
+    RecyclerView recyclerView_Hotplace;
+    Button btnHome;
+    Button btnRanking;
+    Button btnFavorite;
+    Button btnSearch;
+    Button btnList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ Button btnList;
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ListActivity.class);
                 startActivity(i);
-
             }
         });
     }

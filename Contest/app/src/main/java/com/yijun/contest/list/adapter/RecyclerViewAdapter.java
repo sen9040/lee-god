@@ -56,7 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewAdapter.ViewHolder holder, final int position) {
-     ;
+
         SportInfo sportInfo = sportInfosList.get(position);
         String svcNm = sportInfo.getSvcNm();
         String placeNm = sportInfo.getPlaceNm();
@@ -107,7 +107,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView txtPlaceNm;
         TextView txtPaYaTnm;
         TextView txtTime;
-//
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,8 +117,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
-
-
 
         }
 
