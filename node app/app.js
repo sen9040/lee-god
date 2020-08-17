@@ -31,8 +31,6 @@ request(url, async (error, response, body) => {
   });
 
   //   insert(post);
-
-  console.log(post);
 });
 
 async function count() {
@@ -41,9 +39,11 @@ async function count() {
   try {
     [reslut] = await connection.query(query);
     count = reslut[0].count;
-  } catch (e) {}
-
-  return count;
+    console.log(reslut[0].count);
+    return await count;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function insert(post) {
