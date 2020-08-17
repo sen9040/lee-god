@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Contest</string>
+
+<!--     boom menu String-->
+    <string name="weather">Weather</string>
+    <string name="test1">test</string>
+    <string name="test2">test</string>
+    <string name="test3">test</string>
+
+    <string name="weather_content">Weather content</string>
+    <string name="test1_content">test1_content</string>
+    <string name="test2_content">test2_content</string>
+    <string name="test3_content">test3_content</string>
+
 </resources>

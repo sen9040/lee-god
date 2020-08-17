@@ -21,7 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportInfo;
@@ -62,9 +64,14 @@ public class FragmentSearch extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         editSearch = view.findViewById(R.id.editSearch);
         btnSearch = view.findViewById(R.id.btnSearch);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(context,bmb);
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override

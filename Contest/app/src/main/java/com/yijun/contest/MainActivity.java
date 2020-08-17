@@ -27,7 +27,7 @@ Button btnList;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentSearch fragmentSearch = new FragmentSearch(MainActivity.this);
-    private FragmentHome fragmentHome = new FragmentHome();
+    private FragmentHome fragmentHome = new FragmentHome(MainActivity.this);
     private FragmentFavorite fragmentFavorite = new FragmentFavorite();
 
     @Override
