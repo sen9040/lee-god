@@ -8,7 +8,7 @@
         android:title="세팅"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/itemSearch"
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="3"
         android:title="검색"

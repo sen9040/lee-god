@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemSearch"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="100"
+        android:title="Search" />
+    <item
+        android:id="@+id/itemHome"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:orderInCategory="200"
+        android:title="Home" />
+    <item
+        android:id="@+id/itemFavorite"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:orderInCategory="300"
+        android:title="Favorite" />
+</menu>
