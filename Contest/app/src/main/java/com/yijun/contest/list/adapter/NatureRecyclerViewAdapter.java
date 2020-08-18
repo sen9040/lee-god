@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
+import com.yijun.contest.model.WayInfo;
 
 import java.util.ArrayList;
 
@@ -53,7 +56,9 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
 
-        if (natureInfo.getIsFavorite() == 1){
+        Favorite favorite = new Favorite();
+
+        if (favorite.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
         }else {
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
@@ -85,6 +90,28 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
+
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Favorite favorite = new Favorite();
+                    NatureInfo natureInfo = natureInfoArrayList.get(getAdapterPosition());
+                    favorite.setId(natureInfo.getpIdx());
+                    favorite.setTitle(natureInfo.getpPark());
+                    favorite.setAddress(natureInfo.getpAddr());
+                    favorite.setPrice(natureInfo.getpName());
+                    favorite.setTime(natureInfo.getpAdmintel());
+
+                    if (favorite.getIsFavorite() == 1){
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
+                    }else {
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
+                    }
+
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    db.addFavorite(favorite);
+                }
+            });
 
         }
     }

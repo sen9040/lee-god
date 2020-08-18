@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 
@@ -86,12 +88,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.txtTime.setText(svcStaTnm +" : "+v_min+" ~ "+v_max);
         }
 
-//        if (sportInfo.getIsFavorite() == 1){
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-//        }else {
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-//        }
+        Favorite favorite = new Favorite();
 
+        if (favorite.getIsFavorite() == 1){
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }else {
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 
 
@@ -129,6 +132,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     Favorite favorite = new Favorite();
                     SportsInfo sportsInfo = sportInfosList.get(getAdapterPosition());
+                    favorite.setId(sportsInfo.getSvcId());
+                    favorite.setImgUrl(sportsInfo.getImgUrl());
+                    favorite.setTitle(sportsInfo.getSvcNm());
+                    favorite.setAddress(sportsInfo.getPlaceNm());
+                    favorite.setPrice(sportsInfo.getPaYaTnm());
+                    if (sportsInfo.getSvcStaTnm().equals("접수종료")){
+                        favorite.setTime(sportsInfo.getSvcStaTnm());
+                    }else {
+                        if (sportsInfo.getV_max().isEmpty() || sportsInfo.getV_max().equals("")){
+                            favorite.setTime(sportsInfo.getSvcStaTnm());
+                        }
+                        favorite.setTime(sportsInfo.getSvcStaTnm() +" : "+sportsInfo.getV_min()+" ~ "+sportsInfo.getV_max());
+                    }
+
+                    if (favorite.getIsFavorite() == 1){
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
+                    }else {
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
+                    }
+
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    db.addFavorite(favorite);
                 }
             });
 

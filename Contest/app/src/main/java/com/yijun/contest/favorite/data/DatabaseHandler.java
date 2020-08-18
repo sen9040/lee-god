@@ -65,6 +65,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Utils.KEY_PRICE, favorite.getPrice());
         values.put(Utils.KEY_TIME, favorite.getTime());
         values.put(Utils.KEY_FAVORITE, favorite.getIsFavorite());
+//
+//        if (favorite.getIsFavorite() == 1){
+//            values.put(Utils.KEY_FAVORITE, favorite.getIsFavorite());
+//        }
         // 3. db 에 실제로 저장한다.
         db.insert(Utils.TABLE_NAME, null, values);
         db.close();
@@ -106,7 +110,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //        return contact;
 //    }
 
-    // 디비에 저장된 모든 주소록 정보를 불러오는 메소드.
+    // 디비에 저장된 정보중 별표들만 불러오는 메소드.
+    public ArrayList<Favorite> getFavorites(){                 // ArrayList = 배열보다 진화
+        // 1. 비어있는 어레이 리스트를 먼저 한개 만든다.
+        ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
+
+        // 2. 데이터베이스에 select (조회) 해서,
+        String selectAll = "select * from " + Utils.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectAll, null);
+
+        // 3. 여러개의 데이터를 루프 돌면서, Contact 클래스에 정보를 하나씩 담고
+        if (cursor.moveToFirst()){
+            do {
+                String selectedId = cursor.getString(0);
+                String selectedImg = cursor.getString(1);
+                String selectedTitle = cursor.getString(2);
+                String selectedAddress = cursor.getString(3);
+                String selectedPrice = cursor.getString(4);
+                String selectedTime = cursor.getString(5);
+                int selectedFavorite = Integer.parseInt(cursor.getString(6));
+
+                // db 에서 읽어온 데이터를, 자바 클래스로 처리한다.
+                Favorite favorite = new Favorite();
+                favorite.setId(selectedId);
+                favorite.setImgUrl(selectedImg);
+                favorite.setTitle(selectedTitle);
+                favorite.setAddress(selectedAddress);
+                favorite.setPrice(selectedPrice);
+                favorite.setTime(selectedTime);
+                if (selectedFavorite == 1){
+                    favorite.setIsFavorite(selectedFavorite);
+                }
+                // 4. 위의 빈 어레이리스트에 하나씩 추가를 시킨다.
+                favoriteArrayList.add(favorite);
+
+            }while (cursor.moveToNext());
+        }
+        return favoriteArrayList;
+
+    }
+
+    // 디비에 저장된 모든 정보를 불러오는 메소드.
     public ArrayList<Favorite> getAllFavorites(){                 // ArrayList = 배열보다 진화
         // 1. 비어있는 어레이 리스트를 먼저 한개 만든다.
         ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
@@ -119,7 +164,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // 3. 여러개의 데이터를 루프 돌면서, Contact 클래스에 정보를 하나씩 담고
         if (cursor.moveToFirst()){
             do {
-                int selectedId = Integer.parseInt(cursor.getString(0));
+                String selectedId = cursor.getString(0);
                 String selectedImg = cursor.getString(1);
                 String selectedTitle = cursor.getString(2);
                 String selectedAddress = cursor.getString(3);
@@ -136,7 +181,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 favorite.setPrice(selectedPrice);
                 favorite.setTime(selectedTime);
                 favorite.setIsFavorite(selectedFavorite);
-
                 // 4. 위의 빈 어레이리스트에 하나씩 추가를 시킨다.
                 favoriteArrayList.add(favorite);
 

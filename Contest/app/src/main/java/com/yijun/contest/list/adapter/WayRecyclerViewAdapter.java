@@ -12,6 +12,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
+import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
 
 import java.util.ArrayList;
@@ -45,7 +48,9 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         holder.txtPaYaTnm.setText(distance);
         holder.txtTime.setText(leadTime);
 
-        if (wayInfo.getIsFavorite() == 1){
+        Favorite favorite = new Favorite();
+
+        if (favorite.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
         }else {
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
@@ -77,6 +82,28 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
+
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Favorite favorite = new Favorite();
+                    WayInfo wayInfo = wayInfoArrayList.get(getAdapterPosition());
+                    favorite.setId(wayInfo.getCpiName());
+                    favorite.setTitle(wayInfo.getCpiName());
+                    favorite.setAddress(wayInfo.getDetailCourse());
+                    favorite.setPrice(wayInfo.getDistance());
+                    favorite.setTime(wayInfo.getLeadTime());
+
+                    if (favorite.getIsFavorite() == 1){
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
+                    }else {
+                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
+                    }
+
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    db.addFavorite(favorite);
+                }
+            });
 
         }
     }
