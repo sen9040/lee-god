@@ -15,8 +15,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yijun.contest.R;
+
+
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
-import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.SportsRecyclerViewAdapter;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 
@@ -37,7 +39,7 @@ public class ListActivity extends AppCompatActivity {
     String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/5/";
 
     int list_total_count;
-    RecyclerViewAdapter adapter;
+    SportsRecyclerViewAdapter adapter;
     NatureRecyclerViewAdapter natureAdapter;
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
@@ -98,7 +100,7 @@ public class ListActivity extends AppCompatActivity {
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
                         sportInfoArrayList.add(sportInfo);
                     }
-                    adapter = new RecyclerViewAdapter(ListActivity.this,sportInfoArrayList);
+                    adapter = new SportsRecyclerViewAdapter(ListActivity.this,sportInfoArrayList);
                     recyclerView.setAdapter(adapter);
 
 

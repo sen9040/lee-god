@@ -8,7 +8,7 @@ import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
-import com.yijun.contest.weather.WeatherActivity;
+
 
 public class BoomMenu {
 

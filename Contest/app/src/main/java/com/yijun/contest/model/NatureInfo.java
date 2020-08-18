@@ -192,3 +192,4 @@ public class NatureInfo implements Serializable {
         this.templateUrl = templateUrl;
     }
 }
+

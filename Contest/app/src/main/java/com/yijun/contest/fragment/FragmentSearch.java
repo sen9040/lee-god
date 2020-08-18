@@ -24,7 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
-import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.SportsRecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
 
 import org.json.JSONArray;
@@ -48,7 +48,7 @@ public class FragmentSearch extends Fragment {
 
     int list_total_count;
     RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
+    SportsRecyclerViewAdapter adapter;
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
 
     EditText editSearch;
@@ -115,7 +115,7 @@ public class FragmentSearch extends Fragment {
                                         dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
                                 sportInfoArrayList.add(sportInfo);
                             }
-                            adapter = new RecyclerViewAdapter(context,sportInfoArrayList);
+                            adapter = new SportsRecyclerViewAdapter(context,sportInfoArrayList);
                             recyclerView.setAdapter(adapter);
 
 
@@ -139,7 +139,7 @@ public class FragmentSearch extends Fragment {
 
     @Override
     public void onResume() {
-        adapter = new RecyclerViewAdapter(context,sportInfoArrayList);
+        adapter = new SportsRecyclerViewAdapter(context,sportInfoArrayList);
         recyclerView.setAdapter(adapter);
         super.onResume();
     }

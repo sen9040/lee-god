@@ -20,12 +20,13 @@ import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.model.SportsInfo;
 
+
 import java.util.ArrayList;
 
 
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class SportsRecyclerViewAdapter extends RecyclerView.Adapter<SportsRecyclerViewAdapter.ViewHolder> {
 
     Context context;
     ArrayList<SportsInfo> sportInfosList;
@@ -35,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return sportInfosList;
     }
 
-    public RecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
+    public SportsRecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
 
         this.context = context;
         this.sportInfosList = sportInfosList;
@@ -44,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SportsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // 첫번째 파라미터인, parent 로 부터 뷰(화면:하나의 셀)를 생성한다.
         View view = LayoutInflater.from(parent.getContext())
@@ -54,7 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SportsRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         SportsInfo sportInfo = sportInfosList.get(position);
         String svcNm = sportInfo.getSvcNm();

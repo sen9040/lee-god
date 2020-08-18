@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.model.NatureInfo;
 
+
 import java.util.ArrayList;
 
 public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecyclerViewAdapter.ViewHolder>{
