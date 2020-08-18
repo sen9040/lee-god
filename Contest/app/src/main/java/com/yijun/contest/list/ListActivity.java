@@ -18,8 +18,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.NatureInfo;
-import com.yijun.contest.model.SportInfo;
-import com.yijun.contest.search.SearchActivity;
+import com.yijun.contest.model.SportsInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +39,7 @@ public class ListActivity extends AppCompatActivity {
     int list_total_count;
     RecyclerViewAdapter adapter;
     NatureRecyclerViewAdapter natureAdapter;
-    ArrayList<SportInfo> sportInfoArrayList = new ArrayList<>();
+    ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
 
     @Override
@@ -94,7 +93,7 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
-                        SportInfo sportInfo = new SportInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
+                        SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
                         sportInfoArrayList.add(sportInfo);

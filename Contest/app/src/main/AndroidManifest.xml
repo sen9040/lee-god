@@ -15,10 +15,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".list.ListActivity"></activity>
-        <activity android:name=".search.SearchActivity" />
         <activity android:name=".ranking.RankingActivity" />
         <activity android:name=".weather.WeatherActivity" />
-        <activity android:name=".favorite.FavoriteActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

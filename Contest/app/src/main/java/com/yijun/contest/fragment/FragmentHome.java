@@ -41,6 +41,9 @@ public class FragmentHome extends Fragment {
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(context,bmb);
 
+        //ㅓㅏㅓㅓ
+
+
         return view;
     }
 }
