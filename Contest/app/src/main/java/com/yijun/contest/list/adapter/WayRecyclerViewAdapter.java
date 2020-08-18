@@ -36,7 +36,7 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
     public void onBindViewHolder(@NonNull WayRecyclerViewAdapter.ViewHolder holder, int position) {
         WayInfo wayInfo = wayInfoArrayList.get(position);
         String cpiName = wayInfo.getCpiName();
-        String detailCourse = wayInfo.getDatailCourse();
+        String detailCourse = wayInfo.getDetailCourse();
         String distance = wayInfo.getDistance();
         String leadTime = wayInfo.getLeadTime();
 
@@ -44,6 +44,12 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         holder.txtPlaceNm.setText(detailCourse);
         holder.txtPaYaTnm.setText(distance);
         holder.txtTime.setText(leadTime);
+
+        if (wayInfo.getIsFavorite() == 1){
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }else {
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 
     @Override
@@ -59,6 +65,7 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         TextView txtPlaceNm;
         TextView txtPaYaTnm;
         TextView txtTime;
+        ImageView imgFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,6 +76,7 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
+            imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
         }
     }
