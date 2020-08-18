@@ -52,6 +52,12 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPlaceNm.setText(pAddr);
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
+
+        if (natureInfo.getIsFavorite() == 1){
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }else {
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 
     @Override
@@ -67,6 +73,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         TextView txtPlaceNm;
         TextView txtPaYaTnm;
         TextView txtTime;
+        ImageView imgFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +84,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
+            imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
         }
     }
