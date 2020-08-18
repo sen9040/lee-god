@@ -1,18 +1,41 @@
 package com.yijun.contest.weather;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
+import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.weather.model.Forecasts;
 import com.yijun.contest.weather.model.Weather;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -32,9 +55,17 @@ public class WeatherActivity extends AppCompatActivity {
     TextView forecastTxt_6;
     ImageView forecastImg_6;
 
-
+    LocationManager locationManager;
+    LocationListener locationListener;
 
     ArrayList<Forecasts> forecastsArrayList = new ArrayList<>();
+    // 30 이 코드 값임
+    String weatherUrl = "https://weather-ydn-yql.media.yahoo.com/forecastrss?location=seoul&format=json&u=c";
+    String iconUrl = "http://l.yimg.com/a/i/us/we/52/30.gif";
+    String appId = "LHyI4Ire";
+    String clientId = "dj0yJmk9ZXN2TEN5S0FiNUI3JmQ9YWk9TEh5STRJcmUmcGo9MCZzPWNvbnN1bWVyc2VjcmV0JnN2PTAmeD0xMQ--";
+    String clientSecret = "88cac39cf0cd7950fd5b4b177aa9ceffc98ebb0d";
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +114,103 @@ public class WeatherActivity extends AppCompatActivity {
 //        currentLocationTxt.setText(weather.getLocation_city());
 //        currentWeatherTxt.setText(weather.getCondition_temperature()+"℃, "+weather.getCondition_text());
 
+        locationManager = (LocationManager) WeatherActivity.this.getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                double lat = location.getLatitude();
+                double lng = location.getLongitude();
 
+                Log.i("AAA","lat : "+lat);
 
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(WeatherActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                WeatherActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(WeatherActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000*60, 100, locationListener);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0){
+            if (ActivityCompat.checkSelfPermission(WeatherActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(WeatherActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+                ActivityCompat.requestPermissions(WeatherActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000*60,
+                    100,
+                    locationListener);
+        }
+        getSearch(weatherUrl);
+
+    }
+
+    public void getSearch(String url){
+        requestQueue = Volley.newRequestQueue(WeatherActivity.this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("AAA","weather response : "+response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("AAA","weather error : "+error);
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String>headers=new HashMap<String,String>();
+                headers.put("X-Yahoo-App-Id","LHyI4Ire");
+                headers.put("cache-control","no-cache");
+                // 나의 시간도 필요함
+                headers.put("Authorization","OAuth " +
+                        "oauth_consumer_key="+clientId+",oauth_signature_method=HMAC-SHA1,oauth_timestamp=1597738963,oauth_nonce=ZlZkNpc0Ipl,oauth_version=1.0,oauth_signature=oHxUBJQYvSKvQIQFdZwbWQBgN2g=" +
+                        "cache-control: no-cache");
+                return headers;
+            }
+        };
+        requestQueue.add(request);
     }
 }

@@ -17,13 +17,6 @@ import com.yijun.contest.fragment.FragmentHome;
 import com.yijun.contest.fragment.FragmentSearch;
 
 public class MainActivity extends AppCompatActivity {
-RecyclerView recyclerView_Hotplace;
-RecyclerView recyclerView_sports;
-Button btnHome;
-Button btnRanking;
-Button btnFavorite;
-Button btnSearch;
-Button btnList;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private FragmentSearch fragmentSearch = new FragmentSearch(MainActivity.this);
@@ -64,50 +57,7 @@ Button btnList;
             return true;
         }
 
-//        btnHome = findViewById(R.id.btnHome);
-//        btnRanking = findViewById(R.id.btnRanking);
-//        btnFavorite = findViewById(R.id.btnFavorite);
-//        btnSearch = findViewById(R.id.btnSearch);
-//        btnList = findViewById(R.id.btnList);
-//
-//        btnHome.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//
-//        btnRanking.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, RankingActivity.class);
-//                startActivity(i);
-//            }
-//        });
-//        btnFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            Intent i = new Intent(MainActivity.this, FavoriteActivity.class);
-//            startActivity(i);
-//            }
-//        });
-//
-//        // 검색 화면
-//        btnSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, SearchActivity.class);
-//                startActivity(i);
-//            }
-//        });
-//        btnList.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(MainActivity.this, ListActivity.class);
-//                startActivity(i);
-//
-//            }
-//        });
+
 
 
   }
