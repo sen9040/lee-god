@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardBackgroundColor="#000000"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="10dp"
         app:cardElevation="20dp">
 
@@ -25,9 +24,9 @@
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="오금공원"
-                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:text="CPI_name"
+                android:textColor="#000000"
                 android:textSize="22sp" />
 
             <ImageView
@@ -42,8 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="주소"
-                android:textColor="#FFFFFF"
+                android:text="category_name"
+                android:textColor="#000000"
                 android:textSize="18sp" />
 
             <TextView
@@ -51,8 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="가격/이용가능시간"
-                android:textColor="#FFFFFF"
+                android:text="detail_course"
+                android:textColor="#000000"
                 android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

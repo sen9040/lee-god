@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
@@ -16,6 +17,7 @@ import com.yijun.contest.boommenu.BoomMenu;
 
 public class FragmentFavorite extends Fragment {
     Context context;
+    RecyclerView recyclerView;
 
     public FragmentFavorite(){
     }
@@ -29,6 +31,9 @@ public class FragmentFavorite extends Fragment {
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(context,bmb);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+
 
         return view;
     }
