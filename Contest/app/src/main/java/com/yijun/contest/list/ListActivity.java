@@ -177,11 +177,6 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
-
-
-
-
-
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);

@@ -2,6 +2,7 @@ package com.yijun.contest.favorite.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,7 +11,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.nightonke.boommenu.Util;
+import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.utils.Utils;
 
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // 주소 저장하는 메소드 : 오버라이딩이 아니라, 우리가 만들어줘야 하는 메소드
+    // 즐겨찾기 저장하는 메소드 : 오버라이딩이 아니라, 우리가 만들어줘야 하는 메소드
     // 여기서부터는 기획에 맞게 데이터베이스에 넣고, 업데이트, 가져오고, 지우고 메소드 만들기
     public void addFavorite(Favorite favorite){
         Log.i("myDB","addFavorite.");
@@ -65,50 +68,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Utils.KEY_PRICE, favorite.getPrice());
         values.put(Utils.KEY_TIME, favorite.getTime());
         values.put(Utils.KEY_FAVORITE, favorite.getIsFavorite());
-//
-//        if (favorite.getIsFavorite() == 1){
-//            values.put(Utils.KEY_FAVORITE, favorite.getIsFavorite());
-//        }
-        // 3. db 에 실제로 저장한다.
+
+//         3. db 에 실제로 저장한다.
         db.insert(Utils.TABLE_NAME, null, values);
         db.close();
         Log.i("myDB","inserted.");
     }
 
-//    // 주소 1개 가져오는 메소드 : 우리가 만들어줘야 하는 메소드.
-//    // select * from contacts where id = 3;
-//    public Favorite getFavorite (int id){
-//
-//        // 1. 데이터베이스 가져온다. 조회니까, readable 한 db 로 가져온다.
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        // select id, name, phone_number from contacts where id = 3;
-//        // 2. 데이터를 섹렉트(조회) 할때는, Cursor 를 이용해야한다.
-//        Cursor cursor = db.query(Utils.TABLE_NAME,
-//                new String[] {"id", "title", "address", "price", "time", "favorite"},       // String 배열로 조회할컬럼들을 가져옴.
-//                Utils.KEY_ID + " = ?", new String[]{String.valueOf(id)},         // = where 절, new 뒤에 부분 = " = ? " 물음표에 들어갈 부분.
-//                null, null, null);
-//
-//        if (cursor != null){
-//            cursor.moveToFirst();
-//        }
-//        int selectedId = Integer.parseInt(cursor.getString(0));
-//        String selectedTitle = cursor.getString(1);
-//        String selectedAddress = cursor.getString(2);
-//        String selectedPrice = cursor.getString(3);
-//        String selectedTime = cursor.getString(4);
-//        String selctedFavorite = cursor.getString(5);
-//
-//
-//        // db 에서 읽어온 데이터를, 자바 클래스로 처리한다.
-//        Favorite favorite = new Favorite();
-//        favorite.setId(selectedId);
-//        favorite.setTitle(selectedTitle);
-//        favorite.setAddress(selectedAddress);
-//        favorite.set
-//
-//        return contact;
-//    }
+    public void addFavorite(NatureInfo natureInfo){
+        Log.i("myDB","addFavorite.");
+        // 1. 주소를 저장하기 위해서, writable db 를 가져온다.
+        SQLiteDatabase db = this.getWritableDatabase();
+        // 2. db 에 저장하기 위해서는, ContentValues 를 이용한다.
+        ContentValues values = new ContentValues();
+        values.put(Utils.KEY_IMG, natureInfo.getpImg());
+        values.put(Utils.KEY_TITLE, natureInfo.getpPark());
+        values.put(Utils.KEY_ADDRESS, natureInfo.getpAddr());
+        values.put(Utils.KEY_PRICE, natureInfo.getpName());
+        values.put(Utils.KEY_TIME, natureInfo.getpAdmintel());
+        values.put(Utils.KEY_FAVORITE, 1);
+
+//         3. db 에 실제로 저장한다.
+        db.insert(Utils.TABLE_NAME, null, values);
+        db.close();
+        Log.i("myDB","inserted.");
+    }
 
     // 디비에 저장된 정보중 별표들만 불러오는 메소드.
     public ArrayList<Favorite> getFavorites(){                 // ArrayList = 배열보다 진화
@@ -187,6 +171,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         return favoriteArrayList;
+
+    }
+
+    // 디비에 저장된 모든 정보를 불러오는 메소드.(Nature)
+    public ArrayList<NatureInfo> getAllNatureFavorite(){                 // ArrayList = 배열보다 진화
+        // 1. 비어있는 어레이 리스트를 먼저 한개 만든다.
+        ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
+
+        // 2. 데이터베이스에 select (조회) 해서,
+        String selectAll = "select * from " + Utils.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectAll, null);
+
+        // 3. 여러개의 데이터를 루프 돌면서, Contact 클래스에 정보를 하나씩 담고
+        if (cursor.moveToFirst()){
+            do {
+                String selectedImg = cursor.getString(0);
+                String selectedTitle = cursor.getString(1);
+                String selectedAddress = cursor.getString(2);
+                String selectedPrice = cursor.getString(3);
+                String selectedTime = cursor.getString(4);
+                int selectedFavorite = Integer.parseInt(cursor.getString(5));
+
+                // db 에서 읽어온 데이터를, 자바 클래스로 처리한다.
+                NatureInfo natureInfo = new NatureInfo();
+                natureInfo.setpImg(selectedImg);
+                natureInfo.setpPark(selectedTitle);
+                natureInfo.setpAddr(selectedAddress);
+                natureInfo.setpName(selectedPrice);
+                natureInfo.setpAdmintel(selectedTime);
+                // 4. 위의 빈 어레이리스트에 하나씩 추가를 시킨다.
+                natureInfoArrayList.add(natureInfo);
+
+            }while (cursor.moveToNext());
+        }
+        return natureInfoArrayList;
 
     }
 

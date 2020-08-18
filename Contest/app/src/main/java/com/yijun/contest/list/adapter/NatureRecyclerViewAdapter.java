@@ -56,13 +56,11 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
 
-        Favorite favorite = new Favorite();
-
-        if (favorite.getIsFavorite() == 1){
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-        }else {
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-        }
+//        if (favorite.getIsFavorite() == 1){
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+//        }else {
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+//        }
     }
 
     @Override
@@ -94,22 +92,16 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Favorite favorite = new Favorite();
                     NatureInfo natureInfo = natureInfoArrayList.get(getAdapterPosition());
-                    favorite.setId(natureInfo.getpIdx());
-                    favorite.setTitle(natureInfo.getpPark());
-                    favorite.setAddress(natureInfo.getpAddr());
-                    favorite.setPrice(natureInfo.getpName());
-                    favorite.setTime(natureInfo.getpAdmintel());
-
-                    if (favorite.getIsFavorite() == 1){
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
-                    }else {
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
-                    }
+                    NatureInfo nI = new NatureInfo();
+                    nI.setpImg(natureInfo.getpImg());
+                    nI.setpPark(natureInfo.getpPark());
+                    nI.setpAddr(natureInfo.getpAddr());
+                    nI.setpName(natureInfo.getpName());
+                    nI.setpAdmintel(natureInfo.getpAdmintel());
 
                     DatabaseHandler db = new DatabaseHandler(context);
-                    db.addFavorite(favorite);
+                    db.addFavorite(natureInfo);
                 }
             });
 

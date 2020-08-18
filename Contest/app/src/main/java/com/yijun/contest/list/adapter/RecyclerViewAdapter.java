@@ -90,13 +90,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.txtTime.setText(svcStaTnm +" : "+v_min+" ~ "+v_max);
         }
 
-        Favorite favorite = new Favorite();
 
-        if (favorite.getIsFavorite() == 1){
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-        }else {
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-        }
+
+//        if (favorite.getIsFavorite() == 1){
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+//        }else {
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+//        }
     }
 
 
