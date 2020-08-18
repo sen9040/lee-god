@@ -33,7 +33,7 @@ public class ListActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
 
-    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/5/%ED%85%8C%EB%8B%88%EC%8A%A4%EC%9E%A5";
+    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/25";
     String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/5/";
 
     int list_total_count;
@@ -41,6 +41,9 @@ public class ListActivity extends AppCompatActivity {
     NatureRecyclerViewAdapter natureAdapter;
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +57,82 @@ public class ListActivity extends AppCompatActivity {
 
 
         requestQueue = Volley.newRequestQueue(ListActivity.this);
+
+        String sports = getIntent().getStringExtra("sports");
+
+        if (sports.equals("축구")){
+            testUrl = testUrl+ "/축구장";
+            String soccer = "축구장";
+            txtSport.setText(soccer);
+
+
+        }else if (sports.equals("야구")){
+            testUrl = testUrl+ "/야구장";
+            txtSport.setText("야구장");
+
+
+        }else if (sports.equals("족구")){
+            testUrl = testUrl+ "/족구장";
+            txtSport.setText("족구");
+
+        }else if (sports.equals("테니스")){
+            testUrl = testUrl+ "/테니스장";
+            txtSport.setText("테니스");
+
+
+        }else if (sports.equals("풋살")){
+            testUrl = testUrl+ "/풋살경기장";
+            txtSport.setText("풋살경기장");
+
+        }else if (sports.equals("탁구")){
+            testUrl = testUrl+ "/탁구장";
+            txtSport.setText("탁구장");
+
+
+        }else if (sports.equals("다목적")){
+            testUrl = testUrl+ "/다목적경기장";
+            txtSport.setText("다목적경기장");
+
+
+        }else if (sports.equals("골프")){
+            testUrl = testUrl+ "/파크골프장";
+            txtSport.setText("파크골프장");
+
+
+        }else if (sports.equals("배드민턴")){
+            testUrl = testUrl+ "/배드민턴장";
+            txtSport.setText("배드민턴장");
+
+
+        }else if (sports.equals("운동장")){
+            testUrl = testUrl+ "/운동장";
+            txtSport.setText("운동장");
+
+        }else if (sports.equals("체육관")){
+            testUrl = testUrl+ "/체육관";
+            txtSport.setText("체육관");
+
+
+        }else if (sports.equals("둘레길")){
+            testUrl = testUrl+ "/둘레길";
+            txtSport.setText("둘레길");
+
+        }else if (sports.equals("공원")){
+            testUrl = testUrl+ "/공원";
+            txtSport.setText("공원");
+
+
+        }else if (sports.equals("산")){
+            testUrl = testUrl+ "/산";
+            txtSport.setText("산");
+        }
+        sportInfo(testUrl);
+
     }
 
-    public void sportInfo(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, testUrl, null, new Response.Listener<JSONObject>() {
+
+    public void sportInfo(String url){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("AAA","search response : "+response);
@@ -92,6 +167,11 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDayNm= object.getString("REVSTDDAYNM");
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
+
+
+
+
+
 
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,

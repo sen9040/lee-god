@@ -6,14 +6,6 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="홈화면"
-        android:textSize="50dp"
-   />
-
     <com.nightonke.boommenu.BoomMenuButton
         android:id="@+id/bmb"
         android:layout_width="wrap_content"
@@ -24,4 +16,159 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginBottom="20dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/recyclerView"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnSoccer"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_baseball"
+                android:layout_width="87dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_foot"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_tennis"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_futsal"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_pingpong"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_multi"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_golf"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_badminton"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_ground"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_gym"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_dulle"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_park"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/btn_mountain"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
