@@ -14,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.yijun.contest.Favorite.util.Util;
 import com.yijun.contest.Icon.adapter.RecyclerViewAdapter;
 import com.yijun.contest.Icon.model.Icon;
 import com.yijun.contest.Icon.utils.Utils;

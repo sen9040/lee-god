@@ -36,8 +36,14 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
     public void onBindViewHolder(@NonNull WayRecyclerViewAdapter.ViewHolder holder, int position) {
         WayInfo wayInfo = wayInfoArrayList.get(position);
         String cpiName = wayInfo.getCpiName();
-        String courseCategoryName = wayInfo.getCourseCategoryNm();
         String detailCourse = wayInfo.getDatailCourse();
+        String distance = wayInfo.getDistance();
+        String leadTime = wayInfo.getLeadTime();
+
+        holder.txtSvcNm.setText(cpiName);
+        holder.txtPlaceNm.setText(detailCourse);
+        holder.txtPaYaTnm.setText(distance);
+        holder.txtTime.setText(leadTime);
     }
 
     @Override

@@ -6,19 +6,20 @@ public class WayInfo implements Serializable {
 
     private String courseCategory;
     private String courseCategoryNm;
-    private String southNorthdiv;
+    private String southNorthDiv;
     private String southNorthDivNm;
-    private String AreaGu;
-    private String LeadTime;
+    private String areaGu;
+    private String distance;
+    private String leadTime;
     private String courseLevel;
     private String voteCnt;
-    private String RelateSubway;
+    private String relateSubway;
     private String trafficInfo;
     private String content;
     private String pdfFilePath;
     private String courseName;
     private String regDate;
-    private String datailCourse;
+    private String detailCourse;
     private String cpiIdx;
     private String cpiName;
     private String x;
@@ -29,22 +30,23 @@ public class WayInfo implements Serializable {
 
     }
 
-    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthdiv, String southNorthDivNm, String areaGu, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String datailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent) {
+    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent) {
         this.courseCategory = courseCategory;
         this.courseCategoryNm = courseCategoryNm;
-        this.southNorthdiv = southNorthdiv;
+        this.southNorthDiv = southNorthDiv;
         this.southNorthDivNm = southNorthDivNm;
-        AreaGu = areaGu;
-        LeadTime = leadTime;
+        this.areaGu = areaGu;
+        this.distance = distance;
+        this.leadTime = leadTime;
         this.courseLevel = courseLevel;
         this.voteCnt = voteCnt;
-        RelateSubway = relateSubway;
+        this.relateSubway = relateSubway;
         this.trafficInfo = trafficInfo;
         this.content = content;
         this.pdfFilePath = pdfFilePath;
         this.courseName = courseName;
         this.regDate = regDate;
-        this.datailCourse = datailCourse;
+        this.detailCourse = detailCourse;
         this.cpiIdx = cpiIdx;
         this.cpiName = cpiName;
         this.x = x;
@@ -68,12 +70,12 @@ public class WayInfo implements Serializable {
         this.courseCategoryNm = courseCategoryNm;
     }
 
-    public String getSouthNorthdiv() {
-        return southNorthdiv;
+    public String getSouthNorthDiv() {
+        return southNorthDiv;
     }
 
-    public void setSouthNorthdiv(String southNorthdiv) {
-        this.southNorthdiv = southNorthdiv;
+    public void setSouthNorthDiv(String southNorthDiv) {
+        this.southNorthDiv = southNorthDiv;
     }
 
     public String getSouthNorthDivNm() {
@@ -85,19 +87,27 @@ public class WayInfo implements Serializable {
     }
 
     public String getAreaGu() {
-        return AreaGu;
+        return areaGu;
     }
 
     public void setAreaGu(String areaGu) {
-        AreaGu = areaGu;
+        this.areaGu = areaGu;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
     public String getLeadTime() {
-        return LeadTime;
+        return leadTime;
     }
 
     public void setLeadTime(String leadTime) {
-        LeadTime = leadTime;
+        this.leadTime = leadTime;
     }
 
     public String getCourseLevel() {
@@ -117,11 +127,11 @@ public class WayInfo implements Serializable {
     }
 
     public String getRelateSubway() {
-        return RelateSubway;
+        return relateSubway;
     }
 
     public void setRelateSubway(String relateSubway) {
-        RelateSubway = relateSubway;
+        this.relateSubway = relateSubway;
     }
 
     public String getTrafficInfo() {
@@ -164,12 +174,12 @@ public class WayInfo implements Serializable {
         this.regDate = regDate;
     }
 
-    public String getDatailCourse() {
-        return datailCourse;
+    public String getDetailCourse() {
+        return detailCourse;
     }
 
-    public void setDatailCourse(String datailCourse) {
-        this.datailCourse = datailCourse;
+    public void setDetailCourse(String datailCourse) {
+        this.detailCourse = datailCourse;
     }
 
     public String getCpiIdx() {
