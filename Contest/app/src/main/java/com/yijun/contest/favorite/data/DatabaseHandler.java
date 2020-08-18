@@ -129,7 +129,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                 // db 에서 읽어온 데이터를, 자바 클래스로 처리한다.
                 Favorite favorite = new Favorite();
-                favorite.setId(selectedId);
+//                favorite.setId(selectedId);
                 favorite.setImgUrl(selectedImg);
                 favorite.setTitle(selectedTitle);
                 favorite.setAddress(selectedAddress);

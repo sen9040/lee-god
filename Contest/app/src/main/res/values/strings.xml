@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Contest</string>
 
-<!--     boom menu String-->
+    <!--     boom menu String-->
     <string name="weather">Weather</string>
     <string name="test1">test</string>
     <string name="test2">test</string>
@@ -11,5 +11,6 @@
     <string name="test1_content">test1_content</string>
     <string name="test2_content">test2_content</string>
     <string name="test3_content">test3_content</string>
+    <string name="title_activity_view_details">Map</string>
 
 </resources>
