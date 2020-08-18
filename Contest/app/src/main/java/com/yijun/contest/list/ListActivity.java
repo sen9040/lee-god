@@ -34,7 +34,7 @@ public class ListActivity extends AppCompatActivity {
     RequestQueue requestQueue;
 
     String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/25";
-    String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/5/";
+    String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/25/";
 
     int list_total_count;
     RecyclerViewAdapter adapter;
@@ -59,6 +59,7 @@ public class ListActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(ListActivity.this);
 
         String sports = getIntent().getStringExtra("sports");
+
 
         if (sports.equals("축구")){
             testUrl = testUrl+ "/축구장";
@@ -117,16 +118,18 @@ public class ListActivity extends AppCompatActivity {
             testUrl = testUrl+ "/둘레길";
             txtSport.setText("둘레길");
 
-        }else if (sports.equals("공원")){
-            testUrl = testUrl+ "/공원";
-            txtSport.setText("공원");
-
-
         }else if (sports.equals("산")){
             testUrl = testUrl+ "/산";
             txtSport.setText("산");
+
+        } else if (sports.equals("공원")){
+            txtSport.setText("공원");
+            natureInfo(natureTestUrl);
+            return;
         }
         sportInfo(testUrl);
+
+
 
     }
 
@@ -195,8 +198,8 @@ public class ListActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void natureInfo(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, natureTestUrl, null,
+    public void natureInfo(String url){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
