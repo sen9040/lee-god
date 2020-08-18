@@ -2,7 +2,7 @@ package com.yijun.contest.model;
 
 import java.io.Serializable;
 
-public class SportInfo implements Serializable {
+public class SportsInfo implements Serializable {
 
     private String svcId;
     private String maxClassNm;
@@ -28,11 +28,11 @@ public class SportInfo implements Serializable {
     private String revStdDayNm;
     private String revStdDay;
 
-    public SportInfo (){
+    public SportsInfo(){
 
     }
 
-    public SportInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, String x, String y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay) {
+    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, String x, String y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay) {
         this.svcId = svcId;
         this.maxClassNm = maxClassNm;
         this.minClassNm = minClassNm;
