@@ -44,7 +44,7 @@ public class FragmentSearch extends Fragment {
     public FragmentSearch(Context context){
         this.context = context;
     }
-    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/5/%ED%85%8C%EB%8B%88%EC%8A%A4%EC%9E%A5";
+    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/25";
 
     int list_total_count;
     RecyclerView recyclerView;
