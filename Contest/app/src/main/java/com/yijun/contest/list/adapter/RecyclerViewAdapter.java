@@ -4,7 +4,6 @@ package com.yijun.contest.list.adapter;
 import android.content.Context;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-import com.yijun.contest.model.SportInfo;
+import com.yijun.contest.model.SportsInfo;
 
 import java.util.ArrayList;
 
@@ -29,14 +28,14 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<SportInfo> sportInfosList;
+    ArrayList<SportsInfo> sportInfosList;
 
 
-    public ArrayList<SportInfo> getSportInfosList() {
+    public ArrayList<SportsInfo> getSportInfosList() {
         return sportInfosList;
     }
 
-    public RecyclerViewAdapter(Context context, ArrayList<SportInfo> sportInfosList){
+    public RecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
 
         this.context = context;
         this.sportInfosList = sportInfosList;
@@ -56,8 +55,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewAdapter.ViewHolder holder, final int position) {
-     ;
-        SportInfo sportInfo = sportInfosList.get(position);
+
+        SportsInfo sportInfo = sportInfosList.get(position);
         String svcNm = sportInfo.getSvcNm();
         String placeNm = sportInfo.getPlaceNm();
         String paYaTnm = sportInfo.getPaYaTnm();
@@ -107,7 +106,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView txtPlaceNm;
         TextView txtPaYaTnm;
         TextView txtTime;
-//
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,8 +116,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
-
-
 
         }
 
