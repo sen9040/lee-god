@@ -328,7 +328,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtSvcNm.setText(svcNm);
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
-
+        txtTime.setText(svcStaTnm);
 
 
 
