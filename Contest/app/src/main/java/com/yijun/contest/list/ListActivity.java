@@ -181,14 +181,6 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
-                        int is_favorite;
-                        if (row.getJSONObject(i).isNull("is_favorite")){
-                            is_favorite = 0;
-                        }else {
-                            is_favorite = row.getJSONObject(i).getInt("is_favorite");
-                        }
-
-
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay, 0);
@@ -241,13 +233,6 @@ public class ListActivity extends AppCompatActivity {
                                 String x = object.getString("LONGITUDE");
                                 String y = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
-
-                                int is_favorite;
-                                if (row.getJSONObject(i).isNull("is_favorite")){
-                                    is_favorite = 0;
-                                }else {
-                                    is_favorite = row.getJSONObject(i).getInt("is_favorite");
-                                }
 
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
@@ -302,13 +287,6 @@ public class ListActivity extends AppCompatActivity {
                                 String x = object.getString("X");
                                 String y = object.getString("Y");
                                 String cpiContent = object.getString("CPI_CONTENT");
-
-                                int is_favorite;
-                                if (row.getJSONObject(i).isNull("is_favorite")){
-                                    is_favorite = 0;
-                                }else {
-                                    is_favorite = row.getJSONObject(i).getInt("is_favorite");
-                                }
 
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
