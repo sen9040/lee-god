@@ -27,12 +27,13 @@ public class SportsInfo implements Serializable {
     private String v_max;
     private String revStdDayNm;
     private String revStdDay;
+    private int isFavorite;
 
     public SportsInfo(){
 
     }
 
-    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, String x, String y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay) {
+    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, String x, String y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay, int isFavorite) {
         this.svcId = svcId;
         this.maxClassNm = maxClassNm;
         this.minClassNm = minClassNm;
@@ -56,6 +57,7 @@ public class SportsInfo implements Serializable {
         this.v_max = v_max;
         this.revStdDayNm = revStdDayNm;
         this.revStdDay = revStdDay;
+        this.isFavorite = isFavorite;
     }
 
     public String getSvcId() {
@@ -240,5 +242,13 @@ public class SportsInfo implements Serializable {
 
     public void setRevStdDay(String revStdDay) {
         this.revStdDay = revStdDay;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

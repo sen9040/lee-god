@@ -5,6 +5,8 @@ import android.content.Context;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +21,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-import com.yijun.contest.favorite.data.DatabaseHandler;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -92,11 +96,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-//        if (favorite.getIsFavorite() == 1){
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-//        }else {
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-//        }
+        if (sportInfo.getIsFavorite() == 1){
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }else {
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 
 
@@ -132,30 +136,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Favorite favorite = new Favorite();
-                    SportsInfo sportsInfo = sportInfosList.get(getAdapterPosition());
-                    favorite.setId(sportsInfo.getSvcId());
-                    favorite.setImgUrl(sportsInfo.getImgUrl());
-                    favorite.setTitle(sportsInfo.getSvcNm());
-                    favorite.setAddress(sportsInfo.getPlaceNm());
-                    favorite.setPrice(sportsInfo.getPaYaTnm());
-                    if (sportsInfo.getSvcStaTnm().equals("접수종료")){
-                        favorite.setTime(sportsInfo.getSvcStaTnm());
+                    int position = getAdapterPosition();
+
+                    int is_favorite = sportInfosList.get(position).getIsFavorite();
+                    if (is_favorite == 1){
+                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
+                        ((ListActivity)context).addSportFavorite(position);
                     }else {
-                        if (sportsInfo.getV_max().isEmpty() || sportsInfo.getV_max().equals("")){
-                            favorite.setTime(sportsInfo.getSvcStaTnm());
-                        }
-                        favorite.setTime(sportsInfo.getSvcStaTnm() +" : "+sportsInfo.getV_min()+" ~ "+sportsInfo.getV_max());
+                        // 별표가 없으면, 즐겨찾기 추가 함수 호출
+                        ((ListActivity)context).addSportFavorite(position);
                     }
 
-                    if (favorite.getIsFavorite() == 1){
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
-                    }else {
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
-                    }
-
-                    DatabaseHandler db = new DatabaseHandler(context);
-                    db.addFavorite(favorite);
                 }
             });
 
