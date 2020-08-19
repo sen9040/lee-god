@@ -9,15 +9,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
+import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
+import com.yijun.contest.model.Favorite;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class FragmentFavorite extends Fragment {
     Context context;
     RecyclerView recyclerView;
+    FavoriteRecyclerViewAdapter favoriteRecyclerViewAdapter;
+    ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
 
     public FragmentFavorite(){
     }
@@ -33,6 +41,8 @@ public class FragmentFavorite extends Fragment {
         boomMenu.getBoomMenu(context,bmb);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
         return view;

@@ -1,7 +1,6 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
-import com.yijun.contest.viewdetails.ViewDetailsActivity;
+import com.yijun.contest.model.WayInfo;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
 
-//        if (natureInfo.getIsFavorite() == 1){
+//        if (favorite.getIsFavorite() == 1){
 //            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
 //        }else {
 //            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
@@ -87,13 +88,23 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
-            cardView.setOnClickListener(new View.OnClickListener() {
+
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i =new Intent(context, ViewDetailsActivity.class);
-                    context.startActivity(i);
+                    NatureInfo natureInfo = natureInfoArrayList.get(getAdapterPosition());
+                    NatureInfo nI = new NatureInfo();
+                    nI.setpImg(natureInfo.getpImg());
+                    nI.setpPark(natureInfo.getpPark());
+                    nI.setpAddr(natureInfo.getpAddr());
+                    nI.setpName(natureInfo.getpName());
+                    nI.setpAdmintel(natureInfo.getpAdmintel());
+
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    db.addFavorite(natureInfo);
                 }
             });
+
         }
     }
 }
