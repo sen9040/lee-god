@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.model.NatureInfo;
+import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         String pImg = natureInfo.getpImg();
 
         if (pImg.isEmpty() || pImg.equals("")){
-
+            holder.imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(context).load(pImg).into(holder.imgSvc);
         }
@@ -90,7 +91,11 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i =new Intent(context, ViewDetailsActivity.class);
+                    Intent i = new Intent(context, ViewDetailsActivity.class);
+                    NatureInfo natureInfo =  natureInfoArrayList.get(getAdapterPosition());
+
+                    i.putExtra("sports",natureInfo);
+                    i.putExtra("key",2);
                     context.startActivity(i);
                 }
             });

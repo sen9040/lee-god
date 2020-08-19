@@ -231,8 +231,8 @@ public class ListActivity extends AppCompatActivity {
                                 String pAddr = object.getString("P_ADDR");
                                 String pName = object.getString("P_NAME");
                                 String pAdmintel = object.getString("P_ADMINTEL");
-                                String x = object.getString("LONGITUDE");
-                                String y = object.getString("LATITUDE");
+                                String y = object.getString("LONGITUDE");
+                                String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,

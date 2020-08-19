@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
+import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
@@ -82,7 +83,11 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i =new Intent(context, ViewDetailsActivity.class);
+                    Intent i = new Intent(context, ViewDetailsActivity.class);
+                    WayInfo wayInfo =  wayInfoArrayList.get(getAdapterPosition());
+
+                    i.putExtra("sports",wayInfo);
+                    i.putExtra("key",3);
                     context.startActivity(i);
                 }
             });

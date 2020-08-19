@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
@@ -69,7 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String imgUrl = sportInfo.getImgUrl();
 
         if (imgUrl.isEmpty() || imgUrl.equals("")){
-
+           holder.imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(context).load(imgUrl).into(holder.imgSvc);
         }
@@ -134,15 +136,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
 
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                 SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
-              Intent i =new Intent(context, ViewDetailsActivity.class);
-              i.putExtra("sports",sportsInfo);
-              context.startActivity(i);
-                }
-            });
+          cardView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent i = new Intent(context, ViewDetailsActivity.class);
+                  SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
+
+                  i.putExtra("sports",sportsInfo);
+                  i.putExtra("key",1);
+                  context.startActivity(i);
+              }
+          });
         }
 
     }
