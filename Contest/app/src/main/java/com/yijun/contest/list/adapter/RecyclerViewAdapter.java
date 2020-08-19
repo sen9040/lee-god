@@ -139,11 +139,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     int position = getAdapterPosition();
 
                     int is_favorite = sportInfosList.get(position).getIsFavorite();
-                    if (is_favorite == 1){
+                    if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addSportFavorite(position);
-                    }else {
-                        // 별표가 없으면, 즐겨찾기 추가 함수 호출
                         ((ListActivity)context).addSportFavorite(position);
                     }
 

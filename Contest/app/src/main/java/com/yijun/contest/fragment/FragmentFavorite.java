@@ -68,7 +68,7 @@ public class FragmentFavorite extends Fragment {
     }
 
     // 스포츠 즐겨찾기데이터 전부 가져오기
-    private void getSportFavoriteData(int position) {
+    public void getSportFavoriteData(int position) {
 
         // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         Favorite favorite = favoriteArrayList.get(position);
@@ -77,7 +77,6 @@ public class FragmentFavorite extends Fragment {
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
-            body.put("isFavorite", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -148,8 +147,8 @@ public class FragmentFavorite extends Fragment {
         requestQueue.add(request);
     }
 
-    // 스포츠 즐겨찾기데이터 전부 가져오기
-    private void getParkFavoriteData(int position) {
+    // 공원 즐겨찾기데이터 전부 가져오기
+    public void getParkFavoriteData(int position) {
 
         // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         Favorite favorite = favoriteArrayList.get(position);
@@ -229,8 +228,8 @@ public class FragmentFavorite extends Fragment {
         requestQueue.add(request);
     }
 
-    // 스포츠 즐겨찾기데이터 전부 가져오기
-    private void getWayFavoriteData(int position) {
+    // 두드림길 즐겨찾기데이터 전부 가져오기
+    public void getWayFavoriteData(int position) {
 
         // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         Favorite favorite = favoriteArrayList.get(position);
@@ -239,7 +238,6 @@ public class FragmentFavorite extends Fragment {
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
-            body.put("isFavorite", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +17,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.SportsInfo;
 
 import java.util.ArrayList;
 
@@ -86,16 +88,24 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
-//            int position = getAdapterPosition();
-//
-//            int is_favorite = favoriteArrayList.get(position).getIsFavorite();
-//            if (is_favorite == 1){
-//                // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-//                ((context)context).getS(position);
-//            }else {
-//                // 별표가 없으면, 즐겨찾기 추가 함수 호출
-//                ((ListActivity)context).addSportFavorite(position);
-//            }
+            final int position = getAdapterPosition();
+
+            int is_favorite = favoriteArrayList.get(position).getIsFavorite();
+            if (is_favorite == 1){
+                // 별표가 이미 있으면, 즐겨찾기 보기 함수 호출!(FragmentFavorite 에 있는거)
+//                (()context).addSportFavorite(position);
+//                ((ListActivity)context).addParkFavorite(position);
+//                ((ListActivity)context).addWayFavorite(position);
+            }
+
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ListActivity)context).deleteSportFavorite(position);
+                    ((ListActivity)context).deleteParkFavorite(position);
+                    ((ListActivity)context).deleteWayFavorite(position);
+                }
+            });
 
         }
     }

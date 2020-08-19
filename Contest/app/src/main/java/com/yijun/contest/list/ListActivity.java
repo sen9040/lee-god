@@ -17,9 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yijun.contest.R;
+import com.yijun.contest.fragment.FragmentFavorite;
+import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
+import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
@@ -181,6 +184,8 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
+
+
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay, 0);
@@ -233,7 +238,6 @@ public class ListActivity extends AppCompatActivity {
                                 String x = object.getString("LONGITUDE");
                                 String y = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
-
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
                                         guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0);
@@ -314,8 +318,6 @@ public class ListActivity extends AppCompatActivity {
 
     // sport 즐겨찾기 추가 함수
     public void addSportFavorite(final int position){
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         SportsInfo sportsInfo = sportInfoArrayList.get(position);
         String idx = sportsInfo.getSvcId();
 
@@ -354,8 +356,6 @@ public class ListActivity extends AppCompatActivity {
 
     // nature(park) 즐겨찾기 추가 함수
     public void addParkFavorite(final int position){
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         NatureInfo natureInfo = natureInfoArrayList.get(position);
         String idx = natureInfo.getpIdx();
 
@@ -394,8 +394,6 @@ public class ListActivity extends AppCompatActivity {
 
     // way 즐겨찾기 추가 함수
     public void addWayFavorite(final int position){
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
         WayInfo wayInfo = wayInfoArrayList.get(position);
         String idx = wayInfo.getCpiIdx();
 
@@ -430,6 +428,116 @@ public class ListActivity extends AppCompatActivity {
                 }
         );
         Volley.newRequestQueue(ListActivity.this).add(request);
+    }
+
+
+
+    // 스포츠 즐겨찾기 삭제
+    public void deleteSportFavorite(final int position){
+        SportsInfo sportsInfo = sportInfoArrayList.get(position);
+
+        // 서버에 보내기 위해서 필요
+        String idx = sportsInfo.getSvcId();
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        SportsInfo sportsInfo = sportInfoArrayList.get(position);
+                        sportsInfo.setIsFavorite(0);
+                        adapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        requestQueue.add(request);
+    }
+
+    // 공원 즐겨찾기 삭제
+    public void deleteParkFavorite(final int position){
+        NatureInfo natureInfo = natureInfoArrayList.get(position);
+
+        // 서버에 보내기 위해서 필요
+        String idx = natureInfo.getpIdx();
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        NatureInfo natureInfo = natureInfoArrayList.get(position);
+                        natureInfo.setIsFavorite(0);
+                        natureAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        requestQueue.add(request);
+    }
+
+    // 두드림길 즐겨찾기 삭제
+    public void deleteWayFavorite(final int position){
+        WayInfo wayInfo = wayInfoArrayList.get(position);
+
+        // 서버에 보내기 위해서 필요
+        String idx = wayInfo.getCpiIdx();
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        WayInfo wayInfo = wayInfoArrayList.get(position);
+                        wayInfo.setIsFavorite(0);
+                        wayAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        requestQueue.add(request);
     }
 
 }

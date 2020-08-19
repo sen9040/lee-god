@@ -95,11 +95,8 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
                     int position = getAdapterPosition();
 
                     int is_favorite = natureInfoArrayList.get(position).getIsFavorite();
-                    if (is_favorite == 1){
+                    if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addParkFavorite(position);
-                    }else {
-                        // 별표가 없으면, 즐겨찾기 추가 함수 호출
                         ((ListActivity)context).addParkFavorite(position);
                     }
 

@@ -57,9 +57,9 @@ exports.getFavorite = async (req, res, next) => {
 // @request
 // @response    success, cnt, items[]
 exports.deleteFavorite = async (req, res, next) => {
-  let id = req.params.id;
+  let idx = req.body.idx;
 
-  let query = `delete from favorite where id = ${id}`;
+  let query = `delete from favorite where idx = ${idx}`;
   try {
     [rows] = await connection.query(query);
     res.status(200).json({ success: true, cnt: rows.length, items: rows });
