@@ -4,6 +4,7 @@ package com.yijun.contest.list.adapter;
 import android.content.Context;
 
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -85,7 +88,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.txtTime.setText(svcStaTnm +" : "+v_min+" ~ "+v_max);
         }
 
-
+//        if (sportInfo.getIsFavorite() == 1){
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+//        }else {
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+//        }
 
     }
 
@@ -106,6 +113,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView txtPlaceNm;
         TextView txtPaYaTnm;
         TextView txtTime;
+        ImageView imgFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -116,7 +124,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
+            imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Favorite favorite = new Favorite();
+                    SportsInfo sportsInfo = sportInfosList.get(getAdapterPosition());
+                }
+            });
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                 SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
+              Intent i =new Intent(context, ViewDetailsActivity.class);
+              i.putExtra("sports",sportsInfo);
+              context.startActivity(i);
+                }
+            });
         }
 
     }

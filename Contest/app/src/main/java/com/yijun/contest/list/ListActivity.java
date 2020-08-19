@@ -17,8 +17,10 @@ import com.android.volley.toolbox.Volley;
 import com.yijun.contest.R;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.model.WayInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,14 +35,20 @@ public class ListActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
 
-    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/5/%ED%85%8C%EB%8B%88%EC%8A%A4%EC%9E%A5";
-    String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/5/";
+    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/25";
+    String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/25/";
+    String wayTestUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/SeoulGilWalkCourse/1/25/";
 
     int list_total_count;
     RecyclerViewAdapter adapter;
     NatureRecyclerViewAdapter natureAdapter;
+    WayRecyclerViewAdapter wayAdapter;
+
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
+    ArrayList<WayInfo> wayInfoArrayList = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +62,86 @@ public class ListActivity extends AppCompatActivity {
 
 
         requestQueue = Volley.newRequestQueue(ListActivity.this);
+
+        String sports = getIntent().getStringExtra("sports");
+
+
+        if (sports.equals("축구")){
+            testUrl = testUrl+ "/축구장";
+            String soccer = "축구장";
+            txtSport.setText(soccer);
+
+
+        }else if (sports.equals("야구")){
+            testUrl = testUrl+ "/야구장";
+            txtSport.setText("야구장");
+
+
+        }else if (sports.equals("족구")){
+            testUrl = testUrl+ "/족구장";
+            txtSport.setText("족구");
+
+        }else if (sports.equals("테니스")){
+            testUrl = testUrl+ "/테니스장";
+            txtSport.setText("테니스");
+
+
+        }else if (sports.equals("풋살")){
+            testUrl = testUrl+ "/풋살경기장";
+            txtSport.setText("풋살경기장");
+
+        }else if (sports.equals("탁구")){
+            testUrl = testUrl+ "/탁구장";
+            txtSport.setText("탁구장");
+
+
+        }else if (sports.equals("다목적")){
+            testUrl = testUrl+ "/다목적경기장";
+            txtSport.setText("다목적경기장");
+
+
+        }else if (sports.equals("골프")){
+            testUrl = testUrl+ "/파크골프장";
+            txtSport.setText("파크골프장");
+
+
+        }else if (sports.equals("배드민턴")){
+            testUrl = testUrl+ "/배드민턴장";
+            txtSport.setText("배드민턴장");
+
+
+        }else if (sports.equals("운동장")){
+            testUrl = testUrl+ "/운동장";
+            txtSport.setText("운동장");
+
+        }else if (sports.equals("체육관")){
+            testUrl = testUrl+ "/체육관";
+            txtSport.setText("체육관");
+
+
+        }else if (sports.equals("둘레길")){
+            txtSport.setText("둘레길");
+            wayInfo();
+            return;
+
+        }else if (sports.equals("산")){
+            testUrl = testUrl+ "/산";
+            txtSport.setText("산");
+
+        } else if (sports.equals("공원")){
+            txtSport.setText("공원");
+            natureInfo(natureTestUrl);
+            return;
+        }
+        sportInfo(testUrl);
+
+
+
     }
 
-    public void sportInfo(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, testUrl, null, new Response.Listener<JSONObject>() {
+
+    public void sportInfo(String url){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("AAA","search response : "+response);
@@ -93,6 +177,11 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
+
+
+
+
+
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
@@ -115,8 +204,8 @@ public class ListActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void natureInfo(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, natureTestUrl, null,
+    public void natureInfo(String url){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -161,6 +250,60 @@ public class ListActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+    public void wayInfo(){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, wayTestUrl, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject way = response.getJSONObject("SeoulGilWalkCourse");
+                            list_total_count = way.getInt("list_total_count");
+                            JSONArray row = way.getJSONArray("row");
+                            for (int i = 0; i < row.length(); i++){
+                                JSONObject object = row.getJSONObject(i);
+                                String courseCategory = object.getString("COURSE_CATEGORY");
+                                String courseCategoryNm = object.getString("COURSE_CATEGORY_NM");
+                                String southNorthDiv = object.getString("SOUTH_NORTH_DIV");
+                                String southNorthDivNm = object.getString("SOUTH_NORTH_DIV_NM");
+                                String areaGu = object.getString("AREA_GU");
+                                String distance = object.getString("DISTANCE");
+                                String leadTime = object.getString("LEAD_TIME");
+                                String courseLevel = object.getString("COURSE_LEVEL");
+                                String voteCnt = object.getString("VOTE_CNT");
+                                String relateSubway = object.getString("RELATE_SUBWAY");
+                                String trafficInfo = object.getString("TRAFFIC_INFO");
+                                String content = object.getString("CONTENT");
+                                String pdfFilePath = object.getString("PDF_FILE_PATH");
+                                String courseName = object.getString("COURSE_NAME");
+                                String regDate = object.getString("REG_DATE");
+                                String detailCourse = object.getString("DETAIL_COURSE");
+                                String cpiIdx = object.getString("CPI_IDX");
+                                String cpiName = object.getString("CPI_NAME");
+                                String x = object.getString("X");
+                                String y = object.getString("Y");
+                                String cpiContent = object.getString("CPI_CONTENT");
+
+                                WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
+                                        areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent);
+                                wayInfoArrayList.add(wayInfo);
+                            }
+                            wayAdapter = new WayRecyclerViewAdapter(ListActivity.this, wayInfoArrayList);
+                            recyclerView.setAdapter(wayAdapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
 
                     }
                 });
