@@ -1,18 +1,24 @@
 package com.yijun.contest.weather;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,8 +29,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
+
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.model.Forecasts;
 import com.yijun.contest.weather.model.Weather;
 
@@ -32,10 +40,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -67,6 +86,7 @@ public class WeatherActivity extends AppCompatActivity {
     String clientSecret = "88cac39cf0cd7950fd5b4b177aa9ceffc98ebb0d";
     private RequestQueue requestQueue;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +107,22 @@ public class WeatherActivity extends AppCompatActivity {
         forecastTxt_5 = findViewById(R.id.forecastTxt_5);
         forecastImg_6 = findViewById(R.id.forecastImg_6);
         forecastTxt_6 = findViewById(R.id.forecastTxt_6);
+
+
+        currentWeatherImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    WeatherYdnJava.main(WeatherActivity.this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("AAA","error 12: "+e);
+                }
+
+                Toast.makeText(WeatherActivity.this, "hi", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // todo volley 사용 해서 날씨 API 가져오기 (후보 1순위 야후 날씨 날씨 이미지도 가져 올수 있어 보임 )
 

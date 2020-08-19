@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".list.ListActivity"></activity>
+        <activity android:name=".airInfo.AirInfoActivity"></activity>
+        <activity android:name=".airInfo.AirInfo" />
+        <activity android:name=".list.ListActivity" />
         <activity android:name=".ranking.RankingActivity" />
         <activity android:name=".weather.WeatherActivity" />
         <activity android:name=".MainActivity">

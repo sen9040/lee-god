@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".airInfo.AirInfoActivity">
+
+
+
+    <org.eazegraph.lib.charts.BarChart
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/barchart"
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:padding="10dp"
+        app:egFixedBarWidth="true"
+        app:egBarWidth="20dp"
+        app:egLegendHeight="40dp"/>
+
+    <TextView
+        android:id="@+id/txtNo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/barchart"
+        />
+
+    <TextView
+        android:id="@+id/txtO3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/txtNo2"
+        />
+
+    <TextView
+        android:id="@+id/txtCo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/txtO3"
+        />
+    <TextView
+        android:id="@+id/txtSo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/txtCo"
+        />
+    <TextView
+        android:id="@+id/txtPm10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/txtSo2"
+        />
+    <TextView
+        android:id="@+id/txtPm25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_below="@+id/txtPm10"
+        />
+
+    <ImageView
+        android:id="@+id/imgNo2"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/barchart"
+        />
+    <ImageView
+        android:id="@+id/imgO3"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtNo2"
+        />
+    <ImageView
+        android:id="@+id/imgCo"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtO3"
+        />
+    <ImageView
+        android:id="@+id/imgSo2"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtCo"
+        />
+    <ImageView
+        android:id="@+id/imgPm10"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtSo2"
+
+        />
+
+    <ImageView
+        android:id="@+id/imgPm25"
+        android:layout_width="50dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtPm10"
+
+        />
+
+
+</RelativeLayout>
