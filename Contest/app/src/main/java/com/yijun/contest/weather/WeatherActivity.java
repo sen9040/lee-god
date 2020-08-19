@@ -108,7 +108,7 @@ public class WeatherActivity extends AppCompatActivity {
         forecastImg_6 = findViewById(R.id.forecastImg_6);
         forecastTxt_6 = findViewById(R.id.forecastTxt_6);
 
-
+       
         currentWeatherImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
