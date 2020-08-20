@@ -196,7 +196,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
         LatLng main;
         if (x.isEmpty()||x.equals("")||y.isEmpty()||y.equals("")){
-            Toast.makeText(ViewDetailsActivity.this,"해당 지도 정보가 없습니다,",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ViewDetailsActivity.this,"해당 지도 정보가 없습니다.",Toast.LENGTH_LONG).show();
             main = new LatLng(37.554862899999996,126.97461089999997);
             svcNm = "서울시청";
 
