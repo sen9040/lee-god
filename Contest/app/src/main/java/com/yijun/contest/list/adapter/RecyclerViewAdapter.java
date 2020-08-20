@@ -142,6 +142,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addSportFavorite(position);
+                    }else {
+                        ((ListActivity)context).deleteSportFavorite(position);
                     }
 
                 }

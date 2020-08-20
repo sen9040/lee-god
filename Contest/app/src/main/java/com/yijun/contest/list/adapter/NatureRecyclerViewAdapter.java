@@ -98,6 +98,8 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
                     if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addParkFavorite(position);
+                    }else {
+                        ((ListActivity)context).deleteParkFavorite(position);
                     }
 
                 }

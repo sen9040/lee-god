@@ -90,6 +90,8 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
                     if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addWayFavorite(position);
+                    }else{
+                        ((ListActivity)context).deleteWayFavorite(position);
                     }
 
                 }

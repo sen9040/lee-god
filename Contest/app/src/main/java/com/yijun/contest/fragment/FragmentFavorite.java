@@ -26,6 +26,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
@@ -41,7 +42,10 @@ import java.util.Map;
 
 public class FragmentFavorite extends Fragment {
     Context context;
-    RecyclerView recyclerView;
+    RecyclerView sportRecyclerView;
+    RecyclerView parkRecyclerView;
+    RecyclerView wayRecyclerView;
+
     FavoriteRecyclerViewAdapter favoriteRecyclerViewAdapter;
     ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
     RequestQueue requestQueue;
@@ -59,9 +63,19 @@ public class FragmentFavorite extends Fragment {
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(context,bmb);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
+        sportRecyclerView.setHasFixedSize(true);
+        sportRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        parkRecyclerView = view.findViewById(R.id.parkRecyclerView);
+        parkRecyclerView.setHasFixedSize(true);
+        parkRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        wayRecyclerView = view.findViewById(R.id.wayRecyclerView);
+        wayRecyclerView.setHasFixedSize(true);
+        wayRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        requestQueue = Volley.newRequestQueue(context);
 
 
         return view;
@@ -85,7 +99,7 @@ public class FragmentFavorite extends Fragment {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -121,7 +135,7 @@ public class FragmentFavorite extends Fragment {
                                     favoriteArrayList.add(favorite);
                                 }
                                 favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                sportRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -166,7 +180,7 @@ public class FragmentFavorite extends Fragment {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -202,7 +216,7 @@ public class FragmentFavorite extends Fragment {
                                     favoriteArrayList.add(favorite);
                                 }
                                 favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                parkRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -246,7 +260,7 @@ public class FragmentFavorite extends Fragment {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -281,7 +295,7 @@ public class FragmentFavorite extends Fragment {
                                     favoriteArrayList.add(favorite);
                                 }
                                 favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                wayRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.

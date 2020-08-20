@@ -33,7 +33,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
     @NonNull
     @Override
     public FavoriteRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,14 +50,16 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
         if (imgUrl.isEmpty() || imgUrl.equals("")){
 
         }else {
-            Glide.with(context).load(imgUrl).into(holder.imgSvc);
+            Glide.with(context).load(imgUrl).into(holder.img);
         }
 
-        holder.txtSvcNm.setText(title);
-        holder.txtPlaceNm.setText(address);
-        holder.txtPaYaTnm.setText(price);
-        holder.txtTime.setText(time);
-        holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        if (favorite.getIsFavorite() == 1){
+            holder.title.setText(title);
+            holder.address.setText(address);
+            holder.price.setText(price);
+            holder.time.setText(time);
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }
 
 
     }
@@ -70,32 +72,33 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        ImageView imgSvc;
-        TextView txtSvcNm;
-        TextView txtPlaceNm;
-        TextView txtPaYaTnm;
-        TextView txtTime;
+        ImageView img;
+        TextView title;
+        TextView address;
+        TextView price;
+        TextView time;
         ImageView imgFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             cardView = itemView.findViewById(R.id.cardView);
-            imgSvc = itemView.findViewById(R.id.imgSvc);
-            txtSvcNm = itemView.findViewById(R.id.txtSvcNm);
-            txtPlaceNm = itemView.findViewById(R.id.txtPlaceNm);
-            txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
-            txtTime = itemView.findViewById(R.id.txtTime);
+            img = itemView.findViewById(R.id.img);
+            title = itemView.findViewById(R.id.title);
+            address = itemView.findViewById(R.id.address);
+            price = itemView.findViewById(R.id.price);
+            time = itemView.findViewById(R.id.time);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
             final int position = getAdapterPosition();
 
             int is_favorite = favoriteArrayList.get(position).getIsFavorite();
             if (is_favorite == 1){
+                FragmentFavorite ff = new FragmentFavorite();
                 // 별표가 이미 있으면, 즐겨찾기 보기 함수 호출!(FragmentFavorite 에 있는거)
-//                (()context).addSportFavorite(position);
-//                ((ListActivity)context).addParkFavorite(position);
-//                ((ListActivity)context).addWayFavorite(position);
+                ff.getSportFavoriteData(position);
+                ff.getParkFavoriteData(position);
+                ff.getWayFavoriteData(position);
             }
 
             imgFavorite.setOnClickListener(new View.OnClickListener() {

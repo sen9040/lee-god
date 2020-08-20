@@ -26,6 +26,7 @@ import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -333,7 +334,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                testUrl + "/api/v1/favorite",
+                Utils.SERVER_BASE_URL + "/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -371,7 +372,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                natureTestUrl + "/api/v1/favorite",
+                Utils.SERVER_BASE_URL + "/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -409,7 +410,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "localhost:5776/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -450,7 +451,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -486,7 +487,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -522,7 +523,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
