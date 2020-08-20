@@ -27,7 +27,6 @@
 
     <TextView
         android:id="@+id/currentWeatherTxt"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="현재 날씨 및 온도 습도 "
@@ -168,4 +167,14 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutTxtH"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

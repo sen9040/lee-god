@@ -216,19 +216,19 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
         mMap.addMarker(new MarkerOptions().position(main).title(svcNm));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
-
-   getParkingData();
-        Parking parking = new Parking();
-
-        double plat = parking.getLat();
-        double plng = parking.getLng();
-
-        for (Parking parking1 : parkingArrayList){
-            MarkerOptions options = new MarkerOptions()
-                    .position(new LatLng(parking1.getLat(), parking1.getLng()))
-                    .title(parking1.getParking_name()).snippet(parking1.getPay_nm()).snippet(parking1.getPay_yn());
-            mMap.addMarker(options);
-        }
+//
+//   getParkingData();
+//        Parking parking = new Parking();
+//
+//        double plat = parking.getLat();
+//        double plng = parking.getLng();
+//
+//        for (Parking parking1 : parkingArrayList){
+//            MarkerOptions options = new MarkerOptions()
+//                    .position(new LatLng(parking1.getLat(), parking1.getLng()))
+//                    .title(parking1.getParking_name()).snippet(parking1.getPay_nm()).snippet(parking1.getPay_yn());
+//            mMap.addMarker(options);
+//        }
     }
 
 
@@ -334,47 +334,47 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
 
     }
-
-public void getParkingData(){
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-            Request.Method.GET,
-            parkingUrl,
-            null,
-            new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-
-                    try {
-                        JSONArray parking = response.getJSONArray("row");
-                        for (int i =0; i<parking.length(); i++){
-                            JSONObject jsonObject = parking.getJSONObject(i);
-
-                            String pay_yn = jsonObject.getString("PAY_YN");
-                            String pay_nm = jsonObject.getString("PAY_NM");
-                            String parkingname = jsonObject.getString("PARKING_NAME");
-                            double lat = jsonObject.getDouble("LAT");
-                            double lng = jsonObject.getDouble("LNG");
-
-                            Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,lat,lng);
-                            parkingArrayList.add(parking1);
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-
-        }
-    }
-
-    );
-    requestQueue.add(jsonObjectRequest);
-}
+//
+//public void getParkingData(){
+//    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+//            Request.Method.GET,
+//            parkingUrl,
+//            null,
+//            new Response.Listener<JSONObject>() {
+//                @Override
+//                public void onResponse(JSONObject response) {
+//
+//                    try {
+//                        JSONArray parking = response.getJSONArray("row");
+//                        for (int i =0; i<parking.length(); i++){
+//                            JSONObject jsonObject = parking.getJSONObject(i);
+//
+//                            String pay_yn = jsonObject.getString("PAY_YN");
+//                            String pay_nm = jsonObject.getString("PAY_NM");
+//                            String parkingname = jsonObject.getString("PARKING_NAME");
+//                            double lat = jsonObject.getDouble("LAT");
+//                            double lng = jsonObject.getDouble("LNG");
+//
+//                            Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,lat,lng);
+//                            parkingArrayList.add(parking1);
+//
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//
+//                }
+//            }, new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError error) {
+//
+//        }
+//    }
+//
+//    );
+//    requestQueue.add(jsonObjectRequest);
+//}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
