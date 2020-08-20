@@ -1,6 +1,7 @@
 package com.yijun.contest.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +27,10 @@ import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.NatureFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.SportFavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.WayFavoriteRecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
@@ -46,9 +50,14 @@ public class FragmentFavorite extends Fragment {
     RecyclerView parkRecyclerView;
     RecyclerView wayRecyclerView;
 
-    FavoriteRecyclerViewAdapter favoriteRecyclerViewAdapter;
-    ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
-    RequestQueue requestQueue;
+    SportFavoriteRecyclerViewAdapter sportFavoriteRecyclerViewAdapter;
+    NatureFavoriteRecyclerViewAdapter natureFavoriteRecyclerViewAdapter;
+    WayFavoriteRecyclerViewAdapter wayFavoriteRecyclerViewAdapter;
+
+    ArrayList<Favorite> favoriteArrayList1 = new ArrayList<>();
+    ArrayList<Favorite> favoriteArrayList2 = new ArrayList<>();
+    ArrayList<Favorite> favoriteArrayList3 = new ArrayList<>();
+
 
     public FragmentFavorite(){
     }
@@ -65,17 +74,21 @@ public class FragmentFavorite extends Fragment {
 
         sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
         sportRecyclerView.setHasFixedSize(true);
-        sportRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        sportRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+
+        getSportFavoriteData();
 
         parkRecyclerView = view.findViewById(R.id.parkRecyclerView);
         parkRecyclerView.setHasFixedSize(true);
-        parkRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        parkRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, true));
+
+        getParkFavoriteData();
 
         wayRecyclerView = view.findViewById(R.id.wayRecyclerView);
         wayRecyclerView.setHasFixedSize(true);
-        wayRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        wayRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, true));
 
-//        requestQueue = Volley.newRequestQueue(context);
+        getWayFavoriteData();
 
 
         return view;
@@ -122,10 +135,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList1.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                sportRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(context, favoriteArrayList1);
+                                sportRecyclerView.setAdapter(sportFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -148,7 +161,8 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+
+        Volley.newRequestQueue(context).add(request);
     }
 
     // 공원 즐겨찾기데이터 전부 가져오기
@@ -191,10 +205,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList2.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                parkRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(context, favoriteArrayList2);
+                                parkRecyclerView.setAdapter(natureFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -217,7 +231,7 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+        Volley.newRequestQueue(context).add(request);
     }
 
     // 두드림길 즐겨찾기데이터 전부 가져오기
@@ -259,10 +273,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList3.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                wayRecyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(context, favoriteArrayList3);
+                                wayRecyclerView.setAdapter(wayFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -285,7 +299,7 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+        Volley.newRequestQueue(context).add(request);
     }
 
 }

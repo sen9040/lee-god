@@ -1,6 +1,10 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 
 import java.util.ArrayList;
@@ -35,13 +41,35 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
 
     @Override
     public void onBindViewHolder(@NonNull SportFavoriteRecyclerViewAdapter.ViewHolder holder, int position) {
-        FragmentFavorite fragmentFavorite = new FragmentFavorite();
-        Favorite favorite = new fa
+        Favorite favorite = favoriteArrayList.get(position);
+        String title = favorite.getTitle();
+        String address = favorite.getAddress();
+        String price = favorite.getPrice();
+        String time = favorite.getTime();
+        String imgUrl = favorite.getImgUrl();
+        int isFavorite = favorite.getIsFavorite();
+
+        if (isFavorite == 1){
+            holder.title.setText(title);
+            holder.address.setText(address);
+            holder.price.setText(price);
+            holder.time.setText(time);
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+
+            if (imgUrl == null || imgUrl.equals("")){
+                holder.img.setImageResource(R.drawable.butterfly);
+            }else {
+                Glide.with(context).load(imgUrl).into(holder.img);
+            }
+        }else{
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return favoriteArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,6 +92,14 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             price = itemView.findViewById(R.id.price);
             time = itemView.findViewById(R.id.time);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
+
+            imgFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    ((ListActivity)context).deleteSportFavorite(position);
+                }
+            });
 
         }
     }
