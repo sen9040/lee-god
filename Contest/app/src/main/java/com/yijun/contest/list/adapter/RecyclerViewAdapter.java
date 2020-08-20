@@ -49,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public RecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
-
+        Log.i("AAA","recyclerView create : ");
         this.context = context;
         this.sportInfosList = sportInfosList;
     }
@@ -78,12 +78,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
 
+        // 이미지 설정
         if (imgUrl.isEmpty() || imgUrl.equals("")){
 
         }else {
             Glide.with(context).load(imgUrl).into(holder.imgSvc);
         }
-
+        // text 설정
+        holder.txtSvcNm.setText(svcNm);
+        holder.txtPlaceNm.setText(placeNm);
+        holder.txtPaYaTnm.setText(paYaTnm);
 
         if(svcStaTnm.equals("예약일시중지")){
             // 글자색 바꾸는 코드

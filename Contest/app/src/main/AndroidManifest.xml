@@ -38,6 +38,7 @@
             android:label="@string/title_activity_view_details"></activity>
         <activity android:name=".moverecord.MoveRecord"/>
         <activity android:name=".list.ListActivity" />
+        <activity android:name=".airInfo.AirInfoActivity" />
         <activity android:name=".ranking.RankingActivity" />
         <activity android:name=".weather.WeatherActivity" />
         <activity android:name=".MainActivity">
