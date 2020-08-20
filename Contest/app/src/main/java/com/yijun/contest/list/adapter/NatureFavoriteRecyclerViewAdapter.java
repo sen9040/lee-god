@@ -1,6 +1,7 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.NatureInfo;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -89,8 +93,12 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    ((ListActivity)context).deleteParkFavorite(position);
+                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+                    int isFavorite = favorite.getIsFavorite();
+                    if (isFavorite == 1){
+                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
+                        fragmentFavorite.deleteNatureFavorite(getAdapterPosition());
+                    }
 
                 }
             });

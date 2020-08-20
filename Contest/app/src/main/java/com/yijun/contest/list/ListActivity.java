@@ -4,12 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,8 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yijun.contest.R;
-import com.yijun.contest.fragment.FragmentFavorite;
-import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
@@ -33,8 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ListActivity extends AppCompatActivity {
 

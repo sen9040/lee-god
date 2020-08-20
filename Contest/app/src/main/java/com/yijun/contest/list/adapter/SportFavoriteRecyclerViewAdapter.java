@@ -1,6 +1,7 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -20,6 +21,8 @@ import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -96,8 +99,14 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    ((ListActivity)context).deleteSportFavorite(position);
+
+                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+                    int isFavorite = favorite.getIsFavorite();
+                    if (isFavorite == 1){
+                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
+                        fragmentFavorite.deleteSportFavorite(getAdapterPosition());
+                    }
+
                 }
             });
 

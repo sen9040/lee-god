@@ -35,10 +35,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         MoveRecord moveRecord = moveRecordArrayList.get(position);
-        String name = moveRecord.getName();
+        String title = moveRecord.getTitle();
         String address = moveRecord.getAddress();
 
-        holder.name.setText(name);
+        holder.name.setText(title);
         holder.address.setText(address);
     }
 

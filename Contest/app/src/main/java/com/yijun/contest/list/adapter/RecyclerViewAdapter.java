@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.Parking;
@@ -116,6 +117,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
 
+
+        Favorite favorite = new Favorite();
+        String fIdx = favorite.getIdx();
 
         if (sportInfo.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
