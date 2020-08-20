@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.WayInfo;
@@ -56,11 +56,11 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
 
-//        if (favorite.getIsFavorite() == 1){
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-//        }else {
-//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-//        }
+        if (natureInfo.getIsFavorite() == 1){
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+        }else {
+            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+        }
     }
 
     @Override
@@ -92,16 +92,14 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NatureInfo natureInfo = natureInfoArrayList.get(getAdapterPosition());
-                    NatureInfo nI = new NatureInfo();
-                    nI.setpImg(natureInfo.getpImg());
-                    nI.setpPark(natureInfo.getpPark());
-                    nI.setpAddr(natureInfo.getpAddr());
-                    nI.setpName(natureInfo.getpName());
-                    nI.setpAdmintel(natureInfo.getpAdmintel());
+                    int position = getAdapterPosition();
 
-                    DatabaseHandler db = new DatabaseHandler(context);
-                    db.addFavorite(natureInfo);
+                    int is_favorite = natureInfoArrayList.get(position).getIsFavorite();
+                    if (is_favorite == 0){
+                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
+                        ((ListActivity)context).addParkFavorite(position);
+                    }
+
                 }
             });
 

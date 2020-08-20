@@ -1,4 +1,4 @@
-package com.yijun.contest.MoveRecord;
+package com.yijun.contest.moverecord;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;

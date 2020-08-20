@@ -3,6 +3,7 @@ package com.yijun.contest.viewdetails;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,8 +54,8 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String v_max = sportInfo.getV_max();
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
-
-        if (imgUrl.isEmpty() || imgUrl.equals("")){
+        Log.i("AAA","detail imgUrl : "+imgUrl);
+        if (imgUrl.isEmpty() || imgUrl.equals("") ){
 
         }else {
             Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);

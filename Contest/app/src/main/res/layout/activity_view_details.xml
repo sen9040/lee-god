@@ -30,7 +30,7 @@
                 tools:context=".viewdetails.ViewDetailsActivity" />
 
             <ImageView
-                android:id="@+id/imgSvc3"
+                android:id="@+id/imgSvc"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
 

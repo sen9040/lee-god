@@ -1,4 +1,4 @@
-package com.yijun.contest.MoveRecord.model;
+package com.yijun.contest.moverecord.model;
 
 public class MoveRecord {
     private int id;

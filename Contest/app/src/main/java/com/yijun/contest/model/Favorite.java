@@ -1,7 +1,10 @@
 package com.yijun.contest.model;
 
-public class Favorite {
-    private String id;
+import java.io.Serializable;
+
+public class Favorite implements Serializable {
+    private int id;
+    private String idx;
     private String imgUrl;
     private String title;
     private String address;
@@ -13,8 +16,9 @@ public class Favorite {
 
     }
 
-    public Favorite(String id, String imgUrl, String title, String address, String price, String time, int isFavorite) {
+    public Favorite(int id, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite) {
         this.id = id;
+        this.idx = idx;
         this.imgUrl = imgUrl;
         this.title = title;
         this.address = address;
@@ -23,12 +27,20 @@ public class Favorite {
         this.isFavorite = isFavorite;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getIdx() {
+        return idx;
+    }
+
+    public void setIdx(String idx) {
+        this.idx = idx;
     }
 
     public String getImgUrl() {

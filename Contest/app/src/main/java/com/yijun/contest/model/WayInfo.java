@@ -25,12 +25,13 @@ public class WayInfo implements Serializable {
     private String x;
     private String y;
     private String cpiContent;
+    private int isFavorite;
 
     public WayInfo(){
 
     }
 
-    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent) {
+    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent, int isFavorite) {
         this.courseCategory = courseCategory;
         this.courseCategoryNm = courseCategoryNm;
         this.southNorthDiv = southNorthDiv;
@@ -52,6 +53,7 @@ public class WayInfo implements Serializable {
         this.x = x;
         this.y = y;
         this.cpiContent = cpiContent;
+        this.isFavorite = isFavorite;
     }
 
     public String getCourseCategory() {
@@ -220,5 +222,13 @@ public class WayInfo implements Serializable {
 
     public void setCpiContent(String cpiContent) {
         this.cpiContent = cpiContent;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }
