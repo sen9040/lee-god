@@ -44,16 +44,16 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         String pName = natureInfo.getpName();
         String pAdmintel = natureInfo.getpAdmintel();
         String pImg = natureInfo.getpImg();
-
+        double distance = natureInfo.getDistance();
         if (pImg.isEmpty() || pImg.equals("")){
             holder.imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(context).load(pImg).into(holder.imgSvc);
         }
-
+        double distanceNum = Math.round(distance*100)/100.0;
         holder.txtSvcNm.setText(pPark);
-        holder.txtPlaceNm.setText(pAddr);
-        holder.txtPaYaTnm.setText(pName);
+        holder.txtPlaceNm.setText("나와의 거리 : "+distanceNum+"Km");
+        holder.txtPaYaTnm.setText("");
         holder.txtTime.setText(pAdmintel);
 
 //        if (natureInfo.getIsFavorite() == 1){

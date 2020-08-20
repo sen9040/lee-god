@@ -79,6 +79,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String v_max = sportInfo.getV_max();
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
+        double distance = sportInfo.getDistance();
+
+
 
         // 이미지 설정
         if (imgUrl.isEmpty() || imgUrl.equals("")){
@@ -88,7 +91,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         // text 설정
         holder.txtSvcNm.setText(svcNm);
-        holder.txtPlaceNm.setText(placeNm);
+        double distanceNum = Math.round(distance*100)/100.0;
+        holder.txtPlaceNm.setText("나와의 거리 : "+distanceNum+"Km");
         holder.txtPaYaTnm.setText(paYaTnm);
 
         if(svcStaTnm.equals("예약일시중지")){

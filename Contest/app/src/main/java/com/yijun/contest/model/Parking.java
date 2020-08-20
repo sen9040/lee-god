@@ -6,6 +6,7 @@ public class Parking implements Serializable {
     private String pay_yn;
     private String pay_nm;
     private String parking_name;
+    private String addr;
     private double lat;
     private double lng;
 
@@ -15,6 +16,23 @@ public class Parking implements Serializable {
         this.parking_name = parking_name;
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public Parking(String pay_yn, String pay_nm, String parking_name, String addr, double lat, double lng) {
+        this.pay_yn = pay_yn;
+        this.pay_nm = pay_nm;
+        this.parking_name = parking_name;
+        this.addr = addr;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
     }
 
     public String getPay_yn() {

@@ -31,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yijun.contest.R;
@@ -38,6 +39,7 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,15 +59,20 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
     Button btnhiper;
     double lat;
     double lng;
+    int offset = 0;
     int key;
     RequestQueue requestQueue;
-    String parkingUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/GetParkInfo/1/25/";
+    String parkingBaseUrl = Utils.SERVER_BASE_URL+"/api/v1/parking";
     ArrayList<Parking> parkingArrayList = new ArrayList<>();
     ArrayList<MarkerOptions> list = new ArrayList<>();
     // GPS 좌표 가져오기 위한 LocationManager 멤버변수 선언.
     LocationManager locationManager;
     // 위치가 변경될 때마다, 처리해줄 리스너 멤버변수로 선언.
     LocationListener locationListener;
+    private String url;
+
+    ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +81,20 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        txtExam = findViewById(R.id.txtExm);
+        imgSvc = findViewById(R.id.imgSvc1);
+        txtSvcNm = findViewById(R.id.txtSvcNm1);
+        txtPlaceNm = findViewById(R.id.txtPlaceNm1);
+        txtPaYaTnm = findViewById(R.id.txtPaYaTnm1);
+        txtTime = findViewById(R.id.txtTime1);
+        btnhiper = findViewById(R.id.btnhiper1);
+
+
         requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+
+
+
         key = getIntent().getIntExtra("key",0);
        if (key==1){
            setting();
@@ -83,8 +103,33 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
        }else {
            way_setting();
        }
+        imgSvc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (key == 1) {
+                    SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
+                    double sportLat = Double.parseDouble(sportInfo.getX());
+                    double sportLng = Double.parseDouble(sportInfo.getY());
+                    url = parkingBaseUrl+"/location?lat="+sportLat+"&lng="+sportLng+"&offset=0";
+                    getParkingData(url);
 
-        btnhiper = findViewById(R.id.btnhiper1);
+                } else if (key == 2){
+                    NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
+                    double natureLat = Double.parseDouble(natureInfo.getX());
+                    double natureLng = Double.parseDouble(natureInfo.getY());
+                    url = parkingBaseUrl+"/location?lat="+natureLat+"&lng="+natureLng+"&offset=0";
+                    getParkingData(url);
+                }else {
+
+                }
+
+
+
+            }
+        });
+
+
+
         btnhiper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +239,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
 
 
-        LatLng main;
+        final LatLng main;
         if (x.isEmpty()||x.equals("")||y.isEmpty()||y.equals("")){
             Toast.makeText(ViewDetailsActivity.this,"해당 지도 정보가 없습니다.",Toast.LENGTH_LONG).show();
             main = new LatLng(37.554862899999996,126.97461089999997);
@@ -209,38 +254,132 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
 
 
+        if (key == 1) {
+            SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
+            double sportLat = Double.parseDouble(sportInfo.getX());
+            double sportLng = Double.parseDouble(sportInfo.getY());
+            url = parkingBaseUrl+"/location?lat="+sportLat+"&lng="+sportLng+"&offset=0";
+            requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+            final String finalSvcNm2 = svcNm;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            try {
+                                Log.i("AAA","parking response : "+response);
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i =0; i<3; i++){
+                                    JSONObject jsonObject = items.getJSONObject(i);
+                                    String pay_yn = jsonObject.getString("pay_yn");
+                                    String pay_nm = jsonObject.getString("pay_nm");
+                                    String parkingname = jsonObject.getString("parking_name");
+                                    String addr = jsonObject.getString("addr");
+                                    double lat = jsonObject.getDouble("lat");
+                                    double lng = jsonObject.getDouble("lng");
+                                    double distance = jsonObject.getDouble("distance");
+
+                                    Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
+                                    Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
+                                    parkingArrayList.add(parking1);
+                                    MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname).
+                                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    markerOptionsArrayList.add(options);
+                                }
+                                for (MarkerOptions options : markerOptionsArrayList){
+                                    mMap.addMarker(options);
+                                }
+                                mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm2));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
 
-        Log.i("AAAA","에베베베 : "+lat+lng);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("AAA","getParking error : "+error);
+                }
+            }
+
+            );
+            requestQueue.add(jsonObjectRequest);
+
+        } else if (key == 2){
+            NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
+            double natureLat = Double.parseDouble(natureInfo.getX());
+            double natureLng = Double.parseDouble(natureInfo.getY());
+            url = parkingBaseUrl+"/location?lat="+natureLat+"&lng="+natureLng+"&offset=0";
+            requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+            final String finalSvcNm = svcNm;
+            final String finalSvcNm1 = svcNm;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            try {
+                                Log.i("AAA","parking response : "+response);
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i =0; i<3; i++){
+                                    JSONObject jsonObject = items.getJSONObject(i);
+                                    String pay_yn = jsonObject.getString("pay_yn");
+                                    String pay_nm = jsonObject.getString("pay_nm");
+                                    String parkingname = jsonObject.getString("parking_name");
+                                    String addr = jsonObject.getString("addr");
+                                    double lat = jsonObject.getDouble("lat");
+                                    double lng = jsonObject.getDouble("lng");
+                                    double distance = jsonObject.getDouble("distance");
+
+                                    Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
+                                    Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
+                                    parkingArrayList.add(parking1);
+                                    MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname).
+                                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    markerOptionsArrayList.add(options);
+                                }
+                                for (MarkerOptions options : markerOptionsArrayList){
+                                    mMap.addMarker(options);
+                                }
+                                mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm1));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("AAA","getParking error : "+error);
+                }
+            }
+
+            );
+            requestQueue.add(jsonObjectRequest);
+        }else {
+
+        }
+
+        Log.i("AAA","에베베베 : "+markerOptionsArrayList.toString());
         // Add a marker in Sydney and move the camera
 
-        mMap.addMarker(new MarkerOptions().position(main).title(svcNm));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
-//
-//   getParkingData();
-//        Parking parking = new Parking();
-//
-//        double plat = parking.getLat();
-//        double plng = parking.getLng();
-//
-//        for (Parking parking1 : parkingArrayList){
-//            MarkerOptions options = new MarkerOptions()
-//                    .position(new LatLng(parking1.getLat(), parking1.getLng()))
-//                    .title(parking1.getParking_name()).snippet(parking1.getPay_nm()).snippet(parking1.getPay_yn());
-//            mMap.addMarker(options);
-//        }
+
     }
 
 
 
     public void setting(){
-        txtExam = findViewById(R.id.txtExm);
-        imgSvc = findViewById(R.id.imgSvc1);
-        txtSvcNm = findViewById(R.id.txtSvcNm1);
-        txtPlaceNm = findViewById(R.id.txtPlaceNm1);
-        txtPaYaTnm = findViewById(R.id.txtPaYaTnm1);
-        txtTime = findViewById(R.id.txtTime1);
-        btnhiper = findViewById(R.id.btnhiper1);
+
 
         SportsInfo sportInfo =(SportsInfo) getIntent().getSerializableExtra("sports");
 
@@ -276,13 +415,6 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
     }
     public void nature_setting(){
-        txtExam = findViewById(R.id.txtExm);
-        imgSvc = findViewById(R.id.imgSvc1);
-        txtSvcNm = findViewById(R.id.txtSvcNm1);
-        txtPlaceNm = findViewById(R.id.txtPlaceNm1);
-        txtPaYaTnm = findViewById(R.id.txtPaYaTnm1);
-        txtTime = findViewById(R.id.txtTime1);
-        btnhiper = findViewById(R.id.btnhiper1);
 
         NatureInfo natureInfo =(NatureInfo) getIntent().getSerializableExtra("sports");
 
@@ -307,13 +439,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
     }
     public void way_setting(){
-        txtExam = findViewById(R.id.txtExm);
-        imgSvc = findViewById(R.id.imgSvc1);
-        txtSvcNm = findViewById(R.id.txtSvcNm1);
-        txtPlaceNm = findViewById(R.id.txtPlaceNm1);
-        txtPaYaTnm = findViewById(R.id.txtPaYaTnm1);
-        txtTime = findViewById(R.id.txtTime1);
-        btnhiper = findViewById(R.id.btnhiper1);
+
 
         WayInfo wayInfo =(WayInfo) getIntent().getSerializableExtra("sports");
 
@@ -334,47 +460,53 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
 
     }
-//
-//public void getParkingData(){
-//    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//            Request.Method.GET,
-//            parkingUrl,
-//            null,
-//            new Response.Listener<JSONObject>() {
-//                @Override
-//                public void onResponse(JSONObject response) {
-//
-//                    try {
-//                        JSONArray parking = response.getJSONArray("row");
-//                        for (int i =0; i<parking.length(); i++){
-//                            JSONObject jsonObject = parking.getJSONObject(i);
-//
-//                            String pay_yn = jsonObject.getString("PAY_YN");
-//                            String pay_nm = jsonObject.getString("PAY_NM");
-//                            String parkingname = jsonObject.getString("PARKING_NAME");
-//                            double lat = jsonObject.getDouble("LAT");
-//                            double lng = jsonObject.getDouble("LNG");
-//
-//                            Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,lat,lng);
-//                            parkingArrayList.add(parking1);
-//
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                }
-//            }, new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError error) {
-//
-//        }
-//    }
-//
-//    );
-//    requestQueue.add(jsonObjectRequest);
-//}
+
+public void getParkingData(String url){
+        Log.i("AAA","getParking : on");
+        requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    try {
+                        Log.i("AAA","parking response : "+response);
+                        JSONArray items = response.getJSONArray("items");
+                        for (int i =0; i<3; i++){
+                            JSONObject jsonObject = items.getJSONObject(i);
+                            String pay_yn = jsonObject.getString("pay_yn");
+                            String pay_nm = jsonObject.getString("pay_nm");
+                            String parkingname = jsonObject.getString("parking_name");
+                            String addr = jsonObject.getString("addr");
+                            double lat = jsonObject.getDouble("lat");
+                            double lng = jsonObject.getDouble("lng");
+                            double distance = jsonObject.getDouble("distance");
+
+                            Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
+                            Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
+                            parkingArrayList.add(parking1);
+                            MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname);
+                            markerOptionsArrayList.add(options);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.i("AAA","getParking error : "+error);
+        }
+    }
+
+    );
+    requestQueue.add(jsonObjectRequest);
+}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
