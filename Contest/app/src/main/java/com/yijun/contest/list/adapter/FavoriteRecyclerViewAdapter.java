@@ -96,6 +96,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
 //                (()context).addSportFavorite(position);
 //                ((ListActivity)context).addParkFavorite(position);
 //                ((ListActivity)context).addWayFavorite(position);
+
             }
 
             imgFavorite.setOnClickListener(new View.OnClickListener() {

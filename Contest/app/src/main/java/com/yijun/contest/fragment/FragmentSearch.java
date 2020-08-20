@@ -237,8 +237,8 @@ public class FragmentSearch extends Fragment {
                         String placeNm= object.getString("PLACENM");
                         String useTgtInfo= object.getString("USETGTINFO");
                         String svcUrl= object.getString("SVCURL");
-                        Double x= object.getDouble("X");
-                        Double y= object.getDouble("Y");
+                        String x= object.getString("X");
+                        String y= object.getString("Y");
                         String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
                         String svcOpnEndDt= object.getString("SVCOPNENDDT");
                         String rcptEndDt= object.getString("RCPTBGNDT");
