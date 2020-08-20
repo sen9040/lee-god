@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -83,6 +84,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     ArrayList<WeatherDaily> dailyArrayList = new ArrayList<>();
     LinearLayout linearLayoutH;
+    LinearLayout linearLayoutTxtH;
+
 
     private RequestQueue requestQueue;
 
@@ -93,9 +96,9 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+//                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        linearLayoutTxtH = findViewById(R.id.linearLayoutTxtH);
 
 
 
@@ -228,7 +231,7 @@ public class WeatherActivity extends AppCompatActivity {
                     Log.i("AAA","current : "+description);
                     // forecasts
                     JSONArray dailyArray = response.getJSONArray("daily");
-                    for(int i = 0 ; i <6;i++){
+                    for(int i = 1 ; i <7;i++){
                         JSONObject dailyObject = dailyArray.getJSONObject(i);
 
                         JSONObject dailyTempObject = dailyObject.getJSONObject("temp");
@@ -242,20 +245,32 @@ public class WeatherActivity extends AppCompatActivity {
                         String dailyIcon = dailyWeatherObject.getString("icon");
                         double dailyPop = dailyObject.getDouble("pop");
                         Log.i("AAA","daily : "+dailyDescription);
+                        // 예보 이미지 뷰
                         ImageView iv = new ImageView(WeatherActivity.this);  // 새로 추가할 imageView 생성
                         iv.setLayoutParams(new LinearLayout.LayoutParams(200,200,1));
                         iv.setMaxWidth(50);
                         String iconUrl = "http://openweathermap.org/img/wn/"+dailyIcon+"@2x.png";
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(WeatherActivity.this).load(iconUrl).into(iv);  // imageView에 내용 추가
-
-                        // todo 이미지뷰와 같이 텍스트뷰 2개 라인 생성 해야함
-
                         linearLayoutH.addView(iv); // 기존 linearLayout에 imageView 추가
+                        // simpleDateFormat
+                        Date date = new java.util.Date(dailyDt*1000L);
+                        String datePattern = "MM/dd";
+                        SimpleDateFormat format = new SimpleDateFormat(datePattern);
+                        String dateStr = format.format(date);
+                        // 예보 텍스트 뷰
+                        TextView tv = new TextView(WeatherActivity.this);
+                        tv.setLayoutParams(new LinearLayout.LayoutParams(200,200,1));
+                        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+                        tv.setMaxWidth(50);
+
+                        tv.setText(dateStr+"\n"+Math.round(dailyMin)+"℃\n"+Math.round(dailyMax)+"℃\n"+dailyDescription);
+                        linearLayoutTxtH.addView(tv);
                     }
                     // 데이터 입력
                     Glide.with(WeatherActivity.this).load("http://openweathermap.org/img/wn/"+icon+"@2x.png").into(currentWeatherImg);
                     currentLocationTxt.setText(timezone);
-                    currentWeatherTxt.setText(temp+"℃");
+                    currentWeatherTxt.setText("현재 온도"+temp+"℃\n"+description);
 
 
                 } catch (JSONException e) {
