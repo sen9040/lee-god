@@ -75,37 +75,27 @@ public class FragmentFavorite extends Fragment {
         wayRecyclerView.setHasFixedSize(true);
         wayRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        requestQueue = Volley.newRequestQueue(context);
+//        requestQueue = Volley.newRequestQueue(context);
 
 
         return view;
     }
 
     // 스포츠 즐겨찾기데이터 전부 가져오기
-    public void getSportFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getSportFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/sport",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             boolean success = response.getBoolean("success");
+                            int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
                                 Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
@@ -117,11 +107,11 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String imgUrl = jsonObject.getString("ImgUrl");
-                                    String SvcNm = jsonObject.getString("SvcNm");
-                                    String PlaceNm = jsonObject.getString("PlaceNm");
-                                    String PaYaTnm = jsonObject.getString("PaYaTnm");
-                                    String SvcStaTnm = jsonObject.getString("SvcStaTnm");
+                                    String imgUrl = jsonObject.getString("IMGURL");
+                                    String SvcNm = jsonObject.getString("SVCNM");
+                                    String PlaceNm = jsonObject.getString("PLACENM");
+                                    String PaYaTnm = jsonObject.getString("PAYATNM");
+                                    String SvcStaTnm = jsonObject.getString("SVCSTATNM");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -162,25 +152,13 @@ public class FragmentFavorite extends Fragment {
     }
 
     // 공원 즐겨찾기데이터 전부 가져오기
-    public void getParkFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-            body.put("isFavorite", 1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getParkFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/park",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -198,11 +176,11 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String pImg = jsonObject.getString("pImg");
-                                    String pPark = jsonObject.getString("pPark");
-                                    String pAddr = jsonObject.getString("pAddr");
-                                    String pName = jsonObject.getString("pName");
-                                    String pAdmintel = jsonObject.getString("pAdmintel");
+                                    String pImg = jsonObject.getString("P_IMG");
+                                    String pPark = jsonObject.getString("P_PARK");
+                                    String pAddr = jsonObject.getString("P_ADDR");
+                                    String pName = jsonObject.getString("P_NAME");
+                                    String pAdmintel = jsonObject.getString("P_ADMINTEL");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -243,24 +221,13 @@ public class FragmentFavorite extends Fragment {
     }
 
     // 두드림길 즐겨찾기데이터 전부 가져오기
-    public void getWayFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getWayFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/way",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -278,10 +245,10 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String cpiName	 = jsonObject.getString("CpiName");
-                                    String detailCourse = jsonObject.getString("DetailCourse");
-                                    String distance = jsonObject.getString("Distance");
-                                    String leadTime = jsonObject.getString("LeadTime");
+                                    String cpiName = jsonObject.getString("CPI_NAME");
+                                    String detailCourse = jsonObject.getString("DETAIL_COURSE");
+                                    String distance = jsonObject.getString("DISTANCE");
+                                    String leadTime = jsonObject.getString("LEAD_TIME");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
