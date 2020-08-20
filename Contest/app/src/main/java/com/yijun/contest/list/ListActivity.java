@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.yijun.contest.LodingActivity;
+import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
@@ -61,6 +64,8 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        Intent i = new Intent(ListActivity.this, LodingActivity.class);
+        startActivity(i);
 
         txtSport = findViewById(R.id.txtSport);
         recyclerView = findViewById(R.id.recyclerView);

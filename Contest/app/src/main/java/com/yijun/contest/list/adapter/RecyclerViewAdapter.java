@@ -82,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         // 이미지 설정
         if (imgUrl.isEmpty() || imgUrl.equals("")){
-           holder.imgSvc.setImageResource(R.drawable.butterfly);
+           holder.imgSvc.setImageResource(R.drawable.lost);
         }else {
             Glide.with(context).load(imgUrl).into(holder.imgSvc);
         }

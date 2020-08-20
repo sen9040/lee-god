@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 
@@ -91,6 +92,9 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        Intent i = new Intent(WeatherActivity.this, LodingActivity.class);
+        startActivity(i);
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams

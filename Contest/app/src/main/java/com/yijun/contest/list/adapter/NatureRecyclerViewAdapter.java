@@ -46,7 +46,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         String pImg = natureInfo.getpImg();
 
         if (pImg.isEmpty() || pImg.equals("")){
-            holder.imgSvc.setImageResource(R.drawable.butterfly);
+            holder.imgSvc.setImageResource(R.drawable.lost);
         }else {
             Glide.with(context).load(pImg).into(holder.imgSvc);
         }
