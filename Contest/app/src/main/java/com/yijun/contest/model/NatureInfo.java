@@ -22,12 +22,13 @@ public class NatureInfo implements Serializable {
     private String x;
     private String y;
     private String templateUrl;
+    private int isFavorite;
 
     public NatureInfo(){
 
     }
 
-    public NatureInfo(String pIdx, String pPark, String pListContent, String area, String openDt, String mainEquip, String mainPlants, String guidance, String visitRoad, String useRefer, String pImg, String pZone, String pAddr, String pName, String pAdmintel, String x, String y, String templateUrl) {
+    public NatureInfo(String pIdx, String pPark, String pListContent, String area, String openDt, String mainEquip, String mainPlants, String guidance, String visitRoad, String useRefer, String pImg, String pZone, String pAddr, String pName, String pAdmintel, String x, String y, String templateUrl, int isFavorite) {
         this.pIdx = pIdx;
         this.pPark = pPark;
         this.pListContent = pListContent;
@@ -46,6 +47,7 @@ public class NatureInfo implements Serializable {
         this.x = x;
         this.y = y;
         this.templateUrl = templateUrl;
+        this.isFavorite = isFavorite;
     }
 
     public String getpIdx() {
@@ -190,5 +192,13 @@ public class NatureInfo implements Serializable {
 
     public void setTemplateUrl(String templateUrl) {
         this.templateUrl = templateUrl;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

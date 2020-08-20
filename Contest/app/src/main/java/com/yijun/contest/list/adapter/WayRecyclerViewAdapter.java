@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
-import com.yijun.contest.favorite.data.DatabaseHandler;
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
@@ -48,9 +48,7 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         holder.txtPaYaTnm.setText(distance);
         holder.txtTime.setText(leadTime);
 
-        Favorite favorite = new Favorite();
-
-        if (favorite.getIsFavorite() == 1){
+        if (wayInfo.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
         }else {
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
@@ -86,22 +84,14 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Favorite favorite = new Favorite();
-                    WayInfo wayInfo = wayInfoArrayList.get(getAdapterPosition());
-                    favorite.setId(wayInfo.getCpiName());
-                    favorite.setTitle(wayInfo.getCpiName());
-                    favorite.setAddress(wayInfo.getDetailCourse());
-                    favorite.setPrice(wayInfo.getDistance());
-                    favorite.setTime(wayInfo.getLeadTime());
+                    int position = getAdapterPosition();
 
-                    if (favorite.getIsFavorite() == 1){
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_off);
-                    }else {
-                        favorite.setIsFavorite(android.R.drawable.btn_star_big_on);
+                    int is_favorite = wayInfoArrayList.get(position).getIsFavorite();
+                    if (is_favorite == 0){
+                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
+                        ((ListActivity)context).addWayFavorite(position);
                     }
 
-                    DatabaseHandler db = new DatabaseHandler(context);
-                    db.addFavorite(favorite);
                 }
             });
 
