@@ -169,8 +169,8 @@ public class ListActivity extends AppCompatActivity {
                         String placeNm= object.getString("PLACENM");
                         String useTgtInfo= object.getString("USETGTINFO");
                         String svcUrl= object.getString("SVCURL");
-                        Double x= object.getDouble("X");
-                        Double y= object.getDouble("Y");
+                        String x= object.getString("X");
+                        String y= object.getString("Y");
                         String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
                         String svcOpnEndDt= object.getString("SVCOPNENDDT");
                         String rcptEndDt= object.getString("RCPTBGNDT");
@@ -237,8 +237,8 @@ public class ListActivity extends AppCompatActivity {
                                 String pAddr = object.getString("P_ADDR");
                                 String pName = object.getString("P_NAME");
                                 String pAdmintel = object.getString("P_ADMINTEL");
-                                String x = object.getString("LONGITUDE");
-                                String y = object.getString("LATITUDE");
+                                String y = object.getString("LONGITUDE");
+                                String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
