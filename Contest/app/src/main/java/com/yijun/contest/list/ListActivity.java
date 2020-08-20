@@ -141,6 +141,7 @@ public class ListActivity extends AppCompatActivity {
 
 
     public void sportInfo(String url){
+        sportInfoArrayList.clear();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -161,8 +162,8 @@ public class ListActivity extends AppCompatActivity {
                         String placeNm= object.getString("PLACENM");
                         String useTgtInfo= object.getString("USETGTINFO");
                         String svcUrl= object.getString("SVCURL");
-                        String x= object.getString("X");
-                        String y= object.getString("Y");
+                        Double x= object.getDouble("X");
+                        Double y= object.getDouble("Y");
                         String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
                         String svcOpnEndDt= object.getString("SVCOPNENDDT");
                         String rcptEndDt= object.getString("RCPTBGNDT");
@@ -182,6 +183,7 @@ public class ListActivity extends AppCompatActivity {
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
                         sportInfoArrayList.add(sportInfo);
                     }
+
                     adapter = new RecyclerViewAdapter(ListActivity.this,sportInfoArrayList);
                     recyclerView.setAdapter(adapter);
 

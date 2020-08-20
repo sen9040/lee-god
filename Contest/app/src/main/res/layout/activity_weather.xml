@@ -34,6 +34,7 @@
         android:textSize="30sp"
         />
     <LinearLayout
+        android:id="@+id/linearLayoutH"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -48,122 +49,122 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             >
-            <TextView
-                android:id="@+id/forecastTxt_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
 
-            <ImageView
-                android:id="@+id/forecastImg_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on"
-                />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_1"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on"-->
+<!--                />-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:id="@+id/forecastTxt_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
 
-            <ImageView
-                android:id="@+id/forecastImg_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:id="@+id/forecastTxt_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
-            <ImageView
-                android:id="@+id/forecastImg_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:id="@+id/forecastTxt_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
-            <ImageView
-                android:id="@+id/forecastImg_4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:id="@+id/forecastTxt_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
-            <ImageView
-                android:id="@+id/forecastImg_5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:id="@+id/forecastTxt_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="월\n08.02\n25℃"
-                />
-            <ImageView
-                android:id="@+id/forecastImg_6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_2"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_3"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_4"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_5"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_5"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on" />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:id="@+id/forecastTxt_6"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="월\n08.02\n25℃"-->
+<!--                />-->
+<!--            <ImageView-->
+<!--                android:id="@+id/forecastImg_6"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                app:srcCompat="@android:drawable/btn_star_big_on" />-->
         </LinearLayout>
 
     </LinearLayout>

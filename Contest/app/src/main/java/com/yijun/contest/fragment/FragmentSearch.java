@@ -35,6 +35,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,9 @@ public class FragmentSearch extends Fragment {
 
     Context context;
     Button btnSearch;
+    String keyword;
+    String url;
+    int cnt;
 
     public FragmentSearch(){
 
@@ -55,8 +59,7 @@ public class FragmentSearch extends Fragment {
     public FragmentSearch(Context context){
         this.context = context;
     }
-    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/5/%ED%85%8C%EB%8B%88%EC%8A%A4%EC%9E%A5";
-    String baseUrl = "localhost:5776/api/v1/search";
+
     int list_total_count;
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -68,7 +71,7 @@ public class FragmentSearch extends Fragment {
     LocationListener locationListener;
     double lat;
     double lng;
-
+    int offset = 0;
     RequestQueue requestQueue;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,10 +89,36 @@ public class FragmentSearch extends Fragment {
         boomMenu.getBoomMenu(context,bmb);
 
 
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int totalCount = recyclerView.getAdapter().getItemCount();
+                lastPosition = lastPosition +1;   // 인덱스값이라 -1 인듯... ?
+                if(lastPosition == totalCount){
+                    //아이템 추가 ! 입맛에 맞게 설정하시면됩니다.
+                    if(cnt != 0){
+                        url = Utils.SERVER_BASE_URL +"/api/v1/search"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&offset="+offset;
+                        getSearch(url,offset);
+                    }
+                }
+            }
+        });
+
+
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String keyword = editSearch.getText().toString().trim();
+                offset = 0;
+            keyword = editSearch.getText().toString().trim();
             if (keyword.equals("") || keyword.isEmpty()){
                 Toast.makeText(context, "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 return;
@@ -102,6 +131,12 @@ public class FragmentSearch extends Fragment {
                         lng = location.getLongitude();
                         Log.i("AAA","lat : "+lat +" lng : "+lng);
 
+
+                        url = Utils.SERVER_BASE_URL +"/api/v1/search"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&offset="+offset;
+
+
+
+                        getSearch(url,offset);
                     }
 
                     @Override
@@ -141,10 +176,7 @@ public class FragmentSearch extends Fragment {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                         1000*60, 100, locationListener);
 
-            Log.i("AAA","lat : "+lat +" lng : "+lng);
-            String url = baseUrl + "?keyword=" + keyword;
-            // todo 서버 연결후 작업
-            getSearch(testUrl);
+
             }
         });
 
@@ -158,10 +190,7 @@ public class FragmentSearch extends Fragment {
         super.onResume();
     }
 
-    public void getLocation(){
 
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -183,19 +212,22 @@ public class FragmentSearch extends Fragment {
 
     }
 
-    public void getSearch(String url){
+    public void getSearch(String url, final int offset_cnt){
+        if (offset_cnt == 0){
+            sportInfoArrayList.clear();
+        }
+
         requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("AAA","search response : "+response);
                 try {
-                    JSONObject sport = response.getJSONObject("ListPublicReservationSport");
-                    list_total_count = sport.getInt("list_total_count");
-                    JSONArray row = sport.getJSONArray("row");
-                    for(int i = 0; i < row.length(); i++){
+                    cnt = response.getInt("cnt");
+                    JSONArray items = response.getJSONArray("items");
+                    for(int i = 0; i < items.length(); i++){
 
-                        JSONObject object = row.getJSONObject(i);
+                        JSONObject object = items.getJSONObject(i);
                         String svcId = object.getString("SVCID");
                         String maxClassNm= object.getString("MAXCLASSNM");
                         String minClassNm= object.getString("MINCLASSNM");
@@ -205,8 +237,8 @@ public class FragmentSearch extends Fragment {
                         String placeNm= object.getString("PLACENM");
                         String useTgtInfo= object.getString("USETGTINFO");
                         String svcUrl= object.getString("SVCURL");
-                        String x= object.getString("X");
-                        String y= object.getString("Y");
+                        Double x= object.getDouble("X");
+                        Double y= object.getDouble("Y");
                         String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
                         String svcOpnEndDt= object.getString("SVCOPNENDDT");
                         String rcptEndDt= object.getString("RCPTBGNDT");
@@ -219,16 +251,22 @@ public class FragmentSearch extends Fragment {
                         String v_max= object.getString("V_MAX");
                         String revStdDayNm= object.getString("REVSTDDAYNM");
                         String revStdDay= object.getString("REVSTDDAY");
-                        Log.i("AAA","search for : "+svcId);
+                        double distance = object.getDouble("distance");
+                        Log.i("AAA","search for : "+svcStaTnm);
 
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay);
+                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance);
                         sportInfoArrayList.add(sportInfo);
                     }
-                    adapter = new RecyclerViewAdapter(context,sportInfoArrayList);
-                    recyclerView.setAdapter(adapter);
+                    if (offset_cnt == 0){
+                        adapter = new RecyclerViewAdapter(context,sportInfoArrayList);
+                        recyclerView.setAdapter(adapter);
+                    }else {
+                        adapter.notifyDataSetChanged();
+                    }
 
+                    offset = offset + cnt;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
