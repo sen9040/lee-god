@@ -27,17 +27,13 @@ public class SportsInfo implements Serializable {
     private String v_max;
     private String revStdDayNm;
     private String revStdDay;
-<<<<<<< Updated upstream
     private double distance;
-=======
     private int isFavorite;
 
->>>>>>> Stashed changes
     public SportsInfo(){
 
     }
 
-<<<<<<< Updated upstream
     public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, double x, double y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay) {
         this.svcId = svcId;
         this.maxClassNm = maxClassNm;
@@ -62,40 +58,6 @@ public class SportsInfo implements Serializable {
         this.v_max = v_max;
         this.revStdDayNm = revStdDayNm;
         this.revStdDay = revStdDay;
-    }
-
-    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, double x, double y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay, double distance) {
-=======
-    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, String x, String y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay, int isFavorite) {
->>>>>>> Stashed changes
-        this.svcId = svcId;
-        this.maxClassNm = maxClassNm;
-        this.minClassNm = minClassNm;
-        this.svcStaTnm = svcStaTnm;
-        this.svcNm = svcNm;
-        this.paYaTnm = paYaTnm;
-        this.placeNm = placeNm;
-        this.useTgtInfo = useTgtInfo;
-        this.svcUrl = svcUrl;
-        this.x = x;
-        this.y = y;
-        this.svcOpnBgnDt = svcOpnBgnDt;
-        this.svcOpnEndDt = svcOpnEndDt;
-        this.rcptBgnDt = rcptBgnDt;
-        this.rcptEndDt = rcptEndDt;
-        this.areaNm = areaNm;
-        this.imgUrl = imgUrl;
-        this.dtlCont = dtlCont;
-        this.telNo = telNo;
-        this.v_min = v_min;
-        this.v_max = v_max;
-        this.revStdDayNm = revStdDayNm;
-        this.revStdDay = revStdDay;
-<<<<<<< Updated upstream
-        this.distance = distance;
-=======
-        this.isFavorite = isFavorite;
->>>>>>> Stashed changes
     }
 
     public String getSvcId() {
@@ -184,14 +146,6 @@ public class SportsInfo implements Serializable {
 
     public void setY(double y) {
         this.y = y;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
     }
 
     public String getSvcOpnBgnDt() {
@@ -290,6 +244,14 @@ public class SportsInfo implements Serializable {
         this.revStdDay = revStdDay;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     public int getIsFavorite() {
         return isFavorite;
     }
@@ -297,4 +259,11 @@ public class SportsInfo implements Serializable {
     public void setIsFavorite(int isFavorite) {
         this.isFavorite = isFavorite;
     }
+
+    public SportsInfo(String svcId, String maxClassNm, String minClassNm, String svcStaTnm, String svcNm, String paYaTnm, String placeNm, String useTgtInfo, String svcUrl, double x, double y, String svcOpnBgnDt, String svcOpnEndDt, String rcptBgnDt, String rcptEndDt, String areaNm, String imgUrl, String dtlCont, String telNo, String v_min, String v_max, String revStdDayNm, String revStdDay, double distance) {
+
+
+
+
+}
 }
