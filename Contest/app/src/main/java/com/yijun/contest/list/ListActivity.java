@@ -242,11 +242,7 @@ public class ListActivity extends AppCompatActivity {
                                 String templateUrl = object.getString("TEMPLATE_URL");
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
-<<<<<<< Updated upstream
                                         guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0);
-=======
-                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl,0);
->>>>>>> Stashed changes
                                 natureInfoArrayList.add(natureInfo);
                             }
                             natureAdapter = new NatureRecyclerViewAdapter(ListActivity.this, natureInfoArrayList);
@@ -300,11 +296,7 @@ public class ListActivity extends AppCompatActivity {
 
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-<<<<<<< Updated upstream
                                         courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, 0);
-=======
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent,0);
->>>>>>> Stashed changes
                                 wayInfoArrayList.add(wayInfo);
                             }
                             wayAdapter = new WayRecyclerViewAdapter(ListActivity.this, wayInfoArrayList);

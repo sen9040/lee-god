@@ -94,11 +94,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.txtTime.setText(svcStaTnm +" : "+v_min+" ~ "+v_max);
         }
 
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
         if (sportInfo.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
         }else {
@@ -139,7 +136,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-<<<<<<< Updated upstream
                     int position = getAdapterPosition();
 
                     int is_favorite = sportInfosList.get(position).getIsFavorite();
@@ -147,8 +143,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addSportFavorite(position);
                     }
-=======
->>>>>>> Stashed changes
 
                 }
             });

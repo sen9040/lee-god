@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-<<<<<<< Updated upstream
 import com.yijun.contest.list.ListActivity;
-=======
->>>>>>> Stashed changes
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.WayInfo;
@@ -95,7 +92,6 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-<<<<<<< Updated upstream
                     int position = getAdapterPosition();
 
                     int is_favorite = natureInfoArrayList.get(position).getIsFavorite();
@@ -103,8 +99,6 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addParkFavorite(position);
                     }
-=======
->>>>>>> Stashed changes
 
                 }
             });

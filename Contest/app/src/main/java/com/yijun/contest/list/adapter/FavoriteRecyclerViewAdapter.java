@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-<<<<<<< Updated upstream
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
-=======
->>>>>>> Stashed changes
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 
@@ -42,10 +39,7 @@ public class FavoriteRecyclerViewAdapter extends RecyclerView.Adapter<FavoriteRe
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteRecyclerViewAdapter.ViewHolder holder, int position) {
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         Favorite favorite = favoriteArrayList.get(position);
         String title = favorite.getTitle();
         String address = favorite.getAddress();

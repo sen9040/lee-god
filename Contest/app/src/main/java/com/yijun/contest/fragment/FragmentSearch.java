@@ -256,11 +256,7 @@ public class FragmentSearch extends Fragment {
 
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-<<<<<<< Updated upstream
                                 dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance);
-=======
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,0);
->>>>>>> Stashed changes
                         sportInfoArrayList.add(sportInfo);
                     }
                     if (offset_cnt == 0){
