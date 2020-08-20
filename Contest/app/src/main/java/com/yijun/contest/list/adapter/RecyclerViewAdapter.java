@@ -6,12 +6,17 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -23,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
@@ -45,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public RecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
-
+        Log.i("AAA","recyclerView create : ");
         this.context = context;
         this.sportInfosList = sportInfosList;
     }
@@ -74,20 +80,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
 
+        // 이미지 설정
         if (imgUrl.isEmpty() || imgUrl.equals("")){
-
+           holder.imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(context).load(imgUrl).into(holder.imgSvc);
         }
-
-
+        // text 설정
         holder.txtSvcNm.setText(svcNm);
         holder.txtPlaceNm.setText(placeNm);
         holder.txtPaYaTnm.setText(paYaTnm);
 
+        if(svcStaTnm.equals("예약일시중지")){
+            // 글자색 바꾸는 코드
+            final SpannableStringBuilder sp = new SpannableStringBuilder(svcStaTnm);
+            sp.setSpan(new ForegroundColorSpan(Color.rgb(255, 255, 255)), 0, svcStaTnm.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); sp.setSpan(new ForegroundColorSpan(Color.RED), 0, svcStaTnm.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.txtTime.setText(sp);
+        }
+
         if (svcStaTnm.equals("접수종료")){
-            holder.txtTime.setText(svcStaTnm);
-        }else {
+
+            final SpannableStringBuilder sp = new SpannableStringBuilder(svcStaTnm);
+            sp.setSpan(new ForegroundColorSpan(Color.rgb(255, 255, 255)), 0, svcStaTnm.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); sp.setSpan(new ForegroundColorSpan(Color.RED), 0, svcStaTnm.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            holder.txtTime.setText(sp);
+        }
+        if(!svcStaTnm.equals("접수종료") && !svcStaTnm.equals("예약일시중지")) {
             if (v_max.isEmpty() || v_max.equals("")){
                 holder.txtTime.setText(svcStaTnm);
             }
@@ -149,15 +170,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
 
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                 SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
-              Intent i =new Intent(context, ViewDetailsActivity.class);
-              i.putExtra("sports",sportsInfo);
-              context.startActivity(i);
-                }
-            });
+          cardView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent i = new Intent(context, ViewDetailsActivity.class);
+                  SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
+
+                  i.putExtra("sports",sportsInfo);
+                  i.putExtra("key",1);
+                  context.startActivity(i);
+              }
+          });
         }
 
     }

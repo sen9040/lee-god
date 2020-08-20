@@ -1,6 +1,7 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
-import com.yijun.contest.list.ListActivity;
-import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -48,11 +48,11 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         holder.txtPaYaTnm.setText(distance);
         holder.txtTime.setText(leadTime);
 
-        if (wayInfo.getIsFavorite() == 1){
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-        }else {
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-        }
+//        if (wayInfo.getIsFavorite() == 1){
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+//        }else {
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+//        }
     }
 
     @Override
@@ -80,23 +80,17 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
-
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
+                    Intent i = new Intent(context, ViewDetailsActivity.class);
+                    WayInfo wayInfo =  wayInfoArrayList.get(getAdapterPosition());
 
-                    int is_favorite = wayInfoArrayList.get(position).getIsFavorite();
-                    if (is_favorite == 0){
-                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addWayFavorite(position);
-                    }else{
-                        ((ListActivity)context).deleteWayFavorite(position);
-                    }
-
+                    i.putExtra("sports",wayInfo);
+                    i.putExtra("key",3);
+                    context.startActivity(i);
                 }
             });
-
         }
     }
 }

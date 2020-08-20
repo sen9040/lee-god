@@ -9,6 +9,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -37,6 +38,7 @@
             android:name=".viewdetails.ViewDetailsActivity"
             android:label="@string/title_activity_view_details"></activity>
         <activity android:name=".moverecord.MoveRecord"/>
+        <activity android:name=".airInfo.AirInfoActivity"/>
         <activity android:name=".list.ListActivity" />
         <activity android:name=".ranking.RankingActivity" />
         <activity android:name=".weather.WeatherActivity" />

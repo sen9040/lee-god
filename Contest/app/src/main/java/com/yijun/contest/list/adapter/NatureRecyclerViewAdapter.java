@@ -1,6 +1,7 @@
 package com.yijun.contest.list.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
-import com.yijun.contest.list.ListActivity;
-import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
-import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         String pImg = natureInfo.getpImg();
 
         if (pImg.isEmpty() || pImg.equals("")){
-
+            holder.imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(context).load(pImg).into(holder.imgSvc);
         }
@@ -56,11 +56,11 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtPaYaTnm.setText(pName);
         holder.txtTime.setText(pAdmintel);
 
-        if (natureInfo.getIsFavorite() == 1){
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
-        }else {
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
-        }
+//        if (natureInfo.getIsFavorite() == 1){
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+//        }else {
+//            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+//        }
     }
 
     @Override
@@ -88,23 +88,17 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             txtPaYaTnm = itemView.findViewById(R.id.txtPaYaTnm);
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
-
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
+                    Intent i = new Intent(context, ViewDetailsActivity.class);
+                    NatureInfo natureInfo =  natureInfoArrayList.get(getAdapterPosition());
 
-                    int is_favorite = natureInfoArrayList.get(position).getIsFavorite();
-                    if (is_favorite == 0){
-                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addParkFavorite(position);
-                    }else {
-                        ((ListActivity)context).deleteParkFavorite(position);
-                    }
-
+                    i.putExtra("sports",natureInfo);
+                    i.putExtra("key",2);
+                    context.startActivity(i);
                 }
             });
-
         }
     }
 }

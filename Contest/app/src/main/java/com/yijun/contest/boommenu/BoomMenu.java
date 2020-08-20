@@ -8,6 +8,7 @@ import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.moverecord.MoveRecord;
 import com.yijun.contest.weather.WeatherActivity;
 
@@ -36,12 +37,14 @@ public class BoomMenu {
             }else if(i == 1){
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bat)
-                        .normalTextRes(R.string.test1)
-                        .subNormalTextRes(R.string.test1_content);
+                        .normalTextRes(R.string.air_Info)
+                        .subNormalTextRes(R.string.air_Info_content);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
+                        Intent intent = new Intent(context, AirInfoActivity.class);
                         Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
+                        context.startActivity(intent);
                     }
                 });
                 bmb.addBuilder(builder);
