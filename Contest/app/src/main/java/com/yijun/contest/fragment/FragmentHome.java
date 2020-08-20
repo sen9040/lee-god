@@ -81,6 +81,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports","축구");
+                i.putExtra("key",1);
                 startActivity(i);
 
 
@@ -91,6 +92,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","야구");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -99,6 +101,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","족구");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -107,6 +110,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","테니스");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -115,6 +119,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","풋살");
+               a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -123,6 +128,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","탁구");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -131,6 +137,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","다목적");
+               a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -139,6 +146,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","골프");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -147,6 +155,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","배드민턴");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -155,6 +164,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","운동장");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -163,6 +173,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","체육관");
+                a.putExtra("key",1);
                 startActivity(a);
             }
         });
@@ -171,6 +182,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","둘레길");
+                a.putExtra("key",2);
                 startActivity(a);
             }
         });
@@ -179,6 +191,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","공원");
+                a.putExtra("key",3);
                 startActivity(a);
             }
         });
@@ -187,6 +200,7 @@ public class FragmentHome extends Fragment {
             public void onClick(View v) {
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","산");
+                a.putExtra("key",4);
                 startActivity(a);
             }
         });
