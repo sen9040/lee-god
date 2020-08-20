@@ -12,7 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yijun.contest.R;
+<<<<<<< Updated upstream
 import com.yijun.contest.list.ListActivity;
+=======
+>>>>>>> Stashed changes
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
@@ -84,6 +87,7 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+<<<<<<< Updated upstream
                     int position = getAdapterPosition();
 
                     int is_favorite = wayInfoArrayList.get(position).getIsFavorite();
@@ -91,6 +95,8 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         ((ListActivity)context).addWayFavorite(position);
                     }
+=======
+>>>>>>> Stashed changes
 
                 }
             });

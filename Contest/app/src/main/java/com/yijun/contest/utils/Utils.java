@@ -1,6 +1,7 @@
 package com.yijun.contest.utils;
 
 public class Utils {
+<<<<<<< Updated upstream
     public static final String AUTH_KEY = "765867555473656e353874786d6572";
 
     public static final String WEATHER_URL ="https://weather-ydn-yql.media.yahoo.com/forecastrss/";
@@ -19,4 +20,7 @@ public class Utils {
     public static final String KEY_PRICE = "price";
     public static final String KEY_TIME = "time";
     public static final String KEY_FAVORITE = "favorite";
+=======
+    public static final String authKey = "765867555473656e353874786d6572";
+>>>>>>> Stashed changes
 }
