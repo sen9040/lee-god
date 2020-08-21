@@ -3,6 +3,7 @@ package com.yijun.contest.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -60,11 +62,14 @@ public class FragmentHome extends Fragment {
     ImageButton btn_gym;
     ImageButton btn_dulle;
     ImageButton btn_park;
-    ImageButton btn_mountain;
+
     private double lat;
     private double lng;
     LocationManager locationManager;
     LocationListener locationListener;
+
+    ProgressDialog dialog;
+
 
     public FragmentHome(){
     }
@@ -76,7 +81,9 @@ public class FragmentHome extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(context,bmb);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         btnSoccer  =  view.findViewById(R.id.btnSoccer);
@@ -95,6 +102,280 @@ public class FragmentHome extends Fragment {
 
 
 
+
+
+
+
+        btnSoccer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                i.putExtra("sports","축구");
+                i.putExtra("key",1);
+                i.putExtra("lat",lat);
+                i.putExtra("lng",lng);
+                startActivity(i);
+
+
+            }
+        });
+        btn_baseball.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","야구");
+                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+
+
+            }
+        });
+        btn_foot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","족구");
+                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_tennis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","테니스");
+                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_futsal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","풋살");
+               a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+
+            }
+        });
+        btn_pingpong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                a.putExtra("sports","탁구");
+                a.putExtra("key",1);
+                startActivity(a);
+
+            }
+        });
+        btn_multi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","다목적");
+               a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_golf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","골프");
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                a.putExtra("key",1);
+                startActivity(a);
+
+            }
+        });
+        btn_badminton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","배드민턴");
+                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_ground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","운동장");
+                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_gym.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","체육관");
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                a.putExtra("key",1);
+                startActivity(a);
+
+            }
+        });
+        btn_dulle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","둘레길");
+                a.putExtra("key",2);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
+                startActivity(a);
+
+            }
+        });
+        btn_park.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
+                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("sports","공원");
+                a.putExtra("key",3);
+                startActivity(a);
+
+            }
+        });
+
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -102,6 +383,8 @@ public class FragmentHome extends Fragment {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
                 Log.i("AAA","lat : "+lat +" lng : "+lng);
+
+
             }
 
             @Override
@@ -139,282 +422,13 @@ public class FragmentHome extends Fragment {
 
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000, 100, locationListener);
-
-        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
-        BoomMenu boomMenu = new BoomMenu(lat,lng);
-        boomMenu.getBoomMenu(context,bmb);
-
-        btnSoccer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                i.putExtra("sports","축구");
-                i.putExtra("key",1);
-                i.putExtra("lat",lat);
-                i.putExtra("lng",lng);
-                startActivity(i);
-
-
-
-            }
-        });
-        btn_baseball.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","야구");
-                a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_foot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","족구");
-                a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_tennis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, LodingActivity.class);
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","테니스");
-                a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_futsal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","풋살");
-               a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                return;
-
-            }
-        });
-        btn_pingpong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                a.putExtra("sports","탁구");
-                a.putExtra("key",1);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_multi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","다목적");
-               a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_golf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","골프");
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                a.putExtra("key",1);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_badminton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","배드민턴");
-                a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_ground.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","운동장");
-                a.putExtra("key",1);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_gym.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","체육관");
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                a.putExtra("key",1);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_dulle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","둘레길");
-                a.putExtra("key",2);
-                a.putExtra("lat",lat);
-                a.putExtra("lng",lng);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_park.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
-
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","공원");
-                a.putExtra("key",3);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-
+                1000*60, 100, locationListener);
 
         return view;
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
