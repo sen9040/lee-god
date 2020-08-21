@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:hint="검색어를 입력하세요"
         android:textSize="24sp"
-        android:layout_margin="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
         />
 
     <Button
@@ -26,7 +28,37 @@
         android:layout_marginTop="30dp"
         />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editSearch"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/radioSport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="스포츠"
+        />
+        <RadioButton
+            android:id="@+id/radioNature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공원"
+            />
+        <RadioButton
+            android:id="@+id/radioWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="둘레길"
+            />
+
+    </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="40dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

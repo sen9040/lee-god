@@ -23,6 +23,7 @@ public class NatureInfo implements Serializable {
     private String y;
     private String templateUrl;
     private int isFavorite;
+    double distance ;
 
     public NatureInfo(){
 
@@ -48,6 +49,37 @@ public class NatureInfo implements Serializable {
         this.y = y;
         this.templateUrl = templateUrl;
         this.isFavorite = isFavorite;
+    }
+
+    public NatureInfo(String pIdx, String pPark, String pListContent, String area, String openDt, String mainEquip, String mainPlants, String guidance, String visitRoad, String useRefer, String pImg, String pZone, String pAddr, String pName, String pAdmintel, String x, String y, String templateUrl, int isFavorite, double distance) {
+        this.pIdx = pIdx;
+        this.pPark = pPark;
+        this.pListContent = pListContent;
+        this.area = area;
+        this.openDt = openDt;
+        this.mainEquip = mainEquip;
+        this.mainPlants = mainPlants;
+        this.guidance = guidance;
+        this.visitRoad = visitRoad;
+        this.useRefer = useRefer;
+        this.pImg = pImg;
+        this.pZone = pZone;
+        this.pAddr = pAddr;
+        this.pName = pName;
+        this.pAdmintel = pAdmintel;
+        this.x = x;
+        this.y = y;
+        this.templateUrl = templateUrl;
+        this.isFavorite = isFavorite;
+        this.distance = distance;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public String getpIdx() {

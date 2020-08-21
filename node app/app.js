@@ -16,11 +16,6 @@ request(url, async (error, response, body) => {
   let list_total_count = await JSON.parse(body).ListPublicReservationSport
     .list_total_count;
 
-  // if (count() != list_total_count) {
-  //   console.log("시설물 갯수가 달라짐");
-  //   return;
-  //   //   insert(post);
-  // }
   // 데이터 값
   let jsonObj = list;
   let post = Object.keys(jsonObj).map(function (index) {
@@ -29,8 +24,6 @@ request(url, async (error, response, body) => {
       return obj[val];
     });
   });
-
-  insert(post);
 });
 
 async function count() {

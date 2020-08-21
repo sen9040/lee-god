@@ -1,14 +1,23 @@
 package com.yijun.contest.list;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,10 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.yijun.contest.LodingActivity;
-import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
+import com.yijun.contest.fragment.FragmentSearch;
 import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
@@ -29,6 +37,8 @@ import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.utils.Utils;
+import com.yijun.contest.weather.model.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +55,8 @@ public class ListActivity extends AppCompatActivity {
 
     RequestQueue requestQueue;
 
-    String testUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/ListPublicReservationSport/1/25";
+    String baseUrl = Utils.SERVER_BASE_URL+"/api/v1/search";
+    String url;
     String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/25/";
     String wayTestUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/SeoulGilWalkCourse/1/25/";
 
@@ -57,6 +68,13 @@ public class ListActivity extends AppCompatActivity {
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
     ArrayList<WayInfo> wayInfoArrayList = new ArrayList<>();
+    int offset = 0;
+    LocationManager locationManager;
+    LocationListener locationListener;
+    double lat;
+    double lng;
+    int cnt;
+    private String event = "";
 
 
 
@@ -64,107 +82,231 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        Intent i = new Intent(ListActivity.this, LodingActivity.class);
-        startActivity(i);
 
         txtSport = findViewById(R.id.txtSport);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
-        requestQueue = Volley.newRequestQueue(ListActivity.this);
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-        String sports = getIntent().getStringExtra("sports");
+                int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int totalCount = recyclerView.getAdapter().getItemCount();
+                lastPosition = lastPosition +1;   // 인덱스값이라 -1 인듯... ?
+                if(lastPosition == totalCount){
+                    //아이템 추가 ! 입맛에 맞게 설정하시면됩니다.
+                    if(cnt != 0){
+                        Log.i("AAA","List offset : "+offset+event);
+                        url = baseUrl+"&offset="+offset;
+                        if (event.equals("sport")){
+                            getSportInfo(url,offset,ListActivity.this,recyclerView);
+                        }else if(event.equals("nature")){
+                            getNatureInfo(url,offset,ListActivity.this,recyclerView);
+                        }else if(event.equals("way")){
+                            getWayInfo(url,offset,ListActivity.this,recyclerView);
+                        }
 
-
-        if (sports.equals("축구")){
-            testUrl = testUrl+ "/축구장";
-            String soccer = "축구장";
-            txtSport.setText(soccer);
-
-
-        }else if (sports.equals("야구")){
-            testUrl = testUrl+ "/야구장";
-            txtSport.setText("야구장");
-
-
-        }else if (sports.equals("족구")){
-            testUrl = testUrl+ "/족구장";
-            txtSport.setText("족구");
-
-        }else if (sports.equals("테니스")){
-            testUrl = testUrl+ "/테니스장";
-            txtSport.setText("테니스");
-
-
-        }else if (sports.equals("풋살")){
-            testUrl = testUrl+ "/풋살경기장";
-            txtSport.setText("풋살경기장");
-
-        }else if (sports.equals("탁구")){
-            testUrl = testUrl+ "/탁구장";
-            txtSport.setText("탁구장");
-
-
-        }else if (sports.equals("다목적")){
-            testUrl = testUrl+ "/다목적경기장";
-            txtSport.setText("다목적경기장");
+                    }else {
+                        Toast.makeText(ListActivity.this, "모든 시설물을 표시 했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
 
-        }else if (sports.equals("골프")){
-            testUrl = testUrl+ "/파크골프장";
-            txtSport.setText("파크골프장");
 
+        locationManager = (LocationManager) ListActivity.this.getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lat = location.getLatitude();
+                lng = location.getLongitude();
+                Log.i("AAA","lat : "+lat +" lng : "+lng);
 
-        }else if (sports.equals("배드민턴")){
-            testUrl = testUrl+ "/배드민턴장";
-            txtSport.setText("배드민턴장");
+                // 종목 정하는 메소드
+                getSettingUrl(lat,lng);
 
+            }
 
-        }else if (sports.equals("운동장")){
-            testUrl = testUrl+ "/운동장";
-            txtSport.setText("운동장");
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
 
-        }else if (sports.equals("체육관")){
-            testUrl = testUrl+ "/체육관";
-            txtSport.setText("체육관");
+            }
 
+            @Override
+            public void onProviderEnabled(String provider) {
 
-        }else if (sports.equals("둘레길")){
-            txtSport.setText("둘레길");
-            wayInfo();
-            return;
+            }
 
-        }else if (sports.equals("산")){
-            testUrl = testUrl+ "/산";
-            txtSport.setText("산");
+            @Override
+            public void onProviderDisabled(String provider) {
 
-        } else if (sports.equals("공원")){
-            txtSport.setText("공원");
-            natureInfo(natureTestUrl);
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(ListActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                ListActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions((Activity) ListActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        sportInfo(testUrl);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000*60, 100, locationListener);
+
+
+
+
 
 
 
     }
 
 
-    public void sportInfo(String url){
-        sportInfoArrayList.clear();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    private void getSettingUrl(double setLat,double setLng) {
+        String sports = getIntent().getStringExtra("sports");
+
+        if (sports.equals("축구")){
+            baseUrl = baseUrl+ "/sports?keyword=축구장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            String soccer = "축구장";
+            txtSport.setText(soccer);
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("야구")){
+            baseUrl = baseUrl+ "/sports?keyword=야구장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("야구장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("족구")){
+            baseUrl = baseUrl+ "/sports?keyword=족구장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("족구");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+        }else if (sports.equals("테니스")){
+            baseUrl = baseUrl+ "/sports?keyword=테니스장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("테니스");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("풋살")){
+            baseUrl = baseUrl+ "/sports?keyword=풋살&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("풋살경기장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+        }else if (sports.equals("탁구")){
+            baseUrl = baseUrl+ "/sports?keyword=탁구장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("탁구장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("다목적")){
+            baseUrl = baseUrl+ "/sports?keyword=다목적경기장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("다목적경기장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("골프")){
+            baseUrl = baseUrl+ "/sports?keyword=파크골프장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("파크골프장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("배드민턴")){
+            baseUrl = baseUrl+ "/sports?keyword=배드민턴장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("배드민턴장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("운동장")){
+            baseUrl = baseUrl+ "/sports?keyword=운동장&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("운동장");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+        }else if (sports.equals("체육관")){
+            baseUrl = baseUrl+ "/sports?keyword=체육관&lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            txtSport.setText("체육관");
+            getSportInfo(url,offset,ListActivity.this,recyclerView);
+
+        }else if (sports.equals("둘레길")){
+            txtSport.setText("둘레길");
+            baseUrl = baseUrl +"/way"+"?lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            getWayInfo(url,offset,ListActivity.this,recyclerView);
+            return;
+
+        }else if (sports.equals("산")){
+            baseUrl = baseUrl+ "/산";
+            txtSport.setText("산");
+
+        } else if (sports.equals("공원")){
+            txtSport.setText("공원");
+            baseUrl = baseUrl+"/park?lat="+setLat+"&lng="+setLng;
+            url = baseUrl+"&offset="+offset;
+            getNatureInfo(url,offset,ListActivity.this,recyclerView);
+            return;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0){
+            if (ActivityCompat.checkSelfPermission(ListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(ListActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+                ActivityCompat.requestPermissions((Activity) ListActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000*60,
+                    100,
+                    locationListener);
+        }
+
+    }
+
+    // 필드 설정 필요한것 requestQueue , recyclerViewAdapter,recyclerView,offset,cnt,sportInfoArrayList
+    public void getSportInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            sportInfoArrayList.clear();
+        }
+        event = "sport";
+        requestQueue = Volley.newRequestQueue(volleyContext);
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("AAA","search response : "+response);
+                Log.i("AAA","sport response : "+response);
                 try {
-                    JSONObject sport = response.getJSONObject("ListPublicReservationSport");
-                    list_total_count = sport.getInt("list_total_count");
-                    JSONArray row = sport.getJSONArray("row");
-                    for(int i = 0; i < row.length(); i++){
+                    cnt = response.getInt("cnt");
+                    JSONArray items = response.getJSONArray("items");
+                    for(int i = 0; i < items.length(); i++){
 
-                        JSONObject object = row.getJSONObject(i);
+                        JSONObject object = items.getJSONObject(i);
                         String svcId = object.getString("SVCID");
                         String maxClassNm= object.getString("MAXCLASSNM");
                         String minClassNm= object.getString("MINCLASSNM");
@@ -188,19 +330,22 @@ public class ListActivity extends AppCompatActivity {
                         String v_max= object.getString("V_MAX");
                         String revStdDayNm= object.getString("REVSTDDAYNM");
                         String revStdDay= object.getString("REVSTDDAY");
-                        Log.i("AAA","search for : "+svcId);
-
-
+                        double distance = object.getDouble("distance");
+                        Log.i("AAA","search for : "+svcStaTnm);
 
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay, 0);
+                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance);
                         sportInfoArrayList.add(sportInfo);
                     }
-
-                    adapter = new RecyclerViewAdapter(ListActivity.this,sportInfoArrayList);
-                    recyclerView.setAdapter(adapter);
-
+                    if (offset_cnt == 0){
+                        adapter = new RecyclerViewAdapter(volleyContext,sportInfoArrayList);
+                        recycler.setAdapter(adapter);
+                    }else {
+                        adapter.notifyDataSetChanged();
+                    }
+                    // 페이징
+                    offset = offset + cnt;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,18 +360,23 @@ public class ListActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public void natureInfo(String url){
+    public void getNatureInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            natureInfoArrayList.clear();
+        }
+        event = "nature";
+        requestQueue = Volley.newRequestQueue(volleyContext);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("AAA","nature response : "+response);
                         try {
-                            JSONObject nature = response.getJSONObject("SearchParkInfoService");
-                            list_total_count = nature.getInt("list_total_count");
-                            JSONArray row = nature.getJSONArray("row");
-                            for (int i = 0; i < row.length(); i++){
-                                JSONObject object = row.getJSONObject(i);
+                            JSONArray items = response.getJSONArray("items");
+                            cnt = response.getInt("cnt");
+
+                            for (int i = 0; i < items.length(); i++){
+                                JSONObject object = items.getJSONObject(i);
                                 String pIdx = object.getString("P_IDX");
                                 String pPark = object.getString("P_PARK");
                                 String pListContent = object.getString("P_LIST_CONTENT");
@@ -245,13 +395,22 @@ public class ListActivity extends AppCompatActivity {
                                 String y = object.getString("LONGITUDE");
                                 String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
+                                double distance = object.getDouble("distance");
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
-                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0);
+                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0,distance);
                                 natureInfoArrayList.add(natureInfo);
                             }
-                            natureAdapter = new NatureRecyclerViewAdapter(ListActivity.this, natureInfoArrayList);
-                            recyclerView.setAdapter(natureAdapter);
+
+                            if (offset_cnt == 0){
+                                natureAdapter = new NatureRecyclerViewAdapter(volleyContext, natureInfoArrayList);
+                                recycler.setAdapter(natureAdapter);
+                            }else {
+                                natureAdapter.notifyDataSetChanged();
+                            }
+                            // 페이징
+                            offset = offset + cnt;
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -266,17 +425,23 @@ public class ListActivity extends AppCompatActivity {
                 });
         requestQueue.add(request);
     }
-    public void wayInfo(){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, wayTestUrl, null,
+    public void getWayInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            wayInfoArrayList.clear();
+        }
+        event = "way";
+        requestQueue = Volley.newRequestQueue(volleyContext);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONObject way = response.getJSONObject("SeoulGilWalkCourse");
-                            list_total_count = way.getInt("list_total_count");
-                            JSONArray row = way.getJSONArray("row");
-                            for (int i = 0; i < row.length(); i++){
-                                JSONObject object = row.getJSONObject(i);
+                            Log.i("AAA","way response : "+response);
+                            JSONArray items = response.getJSONArray("items");
+                            cnt = response.getInt("cnt");
+                            Log.i("AAA","List volley cnt : " + cnt);
+                            for (int i = 0; i < items.length(); i++){
+                                JSONObject object = items.getJSONObject(i);
                                 String courseCategory = object.getString("COURSE_CATEGORY");
                                 String courseCategoryNm = object.getString("COURSE_CATEGORY_NM");
                                 String southNorthDiv = object.getString("SOUTH_NORTH_DIV");
@@ -304,8 +469,15 @@ public class ListActivity extends AppCompatActivity {
                                         courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, 0);
                                 wayInfoArrayList.add(wayInfo);
                             }
-                            wayAdapter = new WayRecyclerViewAdapter(ListActivity.this, wayInfoArrayList);
-                            recyclerView.setAdapter(wayAdapter);
+                            if (offset_cnt == 0){
+                                wayAdapter = new WayRecyclerViewAdapter(ListActivity.this, wayInfoArrayList);
+                                recycler.setAdapter(wayAdapter);
+                            }else {
+                                wayAdapter.notifyDataSetChanged();
+                            }
+                            // 페이징
+                            offset = offset + cnt;
+                            Log.i("AAA","List volley offset : " + offset);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -315,7 +487,7 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-
+                        Log.i("AAA","List error : "+error);
                     }
                 });
         requestQueue.add(request);
@@ -338,7 +510,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                testUrl + "/api/v1/favorite",
+                Utils.SERVER_BASE_URL + "/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
