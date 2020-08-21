@@ -24,6 +24,7 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumeb"
                 android:text="어디 축구장"
                 android:textColor="#000000"
                 android:textSize="22sp" />
@@ -40,16 +41,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
+                    android:fontFamily="@font/nanumeb"
                     android:text="주소"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/img_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@android:drawable/btn_dialog" />
+                    android:background="#ffffff"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+
+
 
             </LinearLayout>
 
@@ -57,9 +62,11 @@
                 android:id="@+id/btn_url"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:background="#FFF8C4"
                 android:text="바로가기"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
         </LinearLayout>

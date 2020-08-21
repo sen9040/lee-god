@@ -68,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="축구장" />
+                    android:text="축구장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -94,7 +95,8 @@
 
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="야구장" />
+                    android:text="야구장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +122,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="족구장" />
+                    android:text="족구장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,7 +149,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="테니스" />
+                    android:text="테니스"
+                    android:textColor="#000000" />
             </LinearLayout>
 
 
@@ -181,7 +185,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="풋살장" />
+                    android:text="풋살장"
+                    android:textColor="#000000" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,7 +210,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="탁구장" />
+                    android:text="탁구장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -230,7 +236,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="다목적경기장" />
+                    android:text="다목적경기장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -255,7 +262,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="골프장" />
+                    android:text="골프장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
 
@@ -289,7 +297,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="배드민턴장" />
+                    android:text="배드민턴장"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -314,7 +323,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="운동장" />
+                    android:text="운동장"
+                    android:textColor="#000000" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -338,7 +348,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="체육관" />
+                    android:text="체육관"
+                    android:textColor="#000000" />
             </LinearLayout>
 
             <LinearLayout
@@ -363,7 +374,8 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/nanumeb"
                     android:gravity="center_horizontal"
-                    android:text="둘레길" />
+                    android:text="둘레길"
+                    android:textColor="#000000" />
             </LinearLayout>
 
 
@@ -397,7 +409,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/nanumeb"
                 android:gravity="center_horizontal"
-                android:text="공원" />
+                android:text="공원"
+                android:textColor="#000000" />
         </LinearLayout>
 
 

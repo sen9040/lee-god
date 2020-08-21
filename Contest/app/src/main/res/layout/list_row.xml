@@ -38,8 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:ellipsize="end"
+                android:fontFamily="@font/nanumeb"
                 android:maxLines="1"
                 android:text="시설물 명"
+                android:textColor="#000000"
                 android:textSize="24sp" />
 
             <ImageView
@@ -55,11 +57,11 @@
             android:id="@+id/txtPlaceNm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="주소"
-            android:textSize="18sp"
-            android:maxLines="1"
             android:ellipsize="end"
-            />
+            android:fontFamily="@font/nanumeb"
+            android:maxLines="1"
+            android:text="주소"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,33 +71,37 @@
             >
 
 
-
             <TextView
                 android:id="@+id/txtPaYaTnm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가격"
-                android:textSize="18sp"
-                android:maxLines="1"
                 android:ellipsize="end"
-                />
+                android:fontFamily="@font/nanumeb"
+                android:maxLines="1"
+                android:text="가격"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" / "
-                android:textSize="18sp"
-                android:maxLines="1"
                 android:ellipsize="end"
-                />
+                android:fontFamily="@font/nanumeb"
+                android:maxLines="1"
+                android:text=" / "
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/txtTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이용 시간"
-                android:textSize="18sp"
-                android:maxLines="1"
                 android:ellipsize="end"
-                />
+                android:fontFamily="@font/nanumeb"
+                android:maxLines="1"
+                android:text="이용 시간"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

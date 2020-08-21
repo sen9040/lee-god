@@ -12,10 +12,11 @@
         android:id="@+id/txtSport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="종목"
-        android:textSize="32sp"
         android:layout_margin="10dp"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:text="종목"
+        android:textColor="#000000"
+        android:textSize="32sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -23,46 +23,55 @@
         android:id="@+id/txtNo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/barchart"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtO3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/txtNo2"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtCo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/txtO3"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/txtSo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/txtCo"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/txtPm10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/txtSo2"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/txtPm25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_below="@+id/txtPm10"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:textColor="#000000"
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/imgNo2"

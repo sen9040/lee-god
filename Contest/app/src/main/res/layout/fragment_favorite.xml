@@ -9,6 +9,7 @@
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumeb"
         android:gravity="center"
         android:text="즐겨찾기"
         android:textColor="#000000"
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/nanumeb"
         android:text="스포츠"
         android:textColor="#000000"
         android:textSize="20sp" />
@@ -32,7 +34,11 @@
         android:id="@+id/sportRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/txt_sport" />
+        android:layout_below="@+id/txt_sport"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp" />
 
     <TextView
         android:id="@+id/txt_park"
@@ -40,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sportRecyclerView"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/nanumeb"
         android:text="공원"
         android:textColor="#000000"
         android:textSize="20sp" />
@@ -48,7 +55,11 @@
         android:id="@+id/parkRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/txt_park">
+        android:layout_below="@+id/txt_park"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -58,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/parkRecyclerView"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/nanumeb"
         android:text="두드림길"
         android:textColor="#000000"
         android:textSize="20sp" />
@@ -66,7 +78,11 @@
         android:id="@+id/wayRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/txt_way" >
+        android:layout_below="@+id/txt_way"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
