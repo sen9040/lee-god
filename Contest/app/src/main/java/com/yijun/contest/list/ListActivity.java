@@ -15,8 +15,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.yijun.contest.R;
+import com.yijun.contest.list.adapter.NatureFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.SportFavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.WayFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
@@ -45,10 +48,14 @@ public class ListActivity extends AppCompatActivity {
     RecyclerViewAdapter adapter;
     NatureRecyclerViewAdapter natureAdapter;
     WayRecyclerViewAdapter wayAdapter;
+    SportFavoriteRecyclerViewAdapter sportFavoriteRecyclerViewAdapter;
+    NatureFavoriteRecyclerViewAdapter natureFavoriteRecyclerViewAdapter;
+    WayFavoriteRecyclerViewAdapter wayFavoriteRecyclerViewAdapter;
 
     ArrayList<SportsInfo> sportInfoArrayList = new ArrayList<>();
     ArrayList<NatureInfo> natureInfoArrayList = new ArrayList<>();
     ArrayList<WayInfo> wayInfoArrayList = new ArrayList<>();
+    ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
 
 
 
@@ -180,11 +187,9 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         Log.i("AAA","search for : "+svcId);
 
-
-
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay, 0);
+                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,0);
                         sportInfoArrayList.add(sportInfo);
                     }
 
@@ -235,6 +240,8 @@ public class ListActivity extends AppCompatActivity {
                                 String y = object.getString("LONGITUDE");
                                 String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
+
+
 
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
                                         guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0);
@@ -335,6 +342,7 @@ public class ListActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.i("AAA","add sport favorite : "+response.toString());
                         // 어레이리스트의 값을 변경시켜줘야 한다.
+
                         SportsInfo sportsInfo = sportInfoArrayList.get(position);
                         sportsInfo.setIsFavorite(1);
 

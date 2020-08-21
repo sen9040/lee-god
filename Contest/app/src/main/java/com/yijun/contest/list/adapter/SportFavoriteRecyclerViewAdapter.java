@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,13 +100,6 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
-                    int isFavorite = favorite.getIsFavorite();
-                    if (isFavorite == 1){
-                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
-                        fragmentFavorite.deleteSportFavorite(getAdapterPosition());
-                    }
 
                 }
             });

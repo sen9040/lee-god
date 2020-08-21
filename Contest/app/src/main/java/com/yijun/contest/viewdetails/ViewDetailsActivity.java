@@ -38,6 +38,8 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.moverecord.data.DatabaseHandler;
+import com.yijun.contest.moverecord.model.MoveRecord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,9 +90,13 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         btnhiper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MoveRecord moveRecord = new MoveRecord();
+
                 if (key == 1) {
                 SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
 
+                String svcNm = sportInfo.getSvcNm();
+                String placeNm = sportInfo.getPlaceNm();
                 String svcUrl = sportInfo.getSvcUrl();
                 String svcStaTnm = sportInfo.getSvcStaTnm();
 
@@ -101,18 +107,38 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
                     startActivity(i);
                 }
+
+                moveRecord.setTitle(svcNm);
+                moveRecord.setAddress(placeNm);
+                moveRecord.setUrl(svcUrl);
+
+                DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                db.addMoveRecord(moveRecord);
+
             } else if (key == 2){
                     NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
 
+                    String pPark = natureInfo.getpPark();
+                    String pAddr = natureInfo.getpAddr();
                     String tempUrl = natureInfo.getTemplateUrl();
+
+                    moveRecord.setTitle(pPark);
+                    moveRecord.setAddress(pAddr);
+                    moveRecord.setUrl(tempUrl);
+
+                    DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                    db.addMoveRecord(moveRecord);
+
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
                     startActivity(i);
+
                 }
                 else {
                     Toast.makeText(ViewDetailsActivity.this,"링크가 없습니다.",Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
+
         });
 
         // 위치기반 서비스를 위해서, 안드로이드 시스템에 위치기반서비스 요청.

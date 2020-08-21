@@ -93,12 +93,12 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
-                    int isFavorite = favorite.getIsFavorite();
-                    if (isFavorite == 1){
-                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
-                        fragmentFavorite.deleteNatureFavorite(getAdapterPosition());
-                    }
+//                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+//                    int isFavorite = favorite.getIsFavorite();
+//                    if (isFavorite == 1){
+//                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
+//                        fragmentFavorite.deleteNatureFavorite(getAdapterPosition());
+//                    }
 
                 }
             });

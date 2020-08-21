@@ -86,12 +86,12 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
-                    int isFavorite = favorite.getIsFavorite();
-                    if (isFavorite == 1){
-                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
-                        fragmentFavorite.deleteWayFavorite(getAdapterPosition());
-                    }
+//                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+//                    int isFavorite = favorite.getIsFavorite();
+//                    if (isFavorite == 1){
+//                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
+//                        fragmentFavorite.deleteWayFavorite(getAdapterPosition());
+//                    }
 
                 }
             });

@@ -1,18 +1,24 @@
 package com.yijun.contest.moverecord.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yijun.contest.moverecord.data.DatabaseHandler;
 import com.yijun.contest.moverecord.model.MoveRecord;
 import com.yijun.contest.R;
+import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -51,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public TextView name;
         public TextView address;
-        public ImageView img_check;
+        public ImageView img_delete;
         public Button btn_url;
 
         public ViewHolder(@NonNull View itemView) {
@@ -59,13 +65,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             name = itemView.findViewById(R.id.name);
             address = itemView.findViewById(R.id.address);
-            img_check = itemView.findViewById(R.id.img_check);
+            img_delete = itemView.findViewById(R.id.img_delete);
             btn_url = itemView.findViewById(R.id.btn_url);
 
             btn_url.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    ArrayList<MoveRecord> moveRecordArrayList = db.getAllRecord();
+                    for (MoveRecord moveRecord : moveRecordArrayList) {
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(moveRecord.getUrl()));
+                        context.startActivity(i);
+                    }
+                }
+            });
 
+            img_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MoveRecord moveRecord = moveRecordArrayList.get(getAdapterPosition());
+                    DatabaseHandler db = new DatabaseHandler(context);
+                    db.deleteRecord(moveRecord);
                 }
             });
 
