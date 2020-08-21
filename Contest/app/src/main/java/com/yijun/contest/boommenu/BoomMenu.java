@@ -16,6 +16,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.moverecord.MoveRecord;
 import com.yijun.contest.weather.WeatherActivity;
+import com.yijun.contest.weather.model.Weather;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -24,6 +25,7 @@ public class BoomMenu {
     Context context;
     double lat;
     double lng;
+    int key = 0;
 
     public BoomMenu(){
 
@@ -34,15 +36,24 @@ public class BoomMenu {
         this.lng = lng;
     }
 
+    public BoomMenu(int key) {
+        this.key = key;
+    }
+
     public void getBoomMenu(final Context context, BoomMenuButton bmb){
         this.context = context;
 
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+
             if (i == 0){
 
                 LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
                 if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     createGpsDisabledAlert();
+                    return;
+                }
+                if (key == 1){
+                    Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 HamButton.Builder builder = new HamButton.Builder()
@@ -62,6 +73,11 @@ public class BoomMenu {
                 });
                 bmb.addBuilder(builder);
             }else if(i == 1){
+
+                if (key == 2){
+                    Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bat)
                         .normalTextRes(R.string.air_Info)
@@ -76,6 +92,11 @@ public class BoomMenu {
                 });
                 bmb.addBuilder(builder);
             }else if(i == 2){
+
+                if (key == 3){
+                    Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bear)
                         .normalTextRes(R.string.moverecord)
