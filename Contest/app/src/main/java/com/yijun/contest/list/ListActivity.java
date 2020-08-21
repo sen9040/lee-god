@@ -215,7 +215,7 @@ public class ListActivity extends AppCompatActivity {
             txtSport.setText("풋살경기장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
         }else if (sports.equals("탁구")){
-            baseUrl = baseUrl+ "/sports?keyword=탁구장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=탁구&lat="+setLat+"&lng="+setLng;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("탁구장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
@@ -227,19 +227,19 @@ public class ListActivity extends AppCompatActivity {
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("골프")){
-            baseUrl = baseUrl+ "/sports?keyword=파크골프장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=골프&lat="+setLat+"&lng="+setLng;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("파크골프장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("배드민턴")){
-            baseUrl = baseUrl+ "/sports?keyword=배드민턴장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=배드민턴&lat="+setLat+"&lng="+setLng;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("배드민턴장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("운동장")){
-            baseUrl = baseUrl+ "/sports?keyword=운동장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=운동&lat="+setLat+"&lng="+setLng;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("운동장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);

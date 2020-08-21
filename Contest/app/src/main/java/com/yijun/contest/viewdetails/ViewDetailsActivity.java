@@ -293,7 +293,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                                     mMap.addMarker(options);
                                 }
                                 mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm2));
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,14));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -350,7 +350,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                                     mMap.addMarker(options);
                                 }
                                 mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm1));
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,14));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

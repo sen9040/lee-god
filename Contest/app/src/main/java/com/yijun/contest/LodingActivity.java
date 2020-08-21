@@ -20,6 +20,6 @@ public class LodingActivity extends AppCompatActivity {
             public void run() {
                 finish();
             }
-        }, 2000);
+        }, 3000);
     }
 }
