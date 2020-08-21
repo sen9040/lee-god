@@ -22,6 +22,17 @@ import static android.content.Context.LOCATION_SERVICE;
 public class BoomMenu {
 
     Context context;
+    double lat;
+    double lng;
+
+    public BoomMenu(){
+
+    }
+
+    public BoomMenu(double lat, double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
 
     public void getBoomMenu(final Context context, BoomMenuButton bmb){
         this.context = context;
@@ -42,6 +53,9 @@ public class BoomMenu {
                     @Override
                     public void onBoomButtonClick(int index) {
                         Intent intent = new Intent(context, WeatherActivity.class);
+
+                        intent.putExtra("lat",lat);
+                        intent.putExtra("lng",lng);
                         Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
                         context.startActivity(intent);
                     }

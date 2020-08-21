@@ -58,7 +58,7 @@ public class ListActivity extends AppCompatActivity {
     String baseUrl = Utils.SERVER_BASE_URL+"/api/v1/search";
     String url;
     String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/25/";
-    String wayTestUrl = "http://openapi.seoul.go.kr:8088/765867555473656e353874786d6572/json/SeoulGilWalkCourse/1/25/";
+
 
     int list_total_count;
     RecyclerViewAdapter adapter;

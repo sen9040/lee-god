@@ -11,11 +11,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -94,6 +98,7 @@ public class WeatherActivity extends AppCompatActivity {
 
 
     private RequestQueue requestQueue;
+    private String url;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -101,8 +106,7 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        Intent i = new Intent(WeatherActivity.this, LodingActivity.class);
-        startActivity(i);
+
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
@@ -113,9 +117,6 @@ public class WeatherActivity extends AppCompatActivity {
 
 
 
-
-
-        출처: https://gihyun.com/62 [Note]
         currentLocationTxt = findViewById(R.id.currentLocationTxt);
         currentWeatherImg = findViewById(R.id.currentWeatherImg);
         currentWeatherTxt = findViewById(R.id.currentWeatherTxt);
@@ -132,71 +133,18 @@ public class WeatherActivity extends AppCompatActivity {
 //        forecastImg_6 = findViewById(R.id.forecastImg_6);
 //        forecastTxt_6 = findViewById(R.id.forecastTxt_6);
 
-        final String url = "?lat=37.5207083&lon=126.8079374&exclude=hourly,minutely&appid=6896cf20ec1e12eac4c59197b748fd27&lang=kr&units=metric";
+        double mainLat = getIntent().getDoubleExtra("lat",0);
+        double mainLng = getIntent().getDoubleExtra("lng",0);
 
-
-//        // simpleDateFormat
-//        int date = dailyArrayList.get(0).getDailyDt();
-//        String datePattern = "yyyyMMdd";
-//        SimpleDateFormat format = new SimpleDateFormat(datePattern);
-//        String dateStr = format.format(date);
-//        Log.i("AAA",dateStr);
-
-//        for(int i = 0 ; i < forecastsArrayList.size();i++){
-//            if(i == 0){
-//                forecastTxt_1.setText(forecastsArrayList.get(0).getDay()+"\n"+forecastsArrayList.get(0).getDate());
-//            }
-//        }
+//        if (mainLat != 0 || mainLng != 0 ){
 //
+//        }else {
+//            url = "?lat="+mainLat+"&lon="+mainLng+"&exclude=hourly,minutely&appid=6896cf20ec1e12eac4c59197b748fd27&lang=kr&units=metric";
+//        }
 
+        url = "?lat=37.5207083&lon=126.8079374&exclude=hourly,minutely&appid=6896cf20ec1e12eac4c59197b748fd27&lang=kr&units=metric";
+        getWeather(baseUrl+url);
 
-        locationManager = (LocationManager) WeatherActivity.this.getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                double lat = location.getLatitude();
-                double lng = location.getLongitude();
-
-                Log.i("AAA","lat : "+lat);
-                getWeather(baseUrl+url);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(WeatherActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                WeatherActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(WeatherActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
-                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000*60, 100, locationListener);
 
     }
 
@@ -280,7 +228,9 @@ public class WeatherActivity extends AppCompatActivity {
                         tv.setGravity(Gravity.CENTER_HORIZONTAL);
                         tv.setMaxWidth(50);
 
-                        tv.setText(dateStr+"\n"+Math.round(dailyMin)+"℃\n"+Math.round(dailyMax)+"℃\n"+dailyDescription);
+
+
+                        tv.setText(dateStr+"\n"+dailyMin+"℃\n"+dailyMax+"℃\n"+dailyDescription);
                         linearLayoutTxtH.addView(tv);
 
                         // 그레프

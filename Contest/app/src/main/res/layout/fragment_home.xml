@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -48,17 +48,16 @@
                 <ImageButton
                     android:id="@+id/btnSoccer"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    android:background="#ffffff"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/bat" />
 
                 <TextView
                     android:id="@+id/textView17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="축구장" />
             </LinearLayout>
@@ -72,17 +71,18 @@
                 <ImageButton
                     android:id="@+id/btn_baseball"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+
+                    android:background="#ffffff"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/bat" />
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
                     android:gravity="center_horizontal"
                     android:text="야구장" />
             </LinearLayout>
@@ -99,8 +99,9 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="#ffffff"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/bat" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -123,8 +124,9 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="#ffffff"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/bat" />
 
                 <TextView
                     android:id="@+id/textView20"
@@ -135,6 +137,15 @@
                     android:text="테니스" />
             </LinearLayout>
 
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,6 +158,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="#ffffff"
                     android:scaleType="centerCrop"
                     app:srcCompat="@android:drawable/btn_star" />
 
@@ -158,15 +170,6 @@
                     android:gravity="center_horizontal"
                     android:text="풋살장" />
             </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -239,6 +242,15 @@
                     android:text="골프장" />
             </LinearLayout>
 
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -286,15 +298,6 @@
                     android:gravity="center_horizontal"
                     android:text="운동장" />
             </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -343,53 +346,38 @@
                     android:text="둘레길" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_park"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/btn_star" />
 
-                <ImageButton
-                    android:id="@+id/btn_park"
-                    android:layout_width="70dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="공원" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView29"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/btn_mountain"
-                    android:layout_width="70dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
-
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="산" />
-            </LinearLayout>
+                android:gravity="center_horizontal"
+                android:text="공원" />
+        </LinearLayout>
 
 
         </LinearLayout>

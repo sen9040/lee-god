@@ -76,9 +76,7 @@ public class FragmentHome extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
-        BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(context,bmb);
+
 
         recyclerView = view.findViewById(R.id.recyclerView);
         btnSoccer  =  view.findViewById(R.id.btnSoccer);
@@ -94,12 +92,58 @@ public class FragmentHome extends Fragment {
         btn_gym = view.findViewById(R.id.btn_gym);
         btn_dulle = view.findViewById(R.id.btn_dulle);
         btn_park = view.findViewById(R.id.btn_park);
-        btn_mountain = view.findViewById(R.id.btn_mountain);
 
 
 
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lat = location.getLatitude();
+                lng = location.getLongitude();
+                Log.i("AAA","lat : "+lat +" lng : "+lng);
+            }
 
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
 
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000, 100, locationListener);
+
+        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu(lat,lng);
+        boomMenu.getBoomMenu(context,bmb);
 
         btnSoccer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +154,6 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-
-
 
                 Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports","축구");
@@ -368,71 +410,7 @@ public class FragmentHome extends Fragment {
                 startActivity(i);
             }
         });
-        btn_mountain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
 
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","산");
-                a.putExtra("key",4);
-                startActivity(a);
-                startActivity(i);
-            }
-        });
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                lat = location.getLatitude();
-                lng = location.getLongitude();
-                Log.i("AAA","lat : "+lat +" lng : "+lng);
-
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
-                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000*60, 100, locationListener);
 
         return view;
 
