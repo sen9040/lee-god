@@ -2,11 +2,13 @@ package com.yijun.contest.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
+import com.yijun.contest.weather.WeatherActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -158,6 +161,8 @@ public class FragmentSearch extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
 
 
                 offset = 0;
@@ -238,6 +243,39 @@ public class FragmentSearch extends Fragment {
 
         return view;
     }
+
+    private  class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog asyncDialog = new ProgressDialog(context);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("검색 중..");
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void...arg0){
+            try {
+                for(int i = 0; i<5; i++){
+                    asyncDialog.setProgress(i*90);
+                    Thread.sleep(5000);
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
+
 
     @Override
     public void onResume() {

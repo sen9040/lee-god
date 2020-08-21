@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WeatherDaily;
@@ -96,8 +99,8 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        Intent i = new Intent(WeatherActivity.this, LodingActivity.class);
-        startActivity(i);
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
@@ -194,6 +197,41 @@ public class WeatherActivity extends AppCompatActivity {
                 1000*60, 100, locationListener);
 
     }
+
+    private  class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog asyncDialog = new ProgressDialog(WeatherActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void... arg0){
+            try {
+                for(int i = 0; i<5; i++){
+                    asyncDialog.setProgress(i*100);
+                    Thread.sleep(3000);
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+    }
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.fragment.FragmentSearch;
@@ -83,7 +86,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        txtSport = findViewById(R.id.txtSport);
+    txtSport = findViewById(R.id.txtSport);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
@@ -171,15 +174,53 @@ public class ListActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000*60, 100, locationListener);
+                1000, 100, locationListener);
 
 
-
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
 
 
 
     }
+
+    private  class CheckTypesTask extends AsyncTask<String, Void, String> {
+        ProgressDialog asyncDialog = new ProgressDialog(ListActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(String... arg0){
+            try {
+                for(int i = 0; i<5; i++){
+                    asyncDialog.setProgress(i*30);
+                    Thread.sleep(3000);
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+
+
+    }
+
+
+
 
 
     private void getSettingUrl(double setLat,double setLng) {
@@ -283,7 +324,7 @@ public class ListActivity extends AppCompatActivity {
                 return;
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000*60,
+                    1000,
                     100,
                     locationListener);
         }

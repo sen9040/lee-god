@@ -1,6 +1,7 @@
 package com.yijun.contest.fragment;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,13 +82,12 @@ public class FragmentHome extends Fragment {
         btnSoccer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(context, LodingActivity.class);
+
 
                 Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports","축구");
                 i.putExtra("key",1);
-                startActivity(i);
-                startActivity(i);
+               startActivity(i);
 
 
             }
@@ -95,156 +95,156 @@ public class FragmentHome extends Fragment {
         btn_baseball.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","야구");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_foot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","족구");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_tennis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","테니스");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_futsal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","풋살");
                a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_pingpong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","탁구");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_multi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","다목적");
                a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_golf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","골프");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_badminton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","배드민턴");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_ground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","운동장");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_gym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","체육관");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_dulle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","둘레길");
                 a.putExtra("key",2);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_park.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","공원");
                 a.putExtra("key",3);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_mountain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","산");
                 a.putExtra("key",4);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         return view;
