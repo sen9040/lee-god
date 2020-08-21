@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.airInfo.AirInfoActivity;
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.moverecord.adapter.RecyclerViewAdapter;
 import com.yijun.contest.moverecord.data.DatabaseHandler;
 
@@ -27,7 +30,12 @@ public class MoveRecord extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MoveRecord.this));
-////
+
+
+        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(MoveRecord.this,bmb);
+
 //        DatabaseHandler db = new DatabaseHandler(MoveRecord.this);
 //        moveRecordArrayList = db.getAllRecord();
 //

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,26 +13,29 @@
         android:id="@+id/currentLocationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumeb"
         android:text="현재 위치"
-        android:textColor="#000000"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
 
     <ImageView
         android:id="@+id/currentWeatherImg"
         android:layout_width="200dp"
         android:layout_height="200dp"
-
+        android:layout_below="@+id/currentLocationTxt"
+        android:layout_centerHorizontal="true"
         tools:srcCompat="@drawable/bat" />
 
     <TextView
         android:id="@+id/currentWeatherTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumeb"
         android:text="현재 날씨 및 온도 습도 "
-        android:textColor="#000000"
-        android:textSize="30sp" />
+        android:layout_below="@+id/currentWeatherImg"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        />
     <LinearLayout
         android:id="@+id/linearLayoutH"
         android:layout_marginTop="20dp"
@@ -41,6 +44,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/currentWeatherTxt"
+        android:layout_centerHorizontal="true"
         >
         <LinearLayout
             android:orientation="vertical"
@@ -49,6 +54,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             >
+
 <!--            <TextView-->
 <!--                android:id="@+id/forecastTxt_1"-->
 <!--                android:layout_width="wrap_content"-->
@@ -176,6 +182,8 @@
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
+        android:layout_below="@+id/linearLayoutH"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         />
 
@@ -191,5 +199,26 @@
         app:egLegendHeight="40dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_below="@+id/linearLayoutTxtH"
+        android:layout_centerHorizontal="true"
         app:egShowStandardValue="false"/>
-</LinearLayout>
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.nightonke.boommenu.BoomMenuButton
+            android:id="@+id/bmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bmb_buttonEnum="ham"
+            app:bmb_piecePlaceEnum="piecePlace_ham_3"
+            app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
+
+    </FrameLayout>
+
+</RelativeLayout>

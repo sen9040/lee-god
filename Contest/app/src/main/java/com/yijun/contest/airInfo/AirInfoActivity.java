@@ -15,7 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.model.AirInfo;
 import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
@@ -79,6 +81,10 @@ public class AirInfoActivity extends AppCompatActivity {
         imgSo2 = findViewById(R.id.imgSo2);
         imgPm10 = findViewById(R.id.imgPm10);
         imgPm25 = findViewById(R.id.imgPm25);
+
+        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(AirInfoActivity.this,bmb);
 
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
@@ -146,39 +152,39 @@ public class AirInfoActivity extends AppCompatActivity {
 
                     if(no2 >0.06){
                         // 나쁨
-                        imgNo2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgNo2.setImageResource(R.drawable.air_bad);
                     }else {
-                        imgNo2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgNo2.setImageResource(R.drawable.air_good);
                     }
                     if(o3 >0.06){
                         // 나쁨
-                        imgO3.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgO3.setImageResource(R.drawable.air_bad);
                     }else{
-                        imgO3.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgO3.setImageResource(R.drawable.air_good);
                     }
                     if(co >9){
                         // 나쁨
-                        imgCo.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgCo.setImageResource(R.drawable.air_bad);
                     }else {
-                        imgCo.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgCo.setImageResource(R.drawable.air_good);
                     }
                     if(so2 >0.05){
                         // 나쁨
-                        imgSo2.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgSo2.setImageResource(R.drawable.air_bad);
                     }else {
-                        imgSo2.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgSo2.setImageResource(R.drawable.air_good);
                     }
                     if(pm10 >50){
                         // 나쁨
-                        imgPm10.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgPm10.setImageResource(R.drawable.air_bad);
                     }else {
-                        imgPm10.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgPm10.setImageResource(R.drawable.air_good);
                     }
                     if(pm25 >35){
                         // 나쁨
-                        imgPm25.setImageResource(android.R.drawable.btn_star_big_on);
+                        imgPm25.setImageResource(R.drawable.air_bad);
                     }else {
-                        imgPm25.setImageResource(android.R.drawable.btn_star_big_off);
+                        imgPm25.setImageResource(R.drawable.air_good);
                     }
 
                 } catch (JSONException e) {

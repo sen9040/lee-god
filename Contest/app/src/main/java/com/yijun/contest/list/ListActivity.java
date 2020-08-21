@@ -28,7 +28,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.airInfo.AirInfoActivity;
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.fragment.FragmentSearch;
 import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
@@ -89,6 +92,11 @@ public class ListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
+
+
+        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(ListActivity.this,bmb);
 
         double mainLat = getIntent().getDoubleExtra("lat",0);
         double mainLng = getIntent().getDoubleExtra("lng",0);
