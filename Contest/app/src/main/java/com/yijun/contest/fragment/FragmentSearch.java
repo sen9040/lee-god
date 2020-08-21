@@ -2,13 +2,13 @@ package com.yijun.contest.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,7 +46,6 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
-import com.yijun.contest.weather.WeatherActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,9 +161,11 @@ public class FragmentSearch extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckTypesTask task = new CheckTypesTask();
-                task.execute();
-
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
 
                 offset = 0;
             keyword = editSearch.getText().toString().trim();
@@ -243,39 +245,6 @@ public class FragmentSearch extends Fragment {
 
         return view;
     }
-
-    private  class CheckTypesTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog asyncDialog = new ProgressDialog(context);
-
-        @Override
-        protected void onPreExecute(){
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("검색 중..");
-            asyncDialog.show();
-            super.onPreExecute();
-        }
-        @Override
-        protected Void doInBackground(Void...arg0){
-            try {
-                for(int i = 0; i<5; i++){
-                    asyncDialog.setProgress(i*90);
-                    Thread.sleep(5000);
-                }
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void result){
-            asyncDialog.dismiss();
-            super.onPostExecute(result);
-        }
-
-    }
-
 
     @Override
     public void onResume() {
@@ -512,4 +481,30 @@ public class FragmentSearch extends Fragment {
         requestQueue.add(request);
     }
 
+    // GPS Disabled Alert
+    private void createGpsDisabledAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Your GPS is disabled! Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                showGpsOptions();
+                            }
+                        })
+                .setNegativeButton("Do nothing",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.setCancelable(false);
+        alert.show();
+    }
+    // show GPS Options
+    private void showGpsOptions() {
+        Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(gpsOptionsIntent);
+    }
 }

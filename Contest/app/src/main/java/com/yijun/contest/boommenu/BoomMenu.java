@@ -1,8 +1,13 @@
 package com.yijun.contest.boommenu;
 
+import android.content.ContentProvider;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
@@ -12,15 +17,23 @@ import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.moverecord.MoveRecord;
 import com.yijun.contest.weather.WeatherActivity;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class BoomMenu {
 
-
+    Context context;
 
     public void getBoomMenu(final Context context, BoomMenuButton bmb){
-
+        this.context = context;
 
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
             if (i == 0){
+
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.butterfly)
                         .normalTextRes(R.string.weather)
@@ -79,7 +92,34 @@ public class BoomMenu {
         }
 
 
+
+
     }
 
-
+    // GPS Disabled Alert
+    private void createGpsDisabledAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Your GPS is disabled! Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                showGpsOptions();
+                            }
+                        })
+                .setNegativeButton("Do nothing",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.setCancelable(false);
+        alert.show();
+    }
+    // show GPS Options
+    private void showGpsOptions() {
+        Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        context.startActivity(gpsOptionsIntent);
+    }
 }

@@ -2,18 +2,18 @@ package com.yijun.contest.weather;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,12 +37,14 @@ import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 
-import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WeatherDaily;
 
 
+import org.eazegraph.lib.charts.ValueLineChart;
+import org.eazegraph.lib.models.ValueLinePoint;
+import org.eazegraph.lib.models.ValueLineSeries;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,8 +101,8 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
+        Intent i = new Intent(WeatherActivity.this, LodingActivity.class);
+        startActivity(i);
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
@@ -198,41 +200,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    private  class CheckTypesTask extends AsyncTask<Void, Void, Void> {
-        ProgressDialog asyncDialog = new ProgressDialog(WeatherActivity.this);
-
-        @Override
-        protected void onPreExecute(){
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중..");
-            asyncDialog.show();
-            super.onPreExecute();
-        }
-        @Override
-        protected Void doInBackground(Void... arg0){
-            try {
-                for(int i = 0; i<5; i++){
-                    asyncDialog.setProgress(i*100);
-                    Thread.sleep(3000);
-                }
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void result){
-            asyncDialog.dismiss();
-            super.onPostExecute(result);
-        }
-
-    }
-
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -260,6 +227,11 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("AAA","weather response : "+response);
+
+                ValueLineSeries series = new ValueLineSeries();
+                series.setColor(0xFF56B7F1);
+
+
                 try {
                     // current weather
                     String timezone = response.getString("timezone");
@@ -271,6 +243,8 @@ public class WeatherActivity extends AppCompatActivity {
                     String description = weatherArray.getJSONObject(0).getString("description");
                     String icon = weatherArray.getJSONObject(0).getString("icon");
                     Log.i("AAA","current : "+description);
+
+                    series.addPoint(new ValueLinePoint("시작", (float) temp));
                     // forecasts
                     JSONArray dailyArray = response.getJSONArray("daily");
                     for(int i = 1 ; i <7;i++){
@@ -308,11 +282,20 @@ public class WeatherActivity extends AppCompatActivity {
 
                         tv.setText(dateStr+"\n"+Math.round(dailyMin)+"℃\n"+Math.round(dailyMax)+"℃\n"+dailyDescription);
                         linearLayoutTxtH.addView(tv);
+
+                        // 그레프
+                        series.addPoint(new ValueLinePoint(dateStr, (float) dailyMax));
                     }
                     // 데이터 입력
                     Glide.with(WeatherActivity.this).load("http://openweathermap.org/img/wn/"+icon+"@2x.png").into(currentWeatherImg);
                     currentLocationTxt.setText(timezone);
                     currentWeatherTxt.setText("현재 온도"+temp+"℃\n"+description);
+
+                    ValueLineChart mCubicValueLineChart = (ValueLineChart) findViewById(R.id.cubiclinechart);
+
+                    series.addPoint(new ValueLinePoint("끝", (float) temp));
+                    mCubicValueLineChart.addSeries(series);
+                    mCubicValueLineChart.startAnimation();
 
 
                 } catch (JSONException e) {
@@ -327,4 +310,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
         requestQueue.add(request);
     }
+
+
+
 }
