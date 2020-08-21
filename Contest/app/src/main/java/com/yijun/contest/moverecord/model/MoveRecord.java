@@ -2,17 +2,19 @@ package com.yijun.contest.moverecord.model;
 
 public class MoveRecord {
     private int id;
-    private String name;
+    private String title;
     private String address;
+    private String url;
 
     public MoveRecord(){
 
     }
 
-    public MoveRecord(int id, String name, String address) {
+    public MoveRecord(int id, String title, String address,String url) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.address = address;
+        this.url = url;
     }
 
     public int getId() {
@@ -23,12 +25,12 @@ public class MoveRecord {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAddress() {
@@ -37,5 +39,13 @@ public class MoveRecord {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

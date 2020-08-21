@@ -1,6 +1,7 @@
 package com.yijun.contest.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -25,7 +24,12 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
-import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.NatureFavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.RecyclerViewAdapter;
+import com.yijun.contest.list.adapter.SportFavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.WayFavoriteRecyclerViewAdapter;
+import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
@@ -34,17 +38,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FragmentFavorite extends Fragment {
     Context context;
-    RecyclerView recyclerView;
-    FavoriteRecyclerViewAdapter favoriteRecyclerViewAdapter;
-    ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
-    RequestQueue requestQueue;
+    RecyclerView sportRecyclerView;
+    RecyclerView parkRecyclerView;
+    RecyclerView wayRecyclerView;
+
+    SportFavoriteRecyclerViewAdapter sportFavoriteRecyclerViewAdapter;
+    NatureFavoriteRecyclerViewAdapter natureFavoriteRecyclerViewAdapter;
+    WayFavoriteRecyclerViewAdapter wayFavoriteRecyclerViewAdapter;
+
+    RecyclerViewAdapter recyclerViewAdapter;
+    NatureRecyclerViewAdapter natureRecyclerViewAdapter;
+    WayRecyclerViewAdapter wayRecyclerViewAdapter;
+
+    ArrayList<Favorite> favoriteArrayList1 = new ArrayList<>();
+    ArrayList<Favorite> favoriteArrayList2 = new ArrayList<>();
+    ArrayList<Favorite> favoriteArrayList3 = new ArrayList<>();
+
+    int offset = 0;
+    int cnt;
+
 
     public FragmentFavorite(){
     }
@@ -54,44 +70,48 @@ public class FragmentFavorite extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favorite, container, false);;
+        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(context,bmb);
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
+        sportRecyclerView.setHasFixedSize(true);
+        sportRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+
+        getSportFavoriteData();
+
+        parkRecyclerView = view.findViewById(R.id.parkRecyclerView);
+        parkRecyclerView.setHasFixedSize(true);
+        parkRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+
+        getParkFavoriteData();
+
+        wayRecyclerView = view.findViewById(R.id.wayRecyclerView);
+        wayRecyclerView.setHasFixedSize(true);
+        wayRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+
+        getWayFavoriteData();
 
 
         return view;
     }
 
     // 스포츠 즐겨찾기데이터 전부 가져오기
-    public void getSportFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getSportFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/sport",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             boolean success = response.getBoolean("success");
+                            int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
                                 Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
@@ -103,11 +123,11 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String imgUrl = jsonObject.getString("ImgUrl");
-                                    String SvcNm = jsonObject.getString("SvcNm");
-                                    String PlaceNm = jsonObject.getString("PlaceNm");
-                                    String PaYaTnm = jsonObject.getString("PaYaTnm");
-                                    String SvcStaTnm = jsonObject.getString("SvcStaTnm");
+                                    String imgUrl = jsonObject.getString("IMGURL");
+                                    String SvcNm = jsonObject.getString("SVCNM");
+                                    String PlaceNm = jsonObject.getString("PLACENM");
+                                    String PaYaTnm = jsonObject.getString("PAYATNM");
+                                    String SvcStaTnm = jsonObject.getString("SVCSTATNM");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -118,10 +138,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList1.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(context, favoriteArrayList1);
+                                sportRecyclerView.setAdapter(sportFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -144,35 +164,25 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+
+        Volley.newRequestQueue(context).add(request);
     }
 
     // 공원 즐겨찾기데이터 전부 가져오기
-    public void getParkFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-            body.put("isFavorite", 1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getParkFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/park",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             boolean success = response.getBoolean("success");
+                            int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
                                 Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
@@ -184,11 +194,11 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String pImg = jsonObject.getString("pImg");
-                                    String pPark = jsonObject.getString("pPark");
-                                    String pAddr = jsonObject.getString("pAddr");
-                                    String pName = jsonObject.getString("pName");
-                                    String pAdmintel = jsonObject.getString("pAdmintel");
+                                    String pImg = jsonObject.getString("P_IMG");
+                                    String pPark = jsonObject.getString("P_PARK");
+                                    String pAddr = jsonObject.getString("P_ADDR");
+                                    String pName = jsonObject.getString("P_NAME");
+                                    String pAdmintel = jsonObject.getString("P_ADMINTEL");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -199,10 +209,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList2.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(context, favoriteArrayList2);
+                                parkRecyclerView.setAdapter(natureFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -225,34 +235,24 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+        Volley.newRequestQueue(context).add(request);
     }
 
     // 두드림길 즐겨찾기데이터 전부 가져오기
-    public void getWayFavoriteData(int position) {
-
-        // position을 통해서, 즐겨찾기 추가할 movie_id 값을 가져올 수 있습니다.
-        Favorite favorite = favoriteArrayList.get(position);
-        String idx = favorite.getIdx();
-
-        JSONObject body = new JSONObject();
-        try {
-            body.put("idx", idx);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void getWayFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                "/api/v1/favorite",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/way",
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             boolean success = response.getBoolean("success");
+                            int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
                                 Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
@@ -264,10 +264,10 @@ public class FragmentFavorite extends Fragment {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     int id = jsonObject.getInt("id");
                                     String idx = jsonObject.getString("idx");
-                                    String cpiName	 = jsonObject.getString("CpiName");
-                                    String detailCourse = jsonObject.getString("DetailCourse");
-                                    String distance = jsonObject.getString("Distance");
-                                    String leadTime = jsonObject.getString("LeadTime");
+                                    String cpiName = jsonObject.getString("CPI_NAME");
+                                    String detailCourse = jsonObject.getString("DETAIL_COURSE");
+                                    String distance = jsonObject.getString("DISTANCE");
+                                    String leadTime = jsonObject.getString("LEAD_TIME");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -278,10 +278,10 @@ public class FragmentFavorite extends Fragment {
                                     Log.i("가져와", response.toString());
 
                                     Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite);
-                                    favoriteArrayList.add(favorite);
+                                    favoriteArrayList3.add(favorite);
                                 }
-                                favoriteRecyclerViewAdapter = new FavoriteRecyclerViewAdapter(context, favoriteArrayList);
-                                recyclerView.setAdapter(favoriteRecyclerViewAdapter);
+                                wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(context, favoriteArrayList3);
+                                wayRecyclerView.setAdapter(wayFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
                                 // 해당 offset으로 서버에 요청이 가능하다.
@@ -304,7 +304,115 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        requestQueue.add(request);
+        Volley.newRequestQueue(context).add(request);
     }
 
+
+//    // 스포츠 즐겨찾기 삭제
+//    public void deleteSportFavorite(final int position){
+//        Favorite favorite = favoriteArrayList1.get(position);
+//
+//        // 서버에 보내기 위해서 필요
+//        String idx = favorite.getIdx();
+//
+//        JSONObject body = new JSONObject();
+//        try {
+//            body.put("idx", idx);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JsonObjectRequest request = new JsonObjectRequest(
+//                Request.Method.POST,
+//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+//                body,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Favorite favorite = favoriteArrayList1.get(position);
+//                        favorite.setIsFavorite(0);
+//                        sportFavoriteRecyclerViewAdapter.notifyDataSetChanged();
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }
+//        );
+//        Volley.newRequestQueue(context).add(request);
+//    }
+//
+//    // 공원 즐겨찾기 삭제
+//    public void deleteNatureFavorite(final int position){
+//        Favorite favorite = favoriteArrayList2.get(position);
+//
+//        // 서버에 보내기 위해서 필요
+//        String idx = favorite.getIdx();
+//
+//        JSONObject body = new JSONObject();
+//        try {
+//            body.put("idx", idx);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JsonObjectRequest request = new JsonObjectRequest(
+//                Request.Method.POST,
+//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+//                body,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Favorite favorite = favoriteArrayList2.get(position);
+//                        favorite.setIsFavorite(0);
+//                        natureFavoriteRecyclerViewAdapter.notifyDataSetChanged();
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }
+//        );
+//        Volley.newRequestQueue(context).add(request);
+//    }
+//
+//    // 두드림길 즐겨찾기 삭제
+//    public void deleteWayFavorite(final int position){
+//        Favorite favorite = favoriteArrayList3.get(position);
+//
+//        // 서버에 보내기 위해서 필요
+//        String idx = favorite.getIdx();
+//
+//        JSONObject body = new JSONObject();
+//        try {
+//            body.put("idx", idx);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JsonObjectRequest request = new JsonObjectRequest(
+//                Request.Method.POST,
+//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+//                body,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Favorite favorite = favoriteArrayList3.get(position);
+//                        favorite.setIsFavorite(0);
+//                        natureFavoriteRecyclerViewAdapter.notifyDataSetChanged();
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }
+//        );
+//        Volley.newRequestQueue(context).add(request);
+//    }
 }
