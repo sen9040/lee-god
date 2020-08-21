@@ -2,7 +2,6 @@ package com.yijun.contest.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +37,7 @@ import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
 
@@ -63,8 +63,8 @@ public class FragmentHome extends Fragment {
     ImageButton btn_dulle;
     ImageButton btn_park;
 
-    private double lat;
-    private double lng;
+    private double lat ;
+    private double lng ;
     LocationManager locationManager;
     LocationListener locationListener;
 
@@ -172,6 +172,11 @@ public class FragmentHome extends Fragment {
                 i.putExtra("key",1);
                 i.putExtra("lat",lat);
                 i.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
                 startActivity(i);
 
 
@@ -194,6 +199,11 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 startActivity(a);
 
 
@@ -217,6 +227,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -237,6 +251,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -258,6 +276,10 @@ public class FragmentHome extends Fragment {
                a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
 
@@ -280,6 +302,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lng",lng);
                 a.putExtra("sports","탁구");
                 a.putExtra("key",1);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -301,6 +327,10 @@ public class FragmentHome extends Fragment {
                a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -321,6 +351,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 a.putExtra("key",1);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -341,6 +375,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -361,6 +399,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -381,6 +423,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 a.putExtra("key",1);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -401,6 +447,10 @@ public class FragmentHome extends Fragment {
                 a.putExtra("key",2);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
+                if (lat==0||lng==0){
+                    Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(a);
 
             }
@@ -431,6 +481,43 @@ public class FragmentHome extends Fragment {
     }
 
 
+
+    private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
+        ProgressDialog asyncDialog = new ProgressDialog(context);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            asyncDialog.setCancelable(false);
+            super.onPreExecute();
+        }
+        @Override
+        protected Boolean doInBackground(Void... strings){
+
+            for(int i = 0; i<40000; i++){
+                publishProgress(i);
+
+            }
+            return true;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s){
+
+            asyncDialog.dismiss();
+            super.onPostExecute(s);
+        }
+
+
+        @Override
+        protected void onCancelled(Boolean s){
+            super.onCancelled(s);
+        }
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
