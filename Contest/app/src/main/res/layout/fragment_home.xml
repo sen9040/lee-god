@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:Android="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:bmb_buttonEnum="ham"
-        app:bmb_piecePlaceEnum="piecePlace_ham_4"
-        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
+    <FrameLayout
+        Android:layout_width="wrap_content"
+        Android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.nightonke.boommenu.BoomMenuButton
+            android:id="@+id/bmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bmb_buttonEnum="ham"
+            app:bmb_piecePlaceEnum="piecePlace_ham_3"
+            app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            />
+
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -351,6 +361,7 @@
 
         </LinearLayout>
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

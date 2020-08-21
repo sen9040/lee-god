@@ -39,10 +39,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
@@ -109,7 +111,9 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-
+        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(WeatherActivity.this,bmb);
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams

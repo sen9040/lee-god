@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
+import com.yijun.contest.airInfo.AirInfoActivity;
+import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
@@ -96,6 +100,11 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
 
 
+        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(ViewDetailsActivity.this,bmb);
+        FrameLayout frameLayout = findViewById(R.id.frameLayout);
+        frameLayout.bringChildToFront(bmb);
 
         key = getIntent().getIntExtra("key",0);
        if (key==1){
@@ -415,16 +424,22 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String v_max = sportInfo.getV_max();
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
+        String dtlCont = sportInfo.getDtlCont();
         if (imgUrl.isEmpty() || imgUrl.equals("")){
            imgSvc.setImageResource(R.drawable.butterfly);
         }else {
             Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);
         }
-
+        String removeStr = null;
+        try {
+            removeStr = removeTag(dtlCont);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         txtSvcNm.setText(svcNm);
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
-
+        txtExam.setText("상세 정보\n"+removeStr);
         if (svcStaTnm.equals("접수종료")){
             txtTime.setText(svcStaTnm);
         }else {
@@ -481,6 +496,12 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
 
 
+
+    }
+    // html 제거
+    public String removeTag(String html) throws Exception {
+        html =  html.replaceAll("&nbsp;","");
+        return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 
     }
 
