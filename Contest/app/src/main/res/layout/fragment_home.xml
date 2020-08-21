@@ -69,7 +69,7 @@
                     android:layout_gravity="center"
                     android:background="#ffffff"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/bat" />
+                    app:srcCompat="@drawable/icon1" />
 
                 <TextView
                     android:id="@+id/textView17"
@@ -94,8 +94,8 @@
                     android:layout_gravity="center"
 
                     android:background="#ffffff"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/bat" />
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/icon2" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -117,12 +117,12 @@
                 <ImageButton
                     android:id="@+id/btn_foot"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="#ffffff"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/bat" />
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/icon3" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -144,12 +144,12 @@
                 <ImageButton
                     android:id="@+id/btn_tennis"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="#ffffff"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/bat" />
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/icon4" />
 
                 <TextView
                     android:id="@+id/textView20"
@@ -180,12 +180,12 @@
                 <ImageButton
                     android:id="@+id/btn_futsal"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="#ffffff"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon5" />
 
                 <TextView
                     android:id="@+id/textView21"
@@ -206,11 +206,12 @@
                 <ImageButton
                     android:id="@+id/btn_pingpong"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon6" />
 
                 <TextView
                     android:id="@+id/textView22"
@@ -232,11 +233,12 @@
                 <ImageButton
                     android:id="@+id/btn_multi"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    android:background="#FFFFFF"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/icon7_png" />
 
                 <TextView
                     android:id="@+id/textView23"
@@ -258,11 +260,12 @@
                 <ImageButton
                     android:id="@+id/btn_golf"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon8_png" />
 
                 <TextView
                     android:id="@+id/textView24"
@@ -293,11 +296,12 @@
                 <ImageButton
                     android:id="@+id/btn_badminton"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon9" />
 
                 <TextView
                     android:id="@+id/textView25"
@@ -319,11 +323,12 @@
                 <ImageButton
                     android:id="@+id/btn_ground"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon10_png" />
 
                 <TextView
                     android:id="@+id/textView26"
@@ -344,11 +349,12 @@
                 <ImageButton
                     android:id="@+id/btn_gym"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon11_png" />
 
                 <TextView
                     android:id="@+id/textView27"
@@ -370,11 +376,12 @@
                 <ImageButton
                     android:id="@+id/btn_dulle"
                     android:layout_width="70dp"
-                    android:layout_height="80dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:background="#FFFFFF"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star" />
+                    app:srcCompat="@drawable/icon12_png" />
 
                 <TextView
                     android:id="@+id/textView28"
@@ -406,11 +413,12 @@
             <ImageButton
                 android:id="@+id/btn_park"
                 android:layout_width="70dp"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
+                android:background="#FFFFFF"
                 android:scaleType="centerCrop"
-                app:srcCompat="@android:drawable/btn_star" />
+                app:srcCompat="@drawable/icon13_png" />
 
             <TextView
                 android:id="@+id/textView29"
