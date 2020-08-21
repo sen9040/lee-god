@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -178,10 +180,53 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-
-
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
     }
+
+
+
+
+    private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
+        ProgressDialog asyncDialog = new ProgressDialog(ListActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            asyncDialog.setCancelable(false);
+            super.onPreExecute();
+        }
+        @Override
+        protected Boolean doInBackground(Void... strings){
+
+                for(int i = 0; i<35000; i++){
+                    publishProgress(i);
+
+                }
+            return true;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s){
+
+            asyncDialog.dismiss();
+            super.onPostExecute(s);
+        }
+
+
+        @Override
+        protected void onCancelled(Boolean s){
+            super.onCancelled(s);
+        }
+
+    }
+
+
+
 
 
     private void getSettingUrl(double setLat,double setLng) {
