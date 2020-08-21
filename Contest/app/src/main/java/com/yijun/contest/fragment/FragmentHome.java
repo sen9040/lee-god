@@ -176,7 +176,7 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(context,"Gps가 불안정합니다.",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 startActivity(i);
 
 
