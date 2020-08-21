@@ -195,7 +195,6 @@ public class ListActivity extends AppCompatActivity {
 
 
 
-
     private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
         ProgressDialog asyncDialog = new ProgressDialog(ListActivity.this);
 
@@ -210,7 +209,7 @@ public class ListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... strings){
 
-                for(int i = 0; i<35000; i++){
+                for(int i = 0; i<20000; i++){
                     publishProgress(i);
 
                 }

@@ -132,13 +132,16 @@
 
     <Button
         android:id="@+id/btnhiper1"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:text="해당 홈페이지로 이동" />
+        android:background="#FFF8C4"
+        android:text="해당 홈페이지로 이동"
+        android:weightSum="1" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
