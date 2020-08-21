@@ -1,8 +1,17 @@
 package com.yijun.contest.fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -15,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,9 +36,12 @@ import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
+import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
 
 import java.util.ArrayList;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 public class FragmentHome extends Fragment {
 
@@ -47,6 +61,10 @@ public class FragmentHome extends Fragment {
     ImageButton btn_dulle;
     ImageButton btn_park;
     ImageButton btn_mountain;
+    private double lat;
+    private double lng;
+    LocationManager locationManager;
+    LocationListener locationListener;
 
     public FragmentHome(){
     }
@@ -77,17 +95,31 @@ public class FragmentHome extends Fragment {
         btn_dulle = view.findViewById(R.id.btn_dulle);
         btn_park = view.findViewById(R.id.btn_park);
         btn_mountain = view.findViewById(R.id.btn_mountain);
-//
+
+
+
+
+
+
         btnSoccer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(context, LodingActivity.class);
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
 
                 Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports","축구");
                 i.putExtra("key",1);
+                i.putExtra("lat",lat);
+                i.putExtra("lng",lng);
                 startActivity(i);
-                startActivity(i);
+
 
 
             }
@@ -95,11 +127,20 @@ public class FragmentHome extends Fragment {
         btn_baseball.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","야구");
                 a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -107,11 +148,20 @@ public class FragmentHome extends Fragment {
         btn_foot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","족구");
                 a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -119,10 +169,19 @@ public class FragmentHome extends Fragment {
         btn_tennis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
                 Intent i = new Intent(context, LodingActivity.class);
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","테니스");
                 a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -130,21 +189,40 @@ public class FragmentHome extends Fragment {
         btn_futsal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, LodingActivity.class);
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","풋살");
                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+                return;
+
             }
         });
         btn_pingpong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 a.putExtra("sports","탁구");
                 a.putExtra("key",1);
                 startActivity(a);
@@ -154,11 +232,20 @@ public class FragmentHome extends Fragment {
         btn_multi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
+
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","다목적");
                a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -166,10 +253,18 @@ public class FragmentHome extends Fragment {
         btn_golf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","골프");
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 a.putExtra("key",1);
                 startActivity(a);
                 startActivity(i);
@@ -178,11 +273,19 @@ public class FragmentHome extends Fragment {
         btn_badminton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","배드민턴");
                 a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -190,11 +293,19 @@ public class FragmentHome extends Fragment {
         btn_ground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","운동장");
                 a.putExtra("key",1);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -202,10 +313,18 @@ public class FragmentHome extends Fragment {
         btn_gym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","체육관");
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 a.putExtra("key",1);
                 startActivity(a);
                 startActivity(i);
@@ -214,11 +333,19 @@ public class FragmentHome extends Fragment {
         btn_dulle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","둘레길");
                 a.putExtra("key",2);
+                a.putExtra("lat",lat);
+                a.putExtra("lng",lng);
                 startActivity(a);
                 startActivity(i);
             }
@@ -226,6 +353,12 @@ public class FragmentHome extends Fragment {
         btn_park.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
@@ -238,6 +371,12 @@ public class FragmentHome extends Fragment {
         btn_mountain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check GPS Enable
+                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    createGpsDisabledAlert();
+                    return;
+                }
                 Intent i = new Intent(context, LodingActivity.class);
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
@@ -247,6 +386,106 @@ public class FragmentHome extends Fragment {
                 startActivity(i);
             }
         });
+        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lat = location.getLatitude();
+                lng = location.getLongitude();
+                Log.i("AAA","lat : "+lat +" lng : "+lng);
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000*60, 100, locationListener);
+
         return view;
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0){
+            if (ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+                ActivityCompat.requestPermissions((Activity) context,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000*60,
+                    100,
+                    locationListener);
+        }
+
+    }
+
+
+    // GPS Disabled Alert
+    private void createGpsDisabledAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Your GPS is disabled! Would you like to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                showGpsOptions();
+                            }
+                        })
+                .setNegativeButton("Do nothing",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.setCancelable(false);
+        alert.show();
+    }
+
+    // show GPS Options
+    private void showGpsOptions() {
+        Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(gpsOptionsIntent);
+    }
+
+
 }

@@ -88,6 +88,15 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
 
+        double mainLat = getIntent().getDoubleExtra("lat",0);
+        double mainLng = getIntent().getDoubleExtra("lng",0);
+
+        if (mainLat == 0 || mainLng == 0 ){
+            mainLat = lat ;
+            mainLng = lng ;
+        }
+        getSettingUrl(mainLat,mainLng);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -122,7 +131,6 @@ public class ListActivity extends AppCompatActivity {
         });
 
 
-
         locationManager = (LocationManager) ListActivity.this.getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -132,7 +140,7 @@ public class ListActivity extends AppCompatActivity {
                 Log.i("AAA","lat : "+lat +" lng : "+lng);
 
                 // 종목 정하는 메소드
-                getSettingUrl(lat,lng);
+
 
             }
 
@@ -173,12 +181,6 @@ public class ListActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 1000*60, 100, locationListener);
 
-
-
-
-
-
-
     }
 
 
@@ -186,6 +188,7 @@ public class ListActivity extends AppCompatActivity {
         String sports = getIntent().getStringExtra("sports");
 
         if (sports.equals("축구")){
+
             baseUrl = baseUrl+ "/sports?keyword=축구장&lat="+setLat+"&lng="+setLng;
             url = baseUrl+"&offset="+offset;
             String soccer = "축구장";

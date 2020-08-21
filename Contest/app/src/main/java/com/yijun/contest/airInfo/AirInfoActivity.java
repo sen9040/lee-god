@@ -128,10 +128,10 @@ public class AirInfoActivity extends AppCompatActivity {
                     float pm25f = Float.parseFloat(String.valueOf(pm25));
                     Log.i("AAA","pm : "+pm10f);
 
-                    mBarChart.addBar(new BarModel("이산화질소",no2f, 0xFF123456));
-                    mBarChart.addBar(new BarModel("오존",o3f,  0xFF343456));
-                    mBarChart.addBar(new BarModel("일산화탄소",cof, 0xFF563456));
-                    mBarChart.addBar(new BarModel("이황산가스",so2f, 0xFF873F56));
+                    mBarChart.addBar(new BarModel("이산화질소",no2f*1000, 0xFF123456));
+                    mBarChart.addBar(new BarModel("오존",o3f*1000,  0xFF343456));
+                    mBarChart.addBar(new BarModel("일산화탄소",cof*10, 0xFF563456));
+                    mBarChart.addBar(new BarModel("이황산가스",so2f*1000, 0xFF873F56));
                     mBarChart.addBar(new BarModel("초미세먼지",pm25f,  0xFF343456));
                     mBarChart.addBar(new BarModel("미세먼지",pm10f, 0xFF56B7F1));
 

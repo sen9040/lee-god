@@ -15,15 +15,14 @@
         android:layout_height="wrap_content"
         android:text="현재 위치"
         android:textSize="30sp"
-        android:layout_marginTop="50dp"
         />
 
     <ImageView
         android:id="@+id/currentWeatherImg"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:srcCompat="@android:drawable/btn_star_big_off"
-        tools:ignore="VectorDrawableCompat" />
+
+        tools:srcCompat="@drawable/bat" />
 
     <TextView
         android:id="@+id/currentWeatherTxt"
@@ -34,7 +33,7 @@
         />
     <LinearLayout
         android:id="@+id/linearLayoutH"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
@@ -177,4 +176,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
+    <org.eazegraph.lib.charts.ValueLineChart
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cubiclinechart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:egUseCubic="true"
+        app:egUseOverlapFill="true"
+        app:egCurveSmoothness="0.4"
+        app:egIndicatorLineColor="#FE6DA8"
+        app:egLegendHeight="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:egShowStandardValue="false"/>
 </LinearLayout>
