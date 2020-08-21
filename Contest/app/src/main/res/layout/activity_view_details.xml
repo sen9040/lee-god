@@ -55,8 +55,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
                         android:ellipsize="end"
+                        android:fontFamily="@font/nanumeb"
                         android:maxLines="1"
                         android:text="시설물 명"
+                        android:textColor="#000000"
                         android:textSize="24sp" />
 
                 </LinearLayout>
@@ -66,8 +68,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/nanumeb"
                     android:maxLines="1"
                     android:text="주소"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <LinearLayout
@@ -82,16 +86,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/nanumeb"
                         android:maxLines="1"
                         android:text="가격"
+                        android:textColor="#000000"
                         android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/nanumeb"
                         android:maxLines="1"
                         android:text=" / "
+                        android:textColor="#000000"
                         android:textSize="18sp" />
 
                     <TextView
@@ -99,8 +107,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:fontFamily="@font/nanumeb"
                         android:maxLines="1"
                         android:text="이용 시간"
+                        android:textColor="#000000"
                         android:textSize="18sp" />
 
                 </LinearLayout>
@@ -109,7 +119,9 @@
                     android:id="@+id/txtExm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumeb"
                     android:text="상세설명"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
 
