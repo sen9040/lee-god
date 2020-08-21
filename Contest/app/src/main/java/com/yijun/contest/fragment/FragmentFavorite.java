@@ -41,7 +41,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class FragmentFavorite extends Fragment {
-    Context context;
+
     RecyclerView sportRecyclerView;
     RecyclerView parkRecyclerView;
     RecyclerView wayRecyclerView;
@@ -65,31 +65,29 @@ public class FragmentFavorite extends Fragment {
     public FragmentFavorite(){
     }
 
-    public FragmentFavorite(Context context){
-        this.context = context;
-    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(context,bmb);
+        boomMenu.getBoomMenu(getActivity(),bmb);
 
         sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
         sportRecyclerView.setHasFixedSize(true);
-        sportRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+        sportRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
         getSportFavoriteData();
 
         parkRecyclerView = view.findViewById(R.id.parkRecyclerView);
         parkRecyclerView.setHasFixedSize(true);
-        parkRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+        parkRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
         getParkFavoriteData();
 
         wayRecyclerView = view.findViewById(R.id.wayRecyclerView);
         wayRecyclerView.setHasFixedSize(true);
-        wayRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false));
+        wayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
         getWayFavoriteData();
 
@@ -114,7 +112,7 @@ public class FragmentFavorite extends Fragment {
                             int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
-                                Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             try {
@@ -140,7 +138,7 @@ public class FragmentFavorite extends Fragment {
                                     Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite);
                                     favoriteArrayList1.add(favorite);
                                 }
-                                sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(context, favoriteArrayList1);
+                                sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList1);
                                 sportRecyclerView.setAdapter(sportFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
@@ -165,7 +163,7 @@ public class FragmentFavorite extends Fragment {
                 }
         );
 
-        Volley.newRequestQueue(context).add(request);
+        Volley.newRequestQueue(getActivity()).add(request);
     }
 
     // 공원 즐겨찾기데이터 전부 가져오기
@@ -185,7 +183,7 @@ public class FragmentFavorite extends Fragment {
                             int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
-                                Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             try {
@@ -211,7 +209,7 @@ public class FragmentFavorite extends Fragment {
                                     Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite);
                                     favoriteArrayList2.add(favorite);
                                 }
-                                natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(context, favoriteArrayList2);
+                                natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList2);
                                 parkRecyclerView.setAdapter(natureFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
@@ -235,7 +233,7 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        Volley.newRequestQueue(context).add(request);
+        Volley.newRequestQueue(getActivity()).add(request);
     }
 
     // 두드림길 즐겨찾기데이터 전부 가져오기
@@ -255,7 +253,7 @@ public class FragmentFavorite extends Fragment {
                             int cnt = response.getInt("cnt");
                             if (success == false){
                                 // 유저한테 에러있다고 알리고 리턴.
-                                Toast.makeText(context, "success가 false입니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             try {
@@ -280,7 +278,7 @@ public class FragmentFavorite extends Fragment {
                                     Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite);
                                     favoriteArrayList3.add(favorite);
                                 }
-                                wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(context, favoriteArrayList3);
+                                wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList3);
                                 wayRecyclerView.setAdapter(wayFavoriteRecyclerViewAdapter);
 
                                 // 페이징을 위해서, 오프셋을 증가 시킨다. 그래야 리스트 끝에가서 네트워크 다시 호출할 때,
@@ -304,7 +302,7 @@ public class FragmentFavorite extends Fragment {
                     }
                 }
         );
-        Volley.newRequestQueue(context).add(request);
+        Volley.newRequestQueue(getActivity()).add(request);
     }
 
 
@@ -341,7 +339,7 @@ public class FragmentFavorite extends Fragment {
 //                    }
 //                }
 //        );
-//        Volley.newRequestQueue(context).add(request);
+//        Volley.newRequestQueue(getActivity()).add(request);
 //    }
 //
 //    // 공원 즐겨찾기 삭제
@@ -377,7 +375,7 @@ public class FragmentFavorite extends Fragment {
 //                    }
 //                }
 //        );
-//        Volley.newRequestQueue(context).add(request);
+//        Volley.newRequestQueue(getActivity()).add(request);
 //    }
 //
 //    // 두드림길 즐겨찾기 삭제
@@ -413,6 +411,6 @@ public class FragmentFavorite extends Fragment {
 //                    }
 //                }
 //        );
-//        Volley.newRequestQueue(context).add(request);
+//        Volley.newRequestQueue(getActivity()).add(request);
 //    }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
@@ -29,9 +30,9 @@ import com.yijun.contest.viewdetails.ViewDetailsActivity;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    private FragmentSearch fragmentSearch = new FragmentSearch(MainActivity.this);
-    private FragmentHome fragmentHome = new FragmentHome(MainActivity.this);
-    private FragmentFavorite fragmentFavorite = new FragmentFavorite(MainActivity.this);
+    private FragmentSearch fragmentSearch = new FragmentSearch();
+    private FragmentHome fragmentHome = new FragmentHome();
+    private FragmentFavorite fragmentFavorite = new FragmentFavorite();
 
 
 
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
         // 버튼 선택
         bottomNavigationView.setSelectedItemId(R.id.itemHome);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,

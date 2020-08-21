@@ -41,6 +41,9 @@ public class BoomMenu {
     }
 
     public void getBoomMenu(final Context context, BoomMenuButton bmb){
+        if(context == null){
+            return;
+        }
         this.context = context;
 
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
@@ -52,10 +55,7 @@ public class BoomMenu {
                     createGpsDisabledAlert();
                     return;
                 }
-                if (key == 1){
-                    Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.butterfly)
                         .normalTextRes(R.string.weather)
@@ -63,6 +63,11 @@ public class BoomMenu {
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
+
+                        if (key == 1){
+                            Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Intent intent = new Intent(context, WeatherActivity.class);
 
                         intent.putExtra("lat",lat);

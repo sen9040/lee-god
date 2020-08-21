@@ -44,6 +44,7 @@ import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
+import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
@@ -60,7 +61,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class FragmentSearch extends Fragment {
 
-    Context context;
+
     Button btnSearch;
     String keyword;
     String url;
@@ -69,14 +70,11 @@ public class FragmentSearch extends Fragment {
     private String baseUrl;
     private WayRecyclerViewAdapter wayAdapter;
     private NatureRecyclerViewAdapter natureAdapter;
+    private GpsInfo gps;
 
     public FragmentSearch(){
 
     }
-    public FragmentSearch(Context context){
-        this.context = context;
-    }
-
 
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
@@ -97,6 +95,7 @@ public class FragmentSearch extends Fragment {
     int offset = 0;
     RequestQueue requestQueue;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
@@ -109,61 +108,20 @@ public class FragmentSearch extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        // gps class
+        gps = new GpsInfo(getContext());
+        if (gps.isGetLocation()) {
+            lat = gps.getLatitude();
+            lng = gps.getLongitude();
+            Log.i("AAA","lat : "+lat +" lng : "+lng);
 
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(context,bmb);
+        boomMenu.getBoomMenu(getActivity(),bmb);
 
         radioSport.setChecked(true);
-
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                lat = location.getLatitude();
-                lng = location.getLongitude();
-                Log.i("AAA","lat : "+lat +" lng : "+lng);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION
-                            ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000*60, 100, locationListener);
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -186,17 +144,17 @@ public class FragmentSearch extends Fragment {
                             event = "sport";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getSportInfo(url,offset,context,recyclerView);
+                            getSportInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
                             event = "nature";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getNatureInfo(url,offset,context,recyclerView);
+                            getNatureInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
                             event = "way";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getWayInfo(url,offset,context,recyclerView);
+                            getWayInfo(url,offset,getActivity(),recyclerView);
                         }
 
 
@@ -209,17 +167,13 @@ public class FragmentSearch extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
+
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 offset = 0;
             keyword = editSearch.getText().toString().trim();
             if (keyword.equals("") || keyword.isEmpty()){
-                Toast.makeText(context, "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -227,18 +181,18 @@ public class FragmentSearch extends Fragment {
                             event = "sport";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getSportInfo(url,offset,context,recyclerView);
+                            getSportInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
                             event = "nature";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getNatureInfo(url,offset,context,recyclerView);
+                            getNatureInfo(url,offset,getActivity(),recyclerView);
                             Log.i("AAA","search nature : "+url);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
                             event = "way";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
                             url = baseUrl+"&offset="+offset;
-                            getWayInfo(url,offset,context,recyclerView);
+                            getWayInfo(url,offset,getActivity(),recyclerView);
                         }
                         Log.i("AAA","search radio event: "+event);
 
@@ -246,10 +200,228 @@ public class FragmentSearch extends Fragment {
             }
         });
 
-        return view;
+
     }
+
+        return view;
+}
+    @Override
+    public void onResume() {
+        adapter = new RecyclerViewAdapter(getActivity(),sportInfoArrayList);
+        recyclerView.setAdapter(adapter);
+        super.onResume();
+    }
+    public void getWayInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            wayInfoArrayList.clear();
+        }
+        event = "way";
+        requestQueue = Volley.newRequestQueue(volleyContext);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.i("AAA","way response : "+response);
+                            JSONArray items = response.getJSONArray("items");
+                            cnt = response.getInt("cnt");
+                            Log.i("AAA","List volley cnt : " + cnt);
+                            for (int i = 0; i < items.length(); i++){
+                                JSONObject object = items.getJSONObject(i);
+                                String courseCategory = object.getString("COURSE_CATEGORY");
+                                String courseCategoryNm = object.getString("COURSE_CATEGORY_NM");
+                                String southNorthDiv = object.getString("SOUTH_NORTH_DIV");
+                                String southNorthDivNm = object.getString("SOUTH_NORTH_DIV_NM");
+                                String areaGu = object.getString("AREA_GU");
+                                String distance = object.getString("DISTANCE");
+                                String leadTime = object.getString("LEAD_TIME");
+                                String courseLevel = object.getString("COURSE_LEVEL");
+                                String voteCnt = object.getString("VOTE_CNT");
+                                String relateSubway = object.getString("RELATE_SUBWAY");
+                                String trafficInfo = object.getString("TRAFFIC_INFO");
+                                String content = object.getString("CONTENT");
+                                String pdfFilePath = object.getString("PDF_FILE_PATH");
+                                String courseName = object.getString("COURSE_NAME");
+                                String regDate = object.getString("REG_DATE");
+                                String detailCourse = object.getString("DETAIL_COURSE");
+                                String cpiIdx = object.getString("CPI_IDX");
+                                String cpiName = object.getString("CPI_NAME");
+                                String x = object.getString("X");
+                                String y = object.getString("Y");
+                                String cpiContent = object.getString("CPI_CONTENT");
+                                int isFavorite = object.getInt("isFavorite");
+                                WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
+                                        areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite);
+                                wayInfoArrayList.add(wayInfo);
+                            }
+                            if (offset_cnt == 0){
+                                wayAdapter = new WayRecyclerViewAdapter(volleyContext, wayInfoArrayList);
+                                recycler.setAdapter(wayAdapter);
+                            }else {
+                                wayAdapter.notifyDataSetChanged();
+                            }
+                            // 페이징
+                            offset = offset + cnt;
+                            Log.i("AAA","List volley offset : " + offset);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Log.i("AAA","List error : "+error);
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    public void getNatureInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            natureInfoArrayList.clear();
+        }
+        event = "nature";
+        requestQueue = Volley.newRequestQueue(volleyContext);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("AAA","nature response : "+response);
+                        try {
+                            JSONArray items = response.getJSONArray("items");
+                            cnt = response.getInt("cnt");
+
+                            for (int i = 0; i < items.length(); i++){
+                                JSONObject object = items.getJSONObject(i);
+                                String pIdx = object.getString("P_IDX");
+                                String pPark = object.getString("P_PARK");
+                                String pListContent = object.getString("P_LIST_CONTENT");
+                                String area = object.getString("AREA");
+                                String openDt = object.getString("OPEN_DT");
+                                String mainEquip = object.getString("MAIN_EQUIP");
+                                String mainPlants = object.getString("MAIN_PLANTS");
+                                String guidance = object.getString("GUIDANCE");
+                                String visitRoad = object.getString("VISIT_ROAD");
+                                String useRefer = object.getString("USE_REFER");
+                                String pImg = object.getString("P_IMG");
+                                String pZone = object.getString("P_ZONE");
+                                String pAddr = object.getString("P_ADDR");
+                                String pName = object.getString("P_NAME");
+                                String pAdmintel = object.getString("P_ADMINTEL");
+                                String y = object.getString("LONGITUDE");
+                                String x = object.getString("LATITUDE");
+                                String templateUrl = object.getString("TEMPLATE_URL");
+                                double distance = object.getDouble("distance");
+                                int isFavorite = object.getInt("isFavorite");
+
+                                NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
+                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, isFavorite,distance);
+                                natureInfoArrayList.add(natureInfo);
+                            }
+
+                            if (offset_cnt == 0){
+                                natureAdapter = new NatureRecyclerViewAdapter(volleyContext, natureInfoArrayList);
+                                recycler.setAdapter(natureAdapter);
+                            }else {
+                                natureAdapter.notifyDataSetChanged();
+                            }
+                            // 페이징
+                            offset = offset + cnt;
+                            Log.i("AAA","search nature volley offset : " + offset);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    // 필드 설정 필요한것 requestQueue , recyclerViewAdapter,recyclerView,offset,cnt,sportInfoArrayList
+    public void getSportInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
+        if (offset_cnt == 0){
+            sportInfoArrayList.clear();
+        }
+        event = "sport";
+        requestQueue = Volley.newRequestQueue(volleyContext);
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("AAA","sport response : "+response);
+                try {
+                    cnt = response.getInt("cnt");
+                    if (cnt == 0){
+                        Toast.makeText(getActivity(), "표시 할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    JSONArray items = response.getJSONArray("items");
+                    for(int i = 0; i < items.length(); i++){
+
+                        JSONObject object = items.getJSONObject(i);
+                        String svcId = object.getString("SVCID");
+                        String maxClassNm= object.getString("MAXCLASSNM");
+                        String minClassNm= object.getString("MINCLASSNM");
+                        String svcStaTnm= object.getString("SVCSTATNM");
+                        String svcNm= object.getString("SVCNM");
+                        String paYaTnm= object.getString("PAYATNM");
+                        String placeNm= object.getString("PLACENM");
+                        String useTgtInfo= object.getString("USETGTINFO");
+                        String svcUrl= object.getString("SVCURL");
+                        String x= object.getString("X");
+                        String y= object.getString("Y");
+                        String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
+                        String svcOpnEndDt= object.getString("SVCOPNENDDT");
+                        String rcptEndDt= object.getString("RCPTBGNDT");
+                        String rcptBgnDt= object.getString("RCPTENDDT");
+                        String areaNm= object.getString("AREANM");
+                        String imgUrl= object.getString("IMGURL");
+                        String dtlCont= object.getString("DTLCONT");
+                        String telNo= object.getString("TELNO");
+                        String v_min= object.getString("V_MIN");
+                        String v_max= object.getString("V_MAX");
+                        String revStdDayNm= object.getString("REVSTDDAYNM");
+                        String revStdDay= object.getString("REVSTDDAY");
+                        double distance = object.getDouble("distance");
+                        int isFavorite = object.getInt("isFavorite");
+                        Log.i("AAA","search for : "+svcStaTnm);
+
+                        SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
+                                placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
+                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance,isFavorite);
+                        sportInfoArrayList.add(sportInfo);
+                    }
+                    if (offset_cnt == 0){
+                        adapter = new RecyclerViewAdapter(volleyContext,sportInfoArrayList);
+                        recycler.setAdapter(adapter);
+                    }else {
+                        adapter.notifyDataSetChanged();
+                    }
+                    // 페이징
+                    offset = offset + cnt;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("AAA","search error : "+error);
+            }
+        });
+        requestQueue.add(request);
+    }
+
     private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
-        ProgressDialog asyncDialog = new ProgressDialog(context);
+        ProgressDialog asyncDialog = new ProgressDialog(getActivity());
 
         @Override
         protected void onPreExecute(){
@@ -292,265 +464,5 @@ public class FragmentSearch extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        adapter = new RecyclerViewAdapter(context,sportInfoArrayList);
-        recyclerView.setAdapter(adapter);
-        super.onResume();
-    }
 
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 0){
-            if (ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-                ActivityCompat.requestPermissions((Activity) context,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000*60,
-                    100,
-                    locationListener);
-        }
-
-    }
-
-    // 필드 설정 필요한것 requestQueue , recyclerViewAdapter,recyclerView,offset,cnt,sportInfoArrayList
-    public void getSportInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
-        if (offset_cnt == 0){
-            sportInfoArrayList.clear();
-        }
-        event = "sport";
-        requestQueue = Volley.newRequestQueue(volleyContext);
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("AAA","sport response : "+response);
-                try {
-                    cnt = response.getInt("cnt");
-                    if (cnt == 0){
-                        Toast.makeText(context, "표시 할 수 없습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    JSONArray items = response.getJSONArray("items");
-                    for(int i = 0; i < items.length(); i++){
-
-                        JSONObject object = items.getJSONObject(i);
-                        String svcId = object.getString("SVCID");
-                        String maxClassNm= object.getString("MAXCLASSNM");
-                        String minClassNm= object.getString("MINCLASSNM");
-                        String svcStaTnm= object.getString("SVCSTATNM");
-                        String svcNm= object.getString("SVCNM");
-                        String paYaTnm= object.getString("PAYATNM");
-                        String placeNm= object.getString("PLACENM");
-                        String useTgtInfo= object.getString("USETGTINFO");
-                        String svcUrl= object.getString("SVCURL");
-                        String x= object.getString("X");
-                        String y= object.getString("Y");
-                        String svcOpnBgnDt= object.getString("SVCOPNBGNDT");
-                        String svcOpnEndDt= object.getString("SVCOPNENDDT");
-                        String rcptEndDt= object.getString("RCPTBGNDT");
-                        String rcptBgnDt= object.getString("RCPTENDDT");
-                        String areaNm= object.getString("AREANM");
-                        String imgUrl= object.getString("IMGURL");
-                        String dtlCont= object.getString("DTLCONT");
-                        String telNo= object.getString("TELNO");
-                        String v_min= object.getString("V_MIN");
-                        String v_max= object.getString("V_MAX");
-                        String revStdDayNm= object.getString("REVSTDDAYNM");
-                        String revStdDay= object.getString("REVSTDDAY");
-                        double distance = object.getDouble("distance");
-                        Log.i("AAA","search for : "+svcStaTnm);
-
-                        SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
-                                placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance);
-                        sportInfoArrayList.add(sportInfo);
-                    }
-                    if (offset_cnt == 0){
-                        adapter = new RecyclerViewAdapter(volleyContext,sportInfoArrayList);
-                        recycler.setAdapter(adapter);
-                    }else {
-                        adapter.notifyDataSetChanged();
-                    }
-                    // 페이징
-                    offset = offset + cnt;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("AAA","search error : "+error);
-            }
-        });
-        requestQueue.add(request);
-    }
-
-    public void getNatureInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
-        if (offset_cnt == 0){
-            natureInfoArrayList.clear();
-        }
-        event = "nature";
-        requestQueue = Volley.newRequestQueue(volleyContext);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("AAA","nature response : "+response);
-                        try {
-                            JSONArray items = response.getJSONArray("items");
-                            cnt = response.getInt("cnt");
-
-                            for (int i = 0; i < items.length(); i++){
-                                JSONObject object = items.getJSONObject(i);
-                                String pIdx = object.getString("P_IDX");
-                                String pPark = object.getString("P_PARK");
-                                String pListContent = object.getString("P_LIST_CONTENT");
-                                String area = object.getString("AREA");
-                                String openDt = object.getString("OPEN_DT");
-                                String mainEquip = object.getString("MAIN_EQUIP");
-                                String mainPlants = object.getString("MAIN_PLANTS");
-                                String guidance = object.getString("GUIDANCE");
-                                String visitRoad = object.getString("VISIT_ROAD");
-                                String useRefer = object.getString("USE_REFER");
-                                String pImg = object.getString("P_IMG");
-                                String pZone = object.getString("P_ZONE");
-                                String pAddr = object.getString("P_ADDR");
-                                String pName = object.getString("P_NAME");
-                                String pAdmintel = object.getString("P_ADMINTEL");
-                                String y = object.getString("LONGITUDE");
-                                String x = object.getString("LATITUDE");
-                                String templateUrl = object.getString("TEMPLATE_URL");
-                                double distance = object.getDouble("distance");
-
-                                NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
-                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0,distance);
-                                natureInfoArrayList.add(natureInfo);
-                            }
-
-                            if (offset_cnt == 0){
-                                natureAdapter = new NatureRecyclerViewAdapter(volleyContext, natureInfoArrayList);
-                                recycler.setAdapter(natureAdapter);
-                            }else {
-                                natureAdapter.notifyDataSetChanged();
-                            }
-                            // 페이징
-                            offset = offset + cnt;
-                            Log.i("AAA","search nature volley offset : " + offset);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(request);
-    }
-    public void getWayInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
-        if (offset_cnt == 0){
-            wayInfoArrayList.clear();
-        }
-        event = "way";
-        requestQueue = Volley.newRequestQueue(volleyContext);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.i("AAA","way response : "+response);
-                            JSONArray items = response.getJSONArray("items");
-                            cnt = response.getInt("cnt");
-                            Log.i("AAA","List volley cnt : " + cnt);
-                            for (int i = 0; i < items.length(); i++){
-                                JSONObject object = items.getJSONObject(i);
-                                String courseCategory = object.getString("COURSE_CATEGORY");
-                                String courseCategoryNm = object.getString("COURSE_CATEGORY_NM");
-                                String southNorthDiv = object.getString("SOUTH_NORTH_DIV");
-                                String southNorthDivNm = object.getString("SOUTH_NORTH_DIV_NM");
-                                String areaGu = object.getString("AREA_GU");
-                                String distance = object.getString("DISTANCE");
-                                String leadTime = object.getString("LEAD_TIME");
-                                String courseLevel = object.getString("COURSE_LEVEL");
-                                String voteCnt = object.getString("VOTE_CNT");
-                                String relateSubway = object.getString("RELATE_SUBWAY");
-                                String trafficInfo = object.getString("TRAFFIC_INFO");
-                                String content = object.getString("CONTENT");
-                                String pdfFilePath = object.getString("PDF_FILE_PATH");
-                                String courseName = object.getString("COURSE_NAME");
-                                String regDate = object.getString("REG_DATE");
-                                String detailCourse = object.getString("DETAIL_COURSE");
-                                String cpiIdx = object.getString("CPI_IDX");
-                                String cpiName = object.getString("CPI_NAME");
-                                String x = object.getString("X");
-                                String y = object.getString("Y");
-                                String cpiContent = object.getString("CPI_CONTENT");
-
-                                WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
-                                        areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, 0);
-                                wayInfoArrayList.add(wayInfo);
-                            }
-                            if (offset_cnt == 0){
-                                wayAdapter = new WayRecyclerViewAdapter(volleyContext, wayInfoArrayList);
-                                recycler.setAdapter(wayAdapter);
-                            }else {
-                                wayAdapter.notifyDataSetChanged();
-                            }
-                            // 페이징
-                            offset = offset + cnt;
-                            Log.i("AAA","List volley offset : " + offset);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Log.i("AAA","List error : "+error);
-                    }
-                });
-        requestQueue.add(request);
-    }
-
-    // GPS Disabled Alert
-    private void createGpsDisabledAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Your GPS is disabled! Would you like to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Enable GPS",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                showGpsOptions();
-                            }
-                        })
-                .setNegativeButton("Do nothing",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.setCancelable(false);
-        alert.show();
-    }
-    // show GPS Options
-    private void showGpsOptions() {
-        Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(gpsOptionsIntent);
-    }
 }

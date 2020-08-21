@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:Android="http://schemas.Android.com/apk/res/Android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="NamespaceTypo">
 
     <TextView
         android:id="@+id/txt"
@@ -19,11 +21,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_below="@+id/txt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+
     <TextView
         android:id="@+id/txt_sport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt"
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/nanumeb"
         android:text="스포츠"
@@ -85,6 +98,9 @@
         android:paddingBottom="10dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+    </ScrollView>
 
     <FrameLayout
         Android:layout_width="match_parent"

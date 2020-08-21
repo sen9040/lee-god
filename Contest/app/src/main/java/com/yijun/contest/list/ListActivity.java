@@ -17,6 +17,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -240,11 +241,14 @@ public class ListActivity extends AppCompatActivity {
         String sports = getIntent().getStringExtra("sports");
 
         if (sports.equals("축구")){
-
-            baseUrl = baseUrl+ "/sports?keyword=축구장&lat="+setLat+"&lng="+setLng;
+            String idByANDROID_ID =
+                    Settings.Secure.getString(ListActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+            Log.i("AAA","id : "+idByANDROID_ID);
+            baseUrl = baseUrl+ "/sports?keyword=축구장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             String soccer = "축구장";
             txtSport.setText(soccer);
+            Log.i("AAA","id url : " +url);
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("야구")){
@@ -387,10 +391,10 @@ public class ListActivity extends AppCompatActivity {
                         String revStdDay= object.getString("REVSTDDAY");
                         double distance = object.getDouble("distance");
                         Log.i("AAA","search for : "+svcStaTnm);
-
+                        int isFavorite = object.getInt("isFavorite");
                         SportsInfo sportInfo = new SportsInfo(svcId,maxClassNm,minClassNm,svcStaTnm,svcNm,paYaTnm,
                                 placeNm,useTgtInfo,svcUrl,x,y,svcOpnBgnDt,svcOpnEndDt,rcptBgnDt,rcptEndDt,areaNm,imgUrl,
-                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance);
+                                dtlCont,telNo,v_min,v_max,revStdDayNm,revStdDay,distance,isFavorite);
                         sportInfoArrayList.add(sportInfo);
                     }
                     if (offset_cnt == 0){
@@ -451,9 +455,9 @@ public class ListActivity extends AppCompatActivity {
                                 String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
                                 double distance = object.getDouble("distance");
-
+                                int isFavorite = object.getInt("isFavorite");
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
-                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, 0,distance);
+                                        guidance,visitRoad,useRefer,pImg,pZone,pAddr,pName,pAdmintel,x,y,templateUrl, isFavorite,distance);
                                 natureInfoArrayList.add(natureInfo);
                             }
 
@@ -518,10 +522,10 @@ public class ListActivity extends AppCompatActivity {
                                 String x = object.getString("X");
                                 String y = object.getString("Y");
                                 String cpiContent = object.getString("CPI_CONTENT");
-
+                                int isFavorite = object.getInt("isFavorite");
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, 0);
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite);
                                 wayInfoArrayList.add(wayInfo);
                             }
                             if (offset_cnt == 0){

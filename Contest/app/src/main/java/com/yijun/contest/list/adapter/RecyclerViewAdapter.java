@@ -1,9 +1,11 @@
 package com.yijun.contest.list.adapter;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -160,14 +162,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
+                    final int position = getAdapterPosition();
 
                     int is_favorite = sportInfosList.get(position).getIsFavorite();
                     if (is_favorite == 0){
                         // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addSportFavorite(position);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 추가");
+                        alert.setMessage("즐겨찾기 목록에 추가 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                ((ListActivity)context).addSportFavorite(position);
+                            }
+                        });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
+
                     }else {
-                        ((ListActivity)context).deleteSportFavorite(position);
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 삭제");
+                        alert.setMessage("즐겨찾기 목록에서 삭제 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((ListActivity)context).deleteSportFavorite(position);
+                            }
+                        });
+
                     }
 
                 }

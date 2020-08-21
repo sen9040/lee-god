@@ -39,6 +39,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.boommenu.BoomMenu;
+import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
@@ -68,7 +69,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
     int offset = 0;
     int key;
     RequestQueue requestQueue;
-    String parkingBaseUrl = Utils.SERVER_BASE_URL+"/api/v1/parking";
+    String parkingBaseUrl = Utils.SERVER_BASE_URL + "/api/v1/parking";
     ArrayList<Parking> parkingArrayList = new ArrayList<>();
     ArrayList<MarkerOptions> list = new ArrayList<>();
     // GPS 좌표 가져오기 위한 LocationManager 멤버변수 선언.
@@ -78,6 +79,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
     private String url;
 
     ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>();
+    private GpsInfo gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,139 +102,106 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
 
 
-        BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
+        BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(ViewDetailsActivity.this,bmb);
+        boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb);
         FrameLayout frameLayout = findViewById(R.id.frameLayout);
         frameLayout.bringChildToFront(bmb);
 
-        key = getIntent().getIntExtra("key",0);
-       if (key==1){
-           setting();
-       }else if (key==2){
-           nature_setting();
-       }else {
-           way_setting();
-       }
-        imgSvc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (key == 1) {
-                    SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
-                    double sportLat = Double.parseDouble(sportInfo.getX());
-                    double sportLng = Double.parseDouble(sportInfo.getY());
-                    url = parkingBaseUrl+"/location?lat="+sportLat+"&lng="+sportLng+"&offset=0";
-                    getParkingData(url);
+        // gps class
+        gps = new GpsInfo(getBaseContext());
+        if (gps.isGetLocation()) {
+            lat = gps.getLatitude();
+            lng = gps.getLongitude();
+            Log.i("AAA", "lat details : " + lat + " lng details : " + lng);
 
-                } else if (key == 2){
-                    NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
-                    double natureLat = Double.parseDouble(natureInfo.getX());
-                    double natureLng = Double.parseDouble(natureInfo.getY());
-                    url = parkingBaseUrl+"/location?lat="+natureLat+"&lng="+natureLng+"&offset=0";
-                    getParkingData(url);
-                }else {
+            key = getIntent().getIntExtra("key", 0);
+            if (key == 1) {
+                setting();
+            } else if (key == 2) {
+                nature_setting();
+            } else {
+                way_setting();
+            }
+            imgSvc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (key == 1) {
+                        SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
+                        double sportLat = Double.parseDouble(sportInfo.getX());
+                        double sportLng = Double.parseDouble(sportInfo.getY());
+                        url = parkingBaseUrl + "/location?lat=" + sportLat + "&lng=" + sportLng + "&offset=0";
+                        getParkingData(url);
+
+                    } else if (key == 2) {
+                        NatureInfo natureInfo = (NatureInfo) getIntent().getSerializableExtra("sports");
+                        double natureLat = Double.parseDouble(natureInfo.getX());
+                        double natureLng = Double.parseDouble(natureInfo.getY());
+                        url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
+                        getParkingData(url);
+                    } else {
+
+                    }
+
 
                 }
+            });
 
 
+            btnhiper.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MoveRecord moveRecord = new MoveRecord();
+                    if (key == 1) {
+                        SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
 
-            }
-        });
+                        String svcNm = sportInfo.getSvcNm();
+                        String placeNm = sportInfo.getPlaceNm();
+                        String svcUrl = sportInfo.getSvcUrl();
+                        String svcStaTnm = sportInfo.getSvcStaTnm();
 
+                        if (svcStaTnm.equals("접수종료")) {
+                            Toast.makeText(ViewDetailsActivity.this, "접수가 종료되었습니다."
+                                    , Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
+                            startActivity(i);
+                        }
 
+                        moveRecord.setTitle(svcNm);
+                        moveRecord.setAddress(placeNm);
+                        moveRecord.setUrl(svcUrl);
 
-        btnhiper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MoveRecord moveRecord = new MoveRecord();
-                if (key == 1) {
-                SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
+                        DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                        db.addMoveRecord(moveRecord);
 
-                    String svcNm = sportInfo.getSvcNm();
-                    String placeNm = sportInfo.getPlaceNm();
-                    String svcUrl = sportInfo.getSvcUrl();
-                    String svcStaTnm = sportInfo.getSvcStaTnm();
+                    } else if (key == 2) {
+                        NatureInfo natureInfo = (NatureInfo) getIntent().getSerializableExtra("sports");
 
-                if (svcStaTnm.equals("접수종료")) {
-                    Toast.makeText(ViewDetailsActivity.this, "접수가 종료되었습니다."
-                            , Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
-                    startActivity(i);
+                        String pPark = natureInfo.getpPark();
+                        String pAddr = natureInfo.getpAddr();
+                        String tempUrl = natureInfo.getTemplateUrl();
+
+                        moveRecord.setTitle(pPark);
+                        moveRecord.setAddress(pAddr);
+                        moveRecord.setUrl(tempUrl);
+
+                        DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                        db.addMoveRecord(moveRecord);
+
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(ViewDetailsActivity.this, "링크가 없습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
+            });
 
-                    moveRecord.setTitle(svcNm);
-                    moveRecord.setAddress(placeNm);
-                    moveRecord.setUrl(svcUrl);
 
-                    DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
-                    db.addMoveRecord(moveRecord);
-
-            } else if (key == 2){
-                    NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
-
-                    String pPark = natureInfo.getpPark();
-                    String pAddr = natureInfo.getpAddr();
-                    String tempUrl = natureInfo.getTemplateUrl();
-
-                    moveRecord.setTitle(pPark);
-                    moveRecord.setAddress(pAddr);
-                    moveRecord.setUrl(tempUrl);
-
-                    DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
-                    db.addMoveRecord(moveRecord);
-
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
-                    startActivity(i);
-                }
-                else {
-                    Toast.makeText(ViewDetailsActivity.this,"링크가 없습니다.",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        });
-
-        // 위치기반 서비스를 위해서, 안드로이드 시스템에 위치기반서비스 요청.
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                Log.i("AAA", location.toString());
-                lat = location.getLatitude();
-                lng = location.getLongitude();
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // 유저한테, 이 앱은 위치기반 권한이 있어야 한다고 알려야 한다.
-            // 유저가 권한 설정을 하고 나면, 처리해야 할 코드를 작성하기 위해서,
-            // requestCode 값을 설정한다.
-            ActivityCompat.requestPermissions(ViewDetailsActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
-            return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                5000, 0, locationListener);
-
 
     }
-
 
     /**
      * Manipulates the map once available.
@@ -251,9 +220,9 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String svcNm;
         if (key==1){
             SportsInfo sportInfo =(SportsInfo) getIntent().getSerializableExtra("sports");
-             x= sportInfo.getX();
-             y= sportInfo.getY();
-             svcNm= sportInfo.getSvcNm();
+            x= sportInfo.getX();
+            y= sportInfo.getY();
+            svcNm= sportInfo.getSvcNm();
         }else if (key==2){
             NatureInfo natureInfo =(NatureInfo) getIntent().getSerializableExtra("sports");
             x =natureInfo.getX();
@@ -408,12 +377,10 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
     }
 
+    public void setting () {
 
 
-    public void setting(){
-
-
-        SportsInfo sportInfo =(SportsInfo) getIntent().getSerializableExtra("sports");
+        SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
 
 
         // 사진이 없을시 튕긴다.
@@ -425,9 +392,9 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String svcStaTnm = sportInfo.getSvcStaTnm();
         String imgUrl = sportInfo.getImgUrl();
         String dtlCont = sportInfo.getDtlCont();
-        if (imgUrl.isEmpty() || imgUrl.equals("")){
-           imgSvc.setImageResource(R.drawable.butterfly);
-        }else {
+        if (imgUrl.isEmpty() || imgUrl.equals("")) {
+            imgSvc.setImageResource(R.drawable.butterfly);
+        } else {
             Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);
         }
         String removeStr = null;
@@ -439,22 +406,21 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtSvcNm.setText(svcNm);
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
-        txtExam.setText("상세 정보\n"+removeStr);
-        if (svcStaTnm.equals("접수종료")){
+        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
+        if (svcStaTnm.equals("접수종료")) {
             txtTime.setText(svcStaTnm);
-        }else {
-            if (v_max.isEmpty() || v_max.equals("")){
+        } else {
+            if (v_max.isEmpty() || v_max.equals("")) {
                 txtTime.setText(svcStaTnm);
             }
-            txtTime.setText(svcStaTnm +" : "+v_min+" ~ "+v_max);
+            txtTime.setText(svcStaTnm + " : " + v_min + " ~ " + v_max);
         }
 
 
-
     }
-    public void nature_setting(){
+    public void nature_setting () {
 
-        NatureInfo natureInfo =(NatureInfo) getIntent().getSerializableExtra("sports");
+        NatureInfo natureInfo = (NatureInfo) getIntent().getSerializableExtra("sports");
 
 
         // 사진이 없을시 튕긴다.
@@ -463,9 +429,11 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String paYaTnm = natureInfo.getpName();
         String svcStaTnm = natureInfo.getpAdmintel();
         String imgUrl = natureInfo.getpImg();
-        if (imgUrl.isEmpty() || imgUrl.equals("")){
+        String p_listContent = natureInfo.getpListContent();
+        String mainPlants = natureInfo.getMainPlants();
+        if (imgUrl.isEmpty() || imgUrl.equals("")) {
             imgSvc.setImageResource(R.drawable.butterfly);
-        }else {
+        } else {
             Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);
         }
 
@@ -473,13 +441,13 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
         txtTime.setText(svcStaTnm);
-
+        txtExam.setText("상세 정보\n" + p_listContent + "주요 식물" + mainPlants + "\n" + "\n" + "\n" + "\n");
 
     }
-    public void way_setting(){
+    public void way_setting () {
 
 
-        WayInfo wayInfo =(WayInfo) getIntent().getSerializableExtra("sports");
+        WayInfo wayInfo = (WayInfo) getIntent().getSerializableExtra("sports");
 
 
         // 사진이 없을시 튕긴다.
@@ -487,6 +455,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         String placeNm = wayInfo.getDetailCourse();
         String paYaTnm = wayInfo.getDistance();
         String svcStaTnm = wayInfo.getLeadTime();
+        String content = wayInfo.getContent();
 
 
         txtSvcNm.setText(svcNm);
@@ -494,87 +463,62 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtPaYaTnm.setText(paYaTnm);
         txtTime.setText(svcStaTnm);
 
-
+        txtExam.setText("상세 정보\n" + content + "\n" + "\n" + "\n" + "\n");
 
 
     }
     // html 제거
-    public String removeTag(String html) throws Exception {
-        html =  html.replaceAll("&nbsp;","");
-        return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+    public String removeTag (String html) throws Exception {
+        html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+        return html = html.replaceAll("&nbsp;", "");
 
     }
 
-public void getParkingData(String url){
-        Log.i("AAA","getParking : on");
+    public void getParkingData (String url){
+        Log.i("AAA", "getParking : on");
         requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-            Request.Method.GET,
-            url,
-            null,
-            new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-                    try {
-                        Log.i("AAA","parking response : "+response);
-                        JSONArray items = response.getJSONArray("items");
-                        for (int i =0; i<3; i++){
-                            JSONObject jsonObject = items.getJSONObject(i);
-                            String pay_yn = jsonObject.getString("pay_yn");
-                            String pay_nm = jsonObject.getString("pay_nm");
-                            String parkingname = jsonObject.getString("parking_name");
-                            String addr = jsonObject.getString("addr");
-                            double lat = jsonObject.getDouble("lat");
-                            double lng = jsonObject.getDouble("lng");
-                            double distance = jsonObject.getDouble("distance");
+                        try {
+                            Log.i("AAA", "parking response : " + response);
+                            JSONArray items = response.getJSONArray("items");
+                            for (int i = 0; i < 3; i++) {
+                                JSONObject jsonObject = items.getJSONObject(i);
+                                String pay_yn = jsonObject.getString("pay_yn");
+                                String pay_nm = jsonObject.getString("pay_nm");
+                                String parkingname = jsonObject.getString("parking_name");
+                                String addr = jsonObject.getString("addr");
+                                double lat = jsonObject.getDouble("lat");
+                                double lng = jsonObject.getDouble("lng");
+                                double distance = jsonObject.getDouble("distance");
 
-                            Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
-                            Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
-                            parkingArrayList.add(parking1);
-                            MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname);
-                            markerOptionsArrayList.add(options);
+                                Parking parking1 = new Parking(pay_yn, pay_nm, parkingname, addr, lat, lng);
+                                Log.i("AAA", "parking : " + pay_nm + ", " + pay_yn + ", " + parkingname + ", " + addr + ", " + lat + ", " + lng + ", " + distance);
+                                parkingArrayList.add(parking1);
+                                MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname);
+                                markerOptionsArrayList.add(options);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+
                     }
-
-
-                }
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.i("AAA","getParking error : "+error);
-        }
-    }
-
-    );
-    requestQueue.add(jsonObjectRequest);
-}
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == 0){
-            if(ActivityCompat.checkSelfPermission(ViewDetailsActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(ViewDetailsActivity.this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED){
-
-                ActivityCompat.requestPermissions(ViewDetailsActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
-                return;
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("AAA", "getParking error : " + error);
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    5000,   // 밀리세컨드,  1000 : 1초
-                    0,   // 미터   10m
-                    locationListener);
         }
+
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 
 }
-
