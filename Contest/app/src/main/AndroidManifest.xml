@@ -36,6 +36,7 @@
         <activity
             android:name=".viewdetails.ViewDetailsActivity"
             android:label="@string/title_activity_view_details" />
+        <activity android:name=".moverecord.MoveRecord"/>
         <activity android:name=".airInfo.AirInfoActivity" />
         <activity android:name=".list.ListActivity" />
         <activity android:name=".ranking.RankingActivity" />

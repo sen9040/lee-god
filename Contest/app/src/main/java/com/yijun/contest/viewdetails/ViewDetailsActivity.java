@@ -39,6 +39,8 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.moverecord.data.DatabaseHandler;
+import com.yijun.contest.moverecord.model.MoveRecord;
 import com.yijun.contest.utils.Utils;
 
 import org.json.JSONArray;
@@ -133,11 +135,14 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         btnhiper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MoveRecord moveRecord = new MoveRecord();
                 if (key == 1) {
                 SportsInfo sportInfo = (SportsInfo) getIntent().getSerializableExtra("sports");
 
-                String svcUrl = sportInfo.getSvcUrl();
-                String svcStaTnm = sportInfo.getSvcStaTnm();
+                    String svcNm = sportInfo.getSvcNm();
+                    String placeNm = sportInfo.getPlaceNm();
+                    String svcUrl = sportInfo.getSvcUrl();
+                    String svcStaTnm = sportInfo.getSvcStaTnm();
 
                 if (svcStaTnm.equals("접수종료")) {
                     Toast.makeText(ViewDetailsActivity.this, "접수가 종료되었습니다."
@@ -146,10 +151,28 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
                     startActivity(i);
                 }
+
+                    moveRecord.setTitle(svcNm);
+                    moveRecord.setAddress(placeNm);
+                    moveRecord.setUrl(svcUrl);
+
+                    DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                    db.addMoveRecord(moveRecord);
+
             } else if (key == 2){
                     NatureInfo natureInfo = (NatureInfo)getIntent().getSerializableExtra("sports");
 
+                    String pPark = natureInfo.getpPark();
+                    String pAddr = natureInfo.getpAddr();
                     String tempUrl = natureInfo.getTemplateUrl();
+
+                    moveRecord.setTitle(pPark);
+                    moveRecord.setAddress(pAddr);
+                    moveRecord.setUrl(tempUrl);
+
+                    DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                    db.addMoveRecord(moveRecord);
+
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
                     startActivity(i);
                 }
