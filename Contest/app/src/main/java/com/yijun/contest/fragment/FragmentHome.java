@@ -62,14 +62,14 @@ public class FragmentHome extends Fragment {
     ImageButton btn_gym;
     ImageButton btn_dulle;
     ImageButton btn_park;
-    ImageButton btn_mountain;
+
     private double lat;
     private double lng;
     LocationManager locationManager;
     LocationListener locationListener;
 
     ProgressDialog dialog;
-    int pos_dilaog=0;
+
 
     public FragmentHome(){
     }
@@ -99,7 +99,7 @@ public class FragmentHome extends Fragment {
         btn_gym = view.findViewById(R.id.btn_gym);
         btn_dulle = view.findViewById(R.id.btn_dulle);
         btn_park = view.findViewById(R.id.btn_park);
-        btn_mountain = view.findViewById(R.id.btn_mountain);
+
 
 
 
@@ -183,14 +183,14 @@ public class FragmentHome extends Fragment {
                     return;
                 }
 
-                Intent i = new Intent(context, LodingActivity.class);
+
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","테니스");
                 a.putExtra("key",1);
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_futsal.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +211,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                return;
+
 
             }
         });
@@ -225,7 +225,7 @@ public class FragmentHome extends Fragment {
                     return;
                 }
 
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("lat",lat);
@@ -233,7 +233,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("sports","탁구");
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_multi.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +246,7 @@ public class FragmentHome extends Fragment {
                     return;
                 }
 
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","다목적");
@@ -254,7 +254,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_golf.setOnClickListener(new View.OnClickListener() {
@@ -266,7 +266,7 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","골프");
@@ -274,7 +274,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lng",lng);
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_badminton.setOnClickListener(new View.OnClickListener() {
@@ -286,7 +286,7 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","배드민턴");
@@ -294,7 +294,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_ground.setOnClickListener(new View.OnClickListener() {
@@ -306,7 +306,7 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","운동장");
@@ -314,7 +314,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_gym.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +326,7 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","체육관");
@@ -334,7 +334,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lng",lng);
                 a.putExtra("key",1);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_dulle.setOnClickListener(new View.OnClickListener() {
@@ -346,7 +346,7 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","둘레길");
@@ -354,7 +354,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_park.setOnClickListener(new View.OnClickListener() {
@@ -366,33 +366,16 @@ public class FragmentHome extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","공원");
                 a.putExtra("key",3);
                 startActivity(a);
-                startActivity(i);
-            }
-        });
-        btn_mountain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
-                Intent i = new Intent(context, LodingActivity.class);
 
-                Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
-                a.putExtra("sports","산");
-                a.putExtra("key",4);
-                startActivity(a);
-                startActivity(i);
             }
         });
+
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
