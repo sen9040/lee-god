@@ -3,6 +3,7 @@ package com.yijun.contest.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -66,6 +68,9 @@ public class FragmentHome extends Fragment {
     LocationManager locationManager;
     LocationListener locationListener;
 
+    ProgressDialog dialog;
+    int pos_dilaog=0;
+
     public FragmentHome(){
     }
 
@@ -104,6 +109,8 @@ public class FragmentHome extends Fragment {
         btnSoccer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 // Check GPS Enable
                 LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
                 if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -112,14 +119,12 @@ public class FragmentHome extends Fragment {
                 }
 
 
-
                 Intent i = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports","축구");
                 i.putExtra("key",1);
                 i.putExtra("lat",lat);
                 i.putExtra("lng",lng);
                 startActivity(i);
-
 
 
             }
@@ -134,7 +139,7 @@ public class FragmentHome extends Fragment {
                     return;
                 }
 
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","야구");
@@ -142,7 +147,9 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
+
+
             }
         });
         btn_foot.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +162,7 @@ public class FragmentHome extends Fragment {
                     return;
                 }
 
-                Intent i = new Intent(context, LodingActivity.class);
+
 
                 Intent a = new Intent(context, com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports","족구");
@@ -163,7 +170,7 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat",lat);
                 a.putExtra("lng",lng);
                 startActivity(a);
-                startActivity(i);
+
             }
         });
         btn_tennis.setOnClickListener(new View.OnClickListener() {
@@ -437,6 +444,8 @@ public class FragmentHome extends Fragment {
         return view;
 
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -2,6 +2,7 @@ package com.yijun.contest.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +48,7 @@ import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.utils.Utils;
+import com.yijun.contest.weather.WeatherActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -166,7 +169,8 @@ public class FragmentSearch extends Fragment {
                     createGpsDisabledAlert();
                     return;
                 }
-
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 offset = 0;
             keyword = editSearch.getText().toString().trim();
             if (keyword.equals("") || keyword.isEmpty()){
@@ -245,6 +249,49 @@ public class FragmentSearch extends Fragment {
 
         return view;
     }
+    private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
+        ProgressDialog asyncDialog = new ProgressDialog(context);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            asyncDialog.setCancelable(false);
+            super.onPreExecute();
+        }
+        @Override
+        protected Boolean doInBackground(Void... strings){
+
+            for(int i = 0; i<35000; i++){
+                publishProgress(i);
+
+            }
+
+            return true;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer ...values){
+
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Boolean s){
+            super.onCancelled(s);
+        }
+
+    }
+
 
     @Override
     public void onResume() {

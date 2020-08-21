@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,7 @@ import com.yijun.contest.LodingActivity;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 
+import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WeatherDaily;
@@ -100,9 +103,9 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
 
-        Intent i = new Intent(WeatherActivity.this, LodingActivity.class);
-        startActivity(i);
 
         linearLayoutH = findViewById(R.id.linearLayoutH);
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
@@ -220,6 +223,51 @@ public class WeatherActivity extends AppCompatActivity {
 
 
     }
+    private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
+        ProgressDialog asyncDialog = new ProgressDialog(WeatherActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            asyncDialog.setCancelable(false);
+            super.onPreExecute();
+        }
+        @Override
+        protected Boolean doInBackground(Void... strings){
+
+            for(int i = 0; i<35000; i++){
+                publishProgress(i);
+
+            }
+
+            return true;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer ...values){
+
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Boolean s){
+            super.onCancelled(s);
+        }
+
+    }
+
+
+
 
     public void getWeather(String url){
         requestQueue = Volley.newRequestQueue(WeatherActivity.this);
