@@ -40,6 +40,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.location.GpsInfo;
+import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
@@ -105,7 +106,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb);
-        FrameLayout frameLayout = findViewById(R.id.frameLayout);
+        final FrameLayout frameLayout = findViewById(R.id.frameLayout);
         frameLayout.bringChildToFront(bmb);
 
         // gps class
@@ -120,8 +121,12 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                 setting();
             } else if (key == 2) {
                 nature_setting();
-            } else {
+            } else if(key == 3){
                 way_setting();
+            }else if(key == 4){
+                favoriteSetting();
+            }else {
+                finish();
             }
             imgSvc.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -140,9 +145,19 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                         url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
                         getParkingData(url);
                     } else if(key == 3){
-
+                        WayInfo wayInfo = (WayInfo) getIntent().getSerializableExtra("sports");
+                        double natureLat = Double.parseDouble(wayInfo.getX());
+                        double natureLng = Double.parseDouble(wayInfo.getY());
+                        url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
+                        getParkingData(url);
                     }else if(key == 4){
-
+                        Favorite favorite = (Favorite) getIntent().getSerializableExtra("sports");
+                        double natureLat = Double.parseDouble(favorite.getLat());
+                        double natureLng = Double.parseDouble(favorite.getLng());
+                        url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
+                        getParkingData(url);
+                    }else {
+                        finish();
                     }
 
 
@@ -162,13 +177,10 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                         String svcUrl = sportInfo.getSvcUrl();
                         String svcStaTnm = sportInfo.getSvcStaTnm();
 
-                        if (svcStaTnm.equals("접수종료")) {
-                            Toast.makeText(ViewDetailsActivity.this, "접수가 종료되었습니다."
-                                    , Toast.LENGTH_SHORT).show();
-                        } else {
-                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
-                            startActivity(i);
-                        }
+
+                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
+                         startActivity(i);
+
 
                         moveRecord.setTitle(svcNm);
                         moveRecord.setAddress(placeNm);
@@ -190,18 +202,49 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
                         DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
                         db.addMoveRecord(moveRecord);
-
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
                         startActivity(i);
-                    } else {
-                        Toast.makeText(ViewDetailsActivity.this, "링크가 없습니다.", Toast.LENGTH_SHORT).show();
-                        return;
+                    }else if(key == 3){
+                        WayInfo wayInfo = (WayInfo) getIntent().getSerializableExtra("sports");
+
+                        String pPark = wayInfo.getCpiName();
+                        String pAddr = wayInfo.getTrafficInfo();
+                        String tempUrl = wayInfo.getPageUrl();
+
+                        moveRecord.setTitle(pPark);
+                        moveRecord.setAddress(pAddr);
+                        moveRecord.setUrl(tempUrl);
+
+                        DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                        db.addMoveRecord(moveRecord);
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
+                        startActivity(i);
+                    }else if(key == 4){
+                        Favorite favorite = (Favorite) getIntent().getSerializableExtra("sports");
+
+                        String pPark = favorite.getTitle();
+                        String pAddr = favorite.getAddress();
+                        String tempUrl = favorite.getPageUrl();
+
+                        moveRecord.setTitle(pPark);
+                        moveRecord.setAddress(pAddr);
+                        moveRecord.setUrl(tempUrl);
+
+                        DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
+                        db.addMoveRecord(moveRecord);
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
+                        startActivity(i);
+                    }else {
+                        finish();
                     }
+
+
                 }
             });
 
 
         }
+
 
 
 
@@ -230,13 +273,21 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
             x =natureInfo.getX();
             y = natureInfo.getY();
             svcNm = natureInfo.getpPark();
-        }else {
+        }else if (key==3){
             WayInfo wayInfo =(WayInfo) getIntent().getSerializableExtra("sports");
             x = wayInfo.getX();
             y = wayInfo.getY();
             svcNm = wayInfo.getCpiName();
-
-
+        }else if (key==4){
+            Favorite favorite =(Favorite) getIntent().getSerializableExtra("sports");
+            x = favorite.getLat();
+            y = favorite.getLng();
+            svcNm = favorite.getTitle();
+            Log.i("AAA","lat lng details :"+lat+lng);
+        }else {
+            x = "37.554862899999996";
+            y = "126.97461089999997";
+            svcNm = "";
         }
 
 
@@ -370,8 +421,125 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
             );
             requestQueue.add(jsonObjectRequest);
-        }else {
+        } else if (key == 2){
+            WayInfo wayInfo = (WayInfo) getIntent().getSerializableExtra("sports");
+//            double natureLat = Double.parseDouble(wayInfo.getX());
+//            double natureLng = Double.parseDouble(wayInfo.getY());
+            // 임시로 서울시청 으로
+            x = "37.554862899999996";
+            y = "126.97461089999997";
 
+            url = parkingBaseUrl+"/location?lat="+x+"&lng="+y+"&offset=0";
+            requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+            final String finalSvcNm = svcNm;
+            final String finalSvcNm1 = svcNm;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            try {
+                                Log.i("AAA","parking response : "+response);
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i =0; i<3; i++){
+                                    JSONObject jsonObject = items.getJSONObject(i);
+                                    String pay_yn = jsonObject.getString("pay_yn");
+                                    String pay_nm = jsonObject.getString("pay_nm");
+                                    String parkingname = jsonObject.getString("parking_name");
+                                    String addr = jsonObject.getString("addr");
+                                    double lat = jsonObject.getDouble("lat");
+                                    double lng = jsonObject.getDouble("lng");
+                                    double distance = jsonObject.getDouble("distance");
+
+                                    Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
+                                    Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
+                                    parkingArrayList.add(parking1);
+                                    MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname).
+                                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    markerOptionsArrayList.add(options);
+                                }
+                                for (MarkerOptions options : markerOptionsArrayList){
+                                    mMap.addMarker(options);
+                                }
+                                mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm1));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("AAA","getParking error : "+error);
+                }
+            }
+
+            );
+            requestQueue.add(jsonObjectRequest);
+        } else if (key == 4){
+            Favorite favorite = (Favorite) getIntent().getSerializableExtra("sports");
+            double natureLat = Double.parseDouble(favorite.getLat());
+            double natureLng = Double.parseDouble(favorite.getLng());
+            url = parkingBaseUrl+"/location?lat="+natureLat+"&lng="+natureLng+"&offset=0";
+            requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+            final String finalSvcNm = svcNm;
+            final String finalSvcNm1 = svcNm;
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            try {
+                                Log.i("AAA","parking response : "+response);
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i =0; i<3; i++){
+                                    JSONObject jsonObject = items.getJSONObject(i);
+                                    String pay_yn = jsonObject.getString("pay_yn");
+                                    String pay_nm = jsonObject.getString("pay_nm");
+                                    String parkingname = jsonObject.getString("parking_name");
+                                    String addr = jsonObject.getString("addr");
+                                    double lat = jsonObject.getDouble("lat");
+                                    double lng = jsonObject.getDouble("lng");
+                                    double distance = jsonObject.getDouble("distance");
+
+                                    Parking parking1 = new Parking(pay_yn,pay_nm,parkingname,addr,lat,lng);
+                                    Log.i("AAA","parking : "+pay_nm+", "+pay_yn+", "+parkingname+", "+addr+", "+lat+", "+lng+", "+distance);
+                                    parkingArrayList.add(parking1);
+                                    MarkerOptions options = new MarkerOptions().position(new LatLng(lat, lng)).title(parkingname).
+                                            icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    markerOptionsArrayList.add(options);
+                                }
+                                for (MarkerOptions options : markerOptionsArrayList){
+                                    mMap.addMarker(options);
+                                }
+                                mMap.addMarker(new MarkerOptions().position(main).title(finalSvcNm1));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("AAA","getParking error : "+error);
+                }
+            }
+
+            );
+            requestQueue.add(jsonObjectRequest);
+        }else {
+            mMap.addMarker(new MarkerOptions().position(main).title(""));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(main,16));
         }
 
         Log.i("AAA","에베베베 : "+markerOptionsArrayList.toString());
@@ -408,10 +576,12 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         } catch (Exception e) {
             e.printStackTrace();
         }
+        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
+
         txtSvcNm.setText(svcNm);
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
-        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
+
         if (svcStaTnm.equals("접수종료")) {
             txtTime.setText(svcStaTnm);
         } else {
@@ -446,7 +616,16 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtPlaceNm.setText(placeNm);
         txtPaYaTnm.setText(paYaTnm);
         txtTime.setText(svcStaTnm);
-        txtExam.setText("상세 정보\n" + p_listContent + "주요 식물" + mainPlants + "\n" + "\n" + "\n" + "\n");
+
+        String removeStr = null;
+        try {
+            removeStr = removeTag(mainPlants);
+            removeStr = removeTag(p_listContent)+removeStr;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
 
     }
     public void way_setting () {
@@ -468,10 +647,43 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         txtPaYaTnm.setText(paYaTnm);
         txtTime.setText(svcStaTnm);
 
-        txtExam.setText("상세 정보\n" + content + "\n" + "\n" + "\n" + "\n");
+        String removeStr = null;
+        try {
+            removeStr = removeTag(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
 
 
     }
+
+    private void favoriteSetting() {
+        Favorite favorite = (Favorite) getIntent().getSerializableExtra("sports");
+        String add = favorite.getAddress();
+        String imgUrl = favorite.getImgUrl();
+        String content = favorite.getContent();
+        if (imgUrl == null || imgUrl.equals("")){
+            imgSvc.setImageResource(R.drawable.no_image);
+        }else {
+            Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);;
+        }
+
+
+        txtSvcNm.setText(    favorite.getTitle());
+        txtPlaceNm.setText(add);
+        txtTime.setText( favorite.getTime());
+
+        String removeStr = null;
+        try {
+            removeStr = removeTag(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        txtExam.setText("상세 정보\n" + removeStr + "\n" + "\n" + "\n" + "\n");
+
+    }
+
     // html 제거
     public String removeTag (String html) throws Exception {
 
@@ -493,9 +705,10 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                     public void onResponse(JSONObject response) {
 
                         try {
+                            // 주차장 5개 찍는 중
                             Log.i("AAA", "parking response : " + response);
                             JSONArray items = response.getJSONArray("items");
-                            for (int i = 0; i < 3; i++) {
+                            for (int i = 0; i < 5; i++) {
                                 JSONObject jsonObject = items.getJSONObject(i);
                                 String pay_yn = jsonObject.getString("pay_yn");
                                 String pay_nm = jsonObject.getString("pay_nm");
