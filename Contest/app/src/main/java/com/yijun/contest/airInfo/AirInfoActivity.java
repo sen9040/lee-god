@@ -200,10 +200,10 @@ public class AirInfoActivity extends AppCompatActivity {
 
                     if (avg >= 3){
                         imgCurrent.setImageResource(R.drawable.air_bad);
-                        txt.setText("나쁨, 오늘은 활동하기 좋지않은거같아요..");
+                        txt.setText("좋음, 오늘은 야외활동하기 좋아요!");
                     }else {
                         imgCurrent.setImageResource(R.drawable.air_good);
-                        txt.setText("좋음, 오늘은 야외활동하기 좋아요!");
+                        txt.setText("나쁨, 오늘은 활동하기 좋지않은거같아요..");
                     }
 
                 } catch (JSONException e) {
