@@ -234,6 +234,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
             y = wayInfo.getY();
             svcNm = wayInfo.getCpiName();
 
+
         }
 
 

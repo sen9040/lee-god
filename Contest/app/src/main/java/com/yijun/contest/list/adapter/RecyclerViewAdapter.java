@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -163,10 +164,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View v) {
                     final int position = getAdapterPosition();
-
+                    final String id =
+                            Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+                    final SportsInfo sportsInfo = sportInfosList.get(getAdapterPosition());
+                    final String idx = sportsInfo.getSvcId();
                     int is_favorite = sportInfosList.get(position).getIsFavorite();
                     if (is_favorite == 0){
-                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
                         AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.setTitle("즐겨찾기 추가");
                         alert.setMessage("즐겨찾기 목록에 추가 하시겠습니까?");
@@ -174,14 +177,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                ((ListActivity)context).addSportFavorite(position);
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).addSportFavorite(idx,id,context);
+                                sportInfosList.get(position).setIsFavorite(1);
+                                notifyDataSetChanged();
                             }
                         });
                         alert.setNegativeButton("No",null);
                         alert.setCancelable(false);
                         alert.show();
 
-                    }else {
+                    }  else if (is_favorite == 1){
 
                         AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.setTitle("즐겨찾기 삭제");
@@ -189,9 +195,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ((ListActivity)context).deleteSportFavorite(position);
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).deleteSportFavorite(idx,id,context);
+                                sportInfosList.get(position).setIsFavorite(0);
+                                notifyDataSetChanged();
                             }
                         });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
 
                     }
 
