@@ -51,7 +51,7 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         String pImg = natureInfo.getpImg();
         double distance = natureInfo.getDistance();
         if (pImg.isEmpty() || pImg.equals("")){
-            holder.imgSvc.setImageResource(R.drawable.lost);
+            holder.imgSvc.setImageResource(R.drawable.no_image);
         }else {
             Glide.with(context).load(pImg).into(holder.imgSvc);
         }
