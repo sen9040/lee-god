@@ -62,7 +62,7 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             holder.address.setText(address);
             holder.price.setText(price);
             holder.time.setText(time);
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+            holder.imgFavorite.setImageResource(android.R.drawable.star_on);
 
             if (imgUrl == null || imgUrl.equals("")){
                 holder.img.setImageResource(R.drawable.no_image);
@@ -70,7 +70,7 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
                 Glide.with(context).load(imgUrl).into(holder.img);
             }
         }else{
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+            holder.imgFavorite.setImageResource(android.R.drawable.star_off);
         }
 
     }
