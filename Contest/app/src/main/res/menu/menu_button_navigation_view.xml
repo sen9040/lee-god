@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/itemSearch"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/search"
         android:orderInCategory="100"
-        android:title="Search"/>
+        android:title="Search" />
     <item
         android:id="@+id/itemHome"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/home"
         android:orderInCategory="200"
-        android:title="Home"/>
+        android:title="Home" />
     <item
         android:id="@+id/itemFavorite"
-        android:icon="@android:drawable/ic_menu_agenda"
+        android:icon="@drawable/favorite"
         android:orderInCategory="300"
-        android:title="Favorite"/>
+        android:title="Favorite" />
 </menu>
