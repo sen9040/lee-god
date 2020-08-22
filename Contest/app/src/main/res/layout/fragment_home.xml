@@ -78,7 +78,7 @@
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:layout_gravity="center"
-                            android:background="#ffffff"
+                            android:background="#FFFFFF"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/icon1" />
 
@@ -105,7 +105,7 @@
                             android:layout_height="70dp"
                             android:layout_gravity="center"
 
-                            android:background="#ffffff"
+                            android:background="#FFFFFF"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/icon2" />
 
@@ -133,7 +133,7 @@
                             android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:background="#ffffff"
+                            android:background="#FFFFFF"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/icon3" />
 
@@ -161,7 +161,7 @@
                             android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:background="#ffffff"
+                            android:background="#FFFFFF"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/icon4" />
 
@@ -198,7 +198,7 @@
                             android:layout_height="70dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:background="#ffffff"
+                            android:background="#FFFFFF"
                             android:scaleType="centerCrop"
                             app:srcCompat="@drawable/icon5" />
 
