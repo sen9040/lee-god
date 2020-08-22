@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class FragmentSearch extends Fragment {
     private WayRecyclerViewAdapter wayAdapter;
     private NatureRecyclerViewAdapter natureAdapter;
     private GpsInfo gps;
+    private String idByANDROID_ID;
 
     public FragmentSearch(){
 
@@ -109,14 +111,15 @@ public class FragmentSearch extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+       idByANDROID_ID =
+                Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID).trim();
         // gps class
         gps = new GpsInfo(getContext());
         if (gps.isGetLocation()) {
             lat = gps.getLatitude();
             lng = gps.getLongitude();
-            Log.i("AAA","lat : "+lat +" lng : "+lng);
-
+            Log.i("AAA", "lat : " + lat + " lng : " + lng);
+        }
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
@@ -142,17 +145,17 @@ public class FragmentSearch extends Fragment {
                     if(cnt != 0){
                         if (radioGroup.getCheckedRadioButtonId() == R.id.radioSport){
                             event = "sport";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
                             getSportInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
                             event = "nature";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
                             getNatureInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
                             event = "way";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
                             getWayInfo(url,offset,getActivity(),recyclerView);
                         }
@@ -179,18 +182,19 @@ public class FragmentSearch extends Fragment {
 
                         if (radioGroup.getCheckedRadioButtonId() == R.id.radioSport){
                             event = "sport";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
+                            Log.i("AAA","search url : "+url);
                             getSportInfo(url,offset,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
                             event = "nature";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
                             getNatureInfo(url,offset,getActivity(),recyclerView);
                             Log.i("AAA","search nature : "+url);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
                             event = "way";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng;
+                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
                             getWayInfo(url,offset,getActivity(),recyclerView);
                         }
@@ -200,11 +204,11 @@ public class FragmentSearch extends Fragment {
             }
         });
 
-
+        return view;
     }
 
-        return view;
-}
+
+
     @Override
     public void onResume() {
         adapter = new RecyclerViewAdapter(getActivity(),sportInfoArrayList);

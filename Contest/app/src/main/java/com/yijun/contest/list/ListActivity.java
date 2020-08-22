@@ -39,6 +39,7 @@ import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
+import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
@@ -81,7 +82,8 @@ public class ListActivity extends AppCompatActivity {
     double lng;
     int cnt;
     private String event = "";
-
+    private GpsInfo gps;
+    private String idByANDROID_ID;
 
 
     @Override
@@ -94,66 +96,28 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
 
+        idByANDROID_ID =
+                Settings.Secure.getString(ListActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
 
+        if (lat == 0 || lng == 0 ){
+            lat = getIntent().getDoubleExtra("lat",0);
+            lng = getIntent().getDoubleExtra("lng",0);
+        }
+
+
+        // gps 클래스
+        gps = new GpsInfo(getBaseContext());
+        if (gps.isGetLocation()) {
+            lat = gps.getLatitude();
+            lng = gps.getLongitude();
+            Log.i("AAA", "lat : " + lat + " lng : " + lng);
+
+        }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(ListActivity.this,bmb);
 
-        double mainLat = getIntent().getDoubleExtra("lat",0);
-        double mainLng = getIntent().getDoubleExtra("lng",0);
-
-        if (mainLat == 0 || mainLng == 0 ){
-            locationManager = (LocationManager) ListActivity.this.getSystemService(LOCATION_SERVICE);
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    lat = location.getLatitude();
-                    lng = location.getLongitude();
-                    Log.i("AAA","lat : "+lat +" lng : "+lng);
-                            getSettingUrl(lat,lng);
-
-
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            };
-
-            if (ActivityCompat.checkSelfPermission(ListActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    ListActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions((Activity) ListActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION
-                                ,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000*60, 100, locationListener);
-        }else{
-            getSettingUrl(mainLat,mainLng);
-        }
+        getSettingUrl(lat,lng);
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -241,8 +205,7 @@ public class ListActivity extends AppCompatActivity {
         String sports = getIntent().getStringExtra("sports");
 
         if (sports.equals("축구")){
-            String idByANDROID_ID =
-                    Settings.Secure.getString(ListActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+
             Log.i("AAA","id : "+idByANDROID_ID);
             baseUrl = baseUrl+ "/sports?keyword=축구장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
@@ -252,76 +215,72 @@ public class ListActivity extends AppCompatActivity {
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("야구")){
-            baseUrl = baseUrl+ "/sports?keyword=야구장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=야구장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("야구장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("족구")){
-            baseUrl = baseUrl+ "/sports?keyword=족구장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=족구장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("족구");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
         }else if (sports.equals("테니스")){
-            baseUrl = baseUrl+ "/sports?keyword=테니스장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=테니스장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("테니스");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("풋살")){
-            baseUrl = baseUrl+ "/sports?keyword=풋살&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=풋살&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("풋살경기장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
         }else if (sports.equals("탁구")){
-            baseUrl = baseUrl+ "/sports?keyword=탁구&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=탁구&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("탁구장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("다목적")){
-            baseUrl = baseUrl+ "/sports?keyword=다목적경기장&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=다목적경기장&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("다목적경기장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("골프")){
-            baseUrl = baseUrl+ "/sports?keyword=골프&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=골프&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("파크골프장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("배드민턴")){
-            baseUrl = baseUrl+ "/sports?keyword=배드민턴&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=배드민턴&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("배드민턴장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("운동장")){
-            baseUrl = baseUrl+ "/sports?keyword=운동&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=운동&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("운동장");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
         }else if (sports.equals("체육관")){
-            baseUrl = baseUrl+ "/sports?keyword=체육관&lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+ "/sports?keyword=체육관&lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             txtSport.setText("체육관");
             getSportInfo(url,offset,ListActivity.this,recyclerView);
 
         }else if (sports.equals("둘레길")){
             txtSport.setText("둘레길");
-            baseUrl = baseUrl +"/way"+"?lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl +"/way"+"?lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             getWayInfo(url,offset,ListActivity.this,recyclerView);
             return;
 
-        }else if (sports.equals("산")){
-            baseUrl = baseUrl+ "/산";
-            txtSport.setText("산");
-
-        } else if (sports.equals("공원")){
+        }else if (sports.equals("공원")){
             txtSport.setText("공원");
-            baseUrl = baseUrl+"/park?lat="+setLat+"&lng="+setLng;
+            baseUrl = baseUrl+"/park?lat="+setLat+"&lng="+setLng+"&id="+idByANDROID_ID;
             url = baseUrl+"&offset="+offset;
             getNatureInfo(url,offset,ListActivity.this,recyclerView);
             return;
@@ -329,25 +288,7 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 0){
-            if (ActivityCompat.checkSelfPermission(ListActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(ListActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-                ActivityCompat.requestPermissions((Activity) ListActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000*60,
-                    100,
-                    locationListener);
-        }
-
-    }
 
     // 필드 설정 필요한것 requestQueue , recyclerViewAdapter,recyclerView,offset,cnt,sportInfoArrayList
     public void getSportInfo(String url, final int offset_cnt, final Context volleyContext, final RecyclerView recycler){
@@ -563,6 +504,7 @@ public class ListActivity extends AppCompatActivity {
         try {
             body.put("idx", idx);
             body.put("isFavorite", 1);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -601,6 +543,7 @@ public class ListActivity extends AppCompatActivity {
         try {
             body.put("idx", idx);
             body.put("isFavorite", 1);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -634,11 +577,11 @@ public class ListActivity extends AppCompatActivity {
     public void addWayFavorite(final int position){
         WayInfo wayInfo = wayInfoArrayList.get(position);
         String idx = wayInfo.getCpiIdx();
-
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
             body.put("isFavorite", 1);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -680,6 +623,7 @@ public class ListActivity extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -716,6 +660,7 @@ public class ListActivity extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -752,6 +697,7 @@ public class ListActivity extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("idx", idx);
+            body.put("id",idByANDROID_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }

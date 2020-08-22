@@ -114,7 +114,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
             lat = gps.getLatitude();
             lng = gps.getLongitude();
             Log.i("AAA", "lat details : " + lat + " lng details : " + lng);
-
+        }
             key = getIntent().getIntExtra("key", 0);
             if (key == 1) {
                 setting();
@@ -201,7 +201,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
 
         }
 
-    }
+
 
     /**
      * Manipulates the map once available.
