@@ -63,9 +63,9 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             holder.address.setText(address);
             holder.price.setText(price);
             holder.time.setText(time);
-            holder.imgFavorite.setImageResource(android.R.drawable.star_on);
+            holder.imgFavorite.setImageResource(R.drawable.heart_on);
         }else{
-            holder.imgFavorite.setImageResource(android.R.drawable.star_off);
+            holder.imgFavorite.setImageResource(R.drawable.heart_off);
         }
     }
 
