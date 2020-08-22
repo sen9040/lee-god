@@ -115,7 +115,7 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    app:srcCompat="@drawable/star_off" />
+                    app:srcCompat="@drawable/favorite_off" />
             </LinearLayout>
 
 
