@@ -26,12 +26,13 @@ public class WayInfo implements Serializable {
     private String y;
     private String cpiContent;
     private int isFavorite;
+    private String pageUrl;
 
     public WayInfo(){
 
     }
 
-    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent, int isFavorite) {
+    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent, int isFavorite, String pageUrl) {
         this.courseCategory = courseCategory;
         this.courseCategoryNm = courseCategoryNm;
         this.southNorthDiv = southNorthDiv;
@@ -54,6 +55,15 @@ public class WayInfo implements Serializable {
         this.y = y;
         this.cpiContent = cpiContent;
         this.isFavorite = isFavorite;
+        this.pageUrl = pageUrl;
+    }
+
+    public String getPageUrl() {
+        return pageUrl;
+    }
+
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
     }
 
     public String getCourseCategory() {
