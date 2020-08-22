@@ -2,9 +2,9 @@
     <string name="app_name">Contest</string>
 
     <!--     boom menu String-->
-    <string name="weather">Weather</string>
-    <string name="air_Info">Air Info</string>
-    <string name="moverecord">MoveRecord</string>
+    <string name="weather">날씨</string>
+    <string name="air_Info">대기 정보</string>
+    <string name="moverecord">홈페이지 이동 기록</string>
     <string name="test3">test</string>
 
     <string name="weather_content">Weather content</string>

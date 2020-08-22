@@ -59,8 +59,7 @@ public class BoomMenu {
 
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.butterfly)
-                        .normalTextRes(R.string.weather)
-                        .subNormalTextRes(R.string.weather_content).unableColor(Color.BLACK);
+                        .normalTextRes(R.string.weather);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
@@ -86,8 +85,7 @@ public class BoomMenu {
                 }
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bat)
-                        .normalTextRes(R.string.air_Info)
-                        .subNormalTextRes(R.string.air_Info_content);
+                        .normalTextRes(R.string.air_Info);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
@@ -105,8 +103,7 @@ public class BoomMenu {
                 }
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bear)
-                        .normalTextRes(R.string.moverecord)
-                        .subNormalTextRes(R.string.moverecord_content);
+                        .normalTextRes(R.string.moverecord);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
@@ -120,7 +117,7 @@ public class BoomMenu {
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.bee)
                         .normalTextRes(R.string.test3)
-                        .subNormalTextRes(R.string.test3_content);
+                        .normalTextRes(R.font.nanumround);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
