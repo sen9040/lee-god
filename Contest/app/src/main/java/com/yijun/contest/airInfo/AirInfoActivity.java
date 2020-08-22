@@ -28,8 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +39,8 @@ import java.util.Map;
 public class AirInfoActivity extends AppCompatActivity {
 
     // 날짜를 넣어야 하는데 YYYYMMDD 형식으로 넣어야함
-    String url = "http://openAPI.seoul.go.kr:8088/"+ Utils.AUTH_KEY+"/json/DailyAverageAirQuality/1/5/";
+    String baseUrl = "http://openAPI.seoul.go.kr:8088/"+ Utils.AUTH_KEY+"/json/DailyAverageAirQuality/1/5/";
+    String sumUrl ;
     private RequestQueue requestQueue;
     ArrayList<AirInfo> airInfoArrayList = new ArrayList<>();
     TextView txtNo2;
@@ -56,7 +59,7 @@ public class AirInfoActivity extends AppCompatActivity {
     TextView txt;
 
     private String date ;
-    private String msrste_nm;
+    private String msrste_nm ="";
     private double no2;
     private double o3 ;
     private double co ;
@@ -97,11 +100,25 @@ public class AirInfoActivity extends AppCompatActivity {
 
         Log.i("AAA","air date : "+getDate);
 
-        url = url+getDate+"/강남구";
+        sumUrl = baseUrl+getDate+"/강남구";
 
 
-        getAirInfo(url);
-
+        Log.i("AAA","air date url: "+sumUrl);
+        getAirInfo(sumUrl);
+        if (msrste_nm.equals("")){
+            // 날짜 하루 뺴고 검색
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            DateFormat df = new SimpleDateFormat("YYYYMMdd");
+            cal.add(Calendar.DATE, -1);
+            String dt = df.format(cal.getTime());
+            sumUrl = baseUrl+dt+"/강남구";
+            Log.i("AAA","air date url: "+sumUrl);
+            getAirInfo(sumUrl);
+            if (msrste_nm.equals("")){
+                txt.setText("준비중 입니다.");
+            }
+        }
 
 
     }
@@ -112,6 +129,7 @@ public class AirInfoActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 Log.i("AAA","air response : "+response);
                 try {
+
                     JSONObject dailyObject = response.getJSONObject("DailyAverageAirQuality");
                     JSONArray rowArray = dailyObject.getJSONArray("row");
                     for(int i = 0;i<rowArray.length();i++){
