@@ -80,7 +80,7 @@
                             android:layout_gravity="center"
                             android:background="#FFFFFF"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/icon1" />
+                            app:srcCompat="@drawable/soccer" />
 
                         <TextView
                             android:id="@+id/textView17"
@@ -163,7 +163,7 @@
                             android:layout_weight="1"
                             android:background="#FFFFFF"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/icon4" />
+                            app:srcCompat="@drawable/tennis" />
 
                         <TextView
                             android:id="@+id/textView20"
@@ -200,7 +200,7 @@
                             android:layout_weight="1"
                             android:background="#FFFFFF"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/icon5" />
+                            app:srcCompat="@drawable/futsal" />
 
                         <TextView
                             android:id="@+id/textView21"
@@ -349,7 +349,7 @@
                             android:layout_weight="1"
                             android:background="#FFFFFF"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/icon10_png" />
+                            app:srcCompat="@drawable/field" />
 
                         <TextView
                             android:id="@+id/textView26"
@@ -443,7 +443,7 @@
                             android:layout_weight="1"
                             android:background="#FFFFFF"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/icon13_png" />
+                            app:srcCompat="@drawable/park" />
 
                         <TextView
                             android:id="@+id/textView29"
