@@ -25,7 +25,7 @@
                 android:layout_height="120dp"
 
                 android:scaleType="centerCrop"
-                tools:srcCompat="@drawable/ic_launcher_background" />
+                tools:srcCompat="@drawable/no_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,12 +106,12 @@
 
                 <ImageView
                     android:id="@+id/imgFavorite"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    app:srcCompat="@android:drawable/btn_star_big_off" />
+                    app:srcCompat="@drawable/star_off" />
             </LinearLayout>
 
 
