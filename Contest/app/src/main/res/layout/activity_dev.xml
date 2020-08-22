@@ -67,7 +67,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
-        android:text="TextView"
+        android:text="sen9040@naver.com"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
@@ -90,7 +90,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:text="TextView"
+        android:text="tkdwls0712@naver.com"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 </LinearLayout>

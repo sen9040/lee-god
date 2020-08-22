@@ -52,7 +52,7 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
         int isFavorite = favorite.getIsFavorite();
 
         if (imgUrl == null || imgUrl.equals("")){
-            holder.img.setImageResource(R.drawable.butterfly);
+            holder.img.setImageResource(R.drawable.no_image);
         }else {
             Glide.with(context).load(imgUrl).into(holder.img);
         }

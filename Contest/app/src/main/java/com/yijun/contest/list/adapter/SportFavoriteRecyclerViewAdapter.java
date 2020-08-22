@@ -64,7 +64,7 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
 
             if (imgUrl == null || imgUrl.equals("")){
-                holder.img.setImageResource(R.drawable.butterfly);
+                holder.img.setImageResource(R.drawable.no_image);
             }else {
                 Glide.with(context).load(imgUrl).into(holder.img);
             }
