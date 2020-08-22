@@ -7,39 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".airInfo.AirInfoActivity">
 
-    <TextView
-        android:id="@+id/currentTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginVertical="30dp"
-        android:layout_marginEnd="15dp"
-        android:fontFamily="@font/nanumeb"
-        android:text="오늘의 대기 오염도 정보"
-        android:textColor="#000000"
-        android:textSize="32sp" />
-
-    <ImageView
-        android:id="@+id/imgCurrent"
-        android:layout_width="170dp"
-        android:layout_below="@id/currentTxt"
-        android:layout_height="170dp"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgCurrent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/nanumeb"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="#000000"
-        android:textSize="25sp" />
-
     <FrameLayout
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -59,137 +26,181 @@
             app:bmb_piecePlaceEnum="piecePlace_ham_3" />
 
     </FrameLayout>
-<LinearLayout
-    android:id="@+id/barchartLayout"
-    android:layout_width="wrap_content"
-    android:layout_below="@+id/txt"
-    android:layout_height="wrap_content">
 
-    <org.eazegraph.lib.charts.BarChart
-
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/barchart"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:padding="10dp"
-        app:egFixedBarWidth="true"
-        app:egBarWidth="20dp"
-        app:egLegendHeight="40dp"/>
-</LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/iconLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barchartLayout"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+>
+        <TextView
+            android:id="@+id/currentTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/nanumeb"
+            android:text="오늘의 대기 오염도 정보"
+            android:textColor="#000000"
+            android:textSize="32sp" />
 
         <ImageView
-            android:id="@+id/imgNo2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/imgCurrent"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_below="@id/currentTxt"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/imgO3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/imgCo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/imgSo2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/imgPm10"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:id="@+id/imgPm25"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/nameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iconLayout">
-
         <TextView
-            android:id="@+id/txtNo2"
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgCurrent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/nanumeb"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+
+        <LinearLayout
+            android:id="@+id/barchartLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            android:layout_below="@+id/txt">
 
-        <TextView
-            android:id="@+id/txtO3"
+            <org.eazegraph.lib.charts.BarChart
 
-            android:layout_width="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/barchart"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:padding="10dp"
+                app:egBarWidth="20dp"
+                app:egFixedBarWidth="true"
+                app:egLegendHeight="40dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/iconLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            android:layout_below="@+id/barchartLayout"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtCo"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imgNo2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgO3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgCo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgSo2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgPm10"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgPm25"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            android:layout_below="@+id/iconLayout">
 
-        <TextView
-            android:id="@+id/txtSo2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            <TextView
+                android:id="@+id/txtNo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/txtPm10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            <TextView
+                android:id="@+id/txtO3"
 
-        <TextView
-            android:id="@+id/txtPm25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/nanumeb"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtCo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
+            <TextView
+                android:id="@+id/txtSo2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
 
+            <TextView
+                android:id="@+id/txtPm10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/txtPm25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanumeb"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp"
+                android:layout_marginBottom="80dp"
+                />
+
+        </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
