@@ -1,7 +1,10 @@
 package com.yijun.contest.list.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.yijun.contest.R;
+import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
@@ -93,14 +97,48 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-
+                    final int position = getAdapterPosition();
+                    final String id =
+                            Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+                    final NatureInfo natureInfo = natureInfoArrayList.get(position);
+                    final String idx = natureInfo.getpIdx();
                     int is_favorite = natureInfoArrayList.get(position).getIsFavorite();
                     if (is_favorite == 0){
-                        // 별표가 이미 있으면, 즐겨찾기 삭제 함수 호출!
-                        ((ListActivity)context).addParkFavorite(position);
-                    }else {
-                        ((ListActivity)context).deleteParkFavorite(position);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 추가");
+                        alert.setMessage("즐겨찾기 목록에 추가 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).addNatureFavorite(idx,id,context);
+                                natureInfoArrayList.get(position).setIsFavorite(1);
+                                notifyDataSetChanged();
+                            }
+                        });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
+
+                    }  else if (is_favorite == 1){
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 삭제");
+                        alert.setMessage("즐겨찾기 목록에서 삭제 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).deleteNatureFavorite(idx,id,context);
+                                natureInfoArrayList.get(position).setIsFavorite(0);
+                                notifyDataSetChanged();
+                            }
+                        });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
+
                     }
 
                 }

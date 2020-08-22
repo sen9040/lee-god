@@ -1,8 +1,11 @@
 package com.yijun.contest.list.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -100,7 +103,30 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final int position = getAdapterPosition();
+                    final String id =
+                            Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+                    int is_favorite = favoriteArrayList.get(position).getIsFavorite();
+                    final String idx = favoriteArrayList.get(position).getIdx();
+                    if (is_favorite == 1){
 
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 삭제");
+                        alert.setMessage("즐겨찾기 목록에서 삭제 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).deleteSportFavorite(idx,id,context);
+                                favoriteArrayList.remove(position);
+                                notifyDataSetChanged();
+                        }
+                        });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
+
+                    }
                 }
             });
 
