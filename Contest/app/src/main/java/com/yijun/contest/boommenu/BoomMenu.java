@@ -32,14 +32,7 @@ public class BoomMenu {
 
     }
 
-    public BoomMenu(double lat, double lng) {
-        this.lat = lat;
-        this.lng = lng;
-    }
 
-    public BoomMenu(int key) {
-        this.key = key;
-    }
 
     public void getBoomMenu(final Context context, BoomMenuButton bmb){
         if(context == null){
@@ -50,12 +43,6 @@ public class BoomMenu {
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
 
             if (i == 0){
-
-                LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-                if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    createGpsDisabledAlert();
-                    return;
-                }
 
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.butterfly)
@@ -134,30 +121,5 @@ public class BoomMenu {
 
     }
 
-    // GPS Disabled Alert
-    private void createGpsDisabledAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Your GPS is disabled! Would you like to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Enable GPS",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                showGpsOptions();
-                            }
-                        })
-                .setNegativeButton("Do nothing",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.setCancelable(false);
-        alert.show();
-    }
-    // show GPS Options
-    private void showGpsOptions() {
-        Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        context.startActivity(gpsOptionsIntent);
-    }
+
 }

@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
@@ -125,6 +126,17 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
 
                     }
 
+                }
+            });
+
+            cardView.setOnClickListener(new DebouncedOnClickListener() {
+                @Override
+                public void onDebouncedClick(View v) {
+                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+                    Intent intent = new Intent(context,ViewDetailsActivity.class);
+                    intent.putExtra("sports",favorite);
+                    intent.putExtra("key",4);
+                    context.startActivity(intent);
                 }
             });
 

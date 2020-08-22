@@ -34,8 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
-import com.yijun.contest.LodingActivity;
-import com.yijun.contest.MainActivity;
+import com.yijun.contest.DebouncedOnClickListener;
+
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
@@ -66,8 +66,8 @@ public class FragmentHome extends Fragment {
     ImageButton btn_park;
     TextView textView2;
 
-    private double lat ;
-    private double lng ;
+    private double lat = 0;
+    private double lng = 0;
     LocationManager locationManager;
     LocationListener locationListener;
 
@@ -82,19 +82,25 @@ public class FragmentHome extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        BoomMenuButton bmb = (BoomMenuButton) view.findViewById(R.id.bmb);
-        BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(getActivity(), bmb);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
+        BoomMenu boomMenu = new BoomMenu();
+        boomMenu.getBoomMenu(getActivity(),bmb);
         // gps 클래스
         gps = new GpsInfo(getContext());
         if (gps.isGetLocation()) {
             lat = gps.getLatitude();
             lng = gps.getLongitude();
-            Log.i("AAA", "lat : " + lat + " lng : " + lng);
+            Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+        }else {
+            gps.showSettingsAlert();
 
         }
+
+
+
 
         recyclerView = view.findViewById(R.id.recyclerView);
         btnSoccer = view.findViewById(R.id.btnSoccer);
@@ -120,72 +126,74 @@ public class FragmentHome extends Fragment {
             }
         });
 
-
-        btnSoccer.setOnClickListener(new View.OnClickListener() {
+                                        // 인터벌 클래스
+        btnSoccer.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onDebouncedClick(View v) {
+                gps = new GpsInfo(getContext());
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent i = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports", "축구");
                 i.putExtra("key", 1);
                 i.putExtra("lat", lat);
                 i.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps 가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(i);
-
-
             }
         });
-        btn_baseball.setOnClickListener(new View.OnClickListener() {
+        btn_baseball.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                gps = new GpsInfo(getContext());
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "야구");
                 a.putExtra("key", 1);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
-
             }
         });
-        btn_foot.setOnClickListener(new View.OnClickListener() {
+
+
+        btn_foot.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
 
-                    return;
+                gps = new GpsInfo(getContext());
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+                }else {
+                    gps.showSettingsAlert();
                 }
-
 
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "족구");
@@ -193,33 +201,34 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_tennis.setOnClickListener(new View.OnClickListener() {
+
+        btn_tennis.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                gps = new GpsInfo(getContext());
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "테니스");
                 a.putExtra("key", 1);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
@@ -228,16 +237,19 @@ public class FragmentHome extends Fragment {
 
             }
         });
-        btn_futsal.setOnClickListener(new View.OnClickListener() {
+
+        btn_futsal.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
 
-                    return;
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+                }else {
+                    gps.showSettingsAlert();
                 }
-
 
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "풋살");
@@ -245,34 +257,35 @@ public class FragmentHome extends Fragment {
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
 
-
             }
         });
-        btn_pingpong.setOnClickListener(new View.OnClickListener() {
+
+        btn_pingpong.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
 
-                    return;
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 a.putExtra("sports", "탁구");
                 a.putExtra("key", 1);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
@@ -281,24 +294,25 @@ public class FragmentHome extends Fragment {
 
             }
         });
-        btn_multi.setOnClickListener(new View.OnClickListener() {
+
+        btn_multi.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "다목적");
                 a.putExtra("key", 1);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
@@ -307,152 +321,153 @@ public class FragmentHome extends Fragment {
 
             }
         });
-        btn_golf.setOnClickListener(new View.OnClickListener() {
+
+        btn_golf.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "골프");
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 a.putExtra("key", 1);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_badminton.setOnClickListener(new View.OnClickListener() {
+
+        btn_badminton.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "배드민턴");
                 a.putExtra("key", 1);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_ground.setOnClickListener(new View.OnClickListener() {
+
+        btn_ground.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "운동장");
                 a.putExtra("key", 1);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_gym.setOnClickListener(new View.OnClickListener() {
+
+        btn_gym.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "체육관");
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 a.putExtra("key", 1);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_dulle.setOnClickListener(new View.OnClickListener() {
+
+        btn_dulle.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "둘레길");
                 a.putExtra("key", 2);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 startActivity(a);
-
             }
         });
-        btn_park.setOnClickListener(new View.OnClickListener() {
+
+        btn_park.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Check GPS Enable
-                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
-                    return;
+                }else {
+                    gps.showSettingsAlert();
                 }
-
-
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "공원");
                 a.putExtra("key", 3);
                 if (lat == 0 || lng == 0) {
-                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Gps 가 불안정합니다. 잠시만 기다려 주십시오", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 CheckTypesTask task = new CheckTypesTask();
