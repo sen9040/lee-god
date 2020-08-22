@@ -140,6 +140,11 @@ public class FragmentFavorite extends Fragment {
                                     String PaYaTnm = jsonObject.getString("PAYATNM");
                                     String SvcStaTnm = jsonObject.getString("SVCSTATNM");
                                     String pageUrl = jsonObject.getString("SVCURL");
+                                    String lat = jsonObject.getString("X");
+                                    String lng = jsonObject.getString("Y");
+                                    String content = jsonObject.getString("DTLCONT");
+
+
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -149,7 +154,8 @@ public class FragmentFavorite extends Fragment {
 
 
 
-                                    Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite,pageUrl);
+                                    Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm,
+                                            PaYaTnm, SvcStaTnm, is_favorite,pageUrl,lat,lng,content);
                                     favoriteArrayList1.add(favorite);
                                 }
                                 sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList1);
@@ -216,10 +222,14 @@ public class FragmentFavorite extends Fragment {
                                     String pName = jsonObject.getString("P_NAME");
                                     String pAdmintel = jsonObject.getString("P_ADMINTEL");
                                     String templateUrl = jsonObject.getString("TEMPLATE_URL");
+                                    String lat = jsonObject.getString("LATITUDE");
+                                    String lng = jsonObject.getString("LONGITUDE");
+                                    String content1 = jsonObject.getString("P_LISTCONTENT");
+                                    String content2 = jsonObject.getString("MAIN_PLANTS");
                                     if (templateUrl.equals("")){
                                         templateUrl = "http://parks.seoul.go.kr/";
                                     }
-
+                                    String content = content1+content2;
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -229,7 +239,10 @@ public class FragmentFavorite extends Fragment {
 
                                     Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite,templateUrl);
+
+
+
+                                    Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite,templateUrl,lat,lng,content);
                                     favoriteArrayList2.add(favorite);
                                 }
                                 natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList2);
@@ -292,6 +305,7 @@ public class FragmentFavorite extends Fragment {
                                     String detailCourse = jsonObject.getString("DETAIL_COURSE");
                                     String distance = jsonObject.getString("DISTANCE");
                                     String leadTime = jsonObject.getString("LEAD_TIME");
+                                    String content = jsonObject.getString("CONTENT");
                                     String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
@@ -299,10 +313,13 @@ public class FragmentFavorite extends Fragment {
                                     }else {
                                         is_favorite = items.getJSONObject(i).getInt("isFavorite");
                                     }
+                                    // 임시 서울 시청
+                                    String lat = "37.554862899999996";
+                                    String lng = "126.97461089999997";
 
                                     Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite,pageUrl);
+                                    Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite,pageUrl,lat,lng,content);
                                     favoriteArrayList3.add(favorite);
                                 }
                                 wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList3);

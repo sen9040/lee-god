@@ -396,6 +396,9 @@ public class ListActivity extends AppCompatActivity {
                                 String y = object.getString("LONGITUDE");
                                 String x = object.getString("LATITUDE");
                                 String templateUrl = object.getString("TEMPLATE_URL");
+                                if (templateUrl.equals("")){
+                                    templateUrl = "http://parks.seoul.go.kr/";
+                                }
                                 double distance = object.getDouble("distance");
                                 int isFavorite = object.getInt("isFavorite");
                                 NatureInfo natureInfo = new NatureInfo(pIdx,pPark,pListContent,area,openDt,mainEquip,mainPlants,
@@ -465,9 +468,10 @@ public class ListActivity extends AppCompatActivity {
                                 String y = object.getString("Y");
                                 String cpiContent = object.getString("CPI_CONTENT");
                                 int isFavorite = object.getInt("isFavorite");
+                                String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite);
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite,pageUrl);
                                 wayInfoArrayList.add(wayInfo);
                             }
                             if (offset_cnt == 0){

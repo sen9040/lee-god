@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,6 +136,7 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
                     Favorite favorite = favoriteArrayList.get(getAdapterPosition());
                     Intent intent = new Intent(context,ViewDetailsActivity.class);
                     intent.putExtra("sports",favorite);
+                    Log.i("AAA","way Favorite adapter title: " + favorite.getTitle());
                     intent.putExtra("key",4);
                     context.startActivity(intent);
                 }
