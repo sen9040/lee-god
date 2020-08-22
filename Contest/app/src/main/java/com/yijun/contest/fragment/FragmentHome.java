@@ -87,6 +87,7 @@ public class FragmentHome extends Fragment {
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
+        bmb.bringToFront();
         // gps 클래스
         gps = new GpsInfo(getContext());
         if (gps.isGetLocation()) {

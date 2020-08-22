@@ -81,18 +81,6 @@ public class WeatherActivity extends AppCompatActivity {
     TextView currentLocationTxt;
     ImageView currentWeatherImg;
     TextView currentWeatherTxt;
-    TextView forecastTxt_1;
-    ImageView forecastImg_1;
-    TextView forecastTxt_2;
-    ImageView forecastImg_2;
-    TextView forecastTxt_3;
-    ImageView forecastImg_3;
-    TextView forecastTxt_4;
-    ImageView forecastImg_4;
-    TextView forecastTxt_5;
-    ImageView forecastImg_5;
-    TextView forecastTxt_6;
-    ImageView forecastImg_6;
 
     LocationManager locationManager;
     LocationListener locationListener;
@@ -114,10 +102,9 @@ public class WeatherActivity extends AppCompatActivity {
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(WeatherActivity.this,bmb);
-
+        bmb.bringToFront();
         linearLayoutH = findViewById(R.id.linearLayoutH);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-//                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         linearLayoutTxtH = findViewById(R.id.linearLayoutTxtH);
 
 
@@ -127,27 +114,11 @@ public class WeatherActivity extends AppCompatActivity {
         currentLocationTxt = findViewById(R.id.currentLocationTxt);
         currentWeatherImg = findViewById(R.id.currentWeatherImg);
         currentWeatherTxt = findViewById(R.id.currentWeatherTxt);
-//        forecastImg_1 = findViewById(R.id.forecastImg_1);
-//        forecastTxt_1 = findViewById(R.id.forecastTxt_1);
-//        forecastImg_2 = findViewById(R.id.forecastImg_2);
-//        forecastTxt_2 = findViewById(R.id.forecastTxt_2);
-//        forecastImg_3 = findViewById(R.id.forecastImg_3);
-//        forecastTxt_3 = findViewById(R.id.forecastTxt_3);
-//        forecastImg_4 = findViewById(R.id.forecastImg_4);
-//        forecastTxt_4 = findViewById(R.id.forecastTxt_4);
-//        forecastImg_5 = findViewById(R.id.forecastImg_5);
-//        forecastTxt_5 = findViewById(R.id.forecastTxt_5);
-//        forecastImg_6 = findViewById(R.id.forecastImg_6);
-//        forecastTxt_6 = findViewById(R.id.forecastTxt_6);
 
         double mainLat = getIntent().getDoubleExtra("lat",0);
         double mainLng = getIntent().getDoubleExtra("lng",0);
 
-//        if (mainLat != 0 || mainLng != 0 ){
-//
-//        }else {
-//            url = "?lat="+mainLat+"&lon="+mainLng+"&exclude=hourly,minutely&appid=6896cf20ec1e12eac4c59197b748fd27&lang=kr&units=metric";
-//        }
+
 
         url = "?lat=37.5207083&lon=126.8079374&exclude=hourly,minutely&appid=6896cf20ec1e12eac4c59197b748fd27&lang=kr&units=metric";
         getWeather(baseUrl+url);

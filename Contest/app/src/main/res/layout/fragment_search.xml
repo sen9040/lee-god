@@ -80,14 +80,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/searchLayout"
         />
-    <FrameLayout
-        Android:layout_width="wrap_content"
-        Android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+
 
         <com.nightonke.boommenu.BoomMenuButton
             android:id="@+id/bmb"
@@ -100,7 +93,7 @@
             app:bmb_normalColor="#000000"
             app:bmb_piecePlaceEnum="piecePlace_ham_3" />
 
-    </FrameLayout>
+
 
 
 
