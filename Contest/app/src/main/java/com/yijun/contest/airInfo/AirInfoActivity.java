@@ -53,6 +53,7 @@ public class AirInfoActivity extends AppCompatActivity {
     ImageView imgPm10;
     ImageView imgPm25;
     ImageView imgCurrent;
+    TextView txt;
 
     private String date ;
     private String msrste_nm;
@@ -83,6 +84,7 @@ public class AirInfoActivity extends AppCompatActivity {
         imgPm10 = findViewById(R.id.imgPm10);
         imgPm25 = findViewById(R.id.imgPm25);
         imgCurrent = findViewById(R.id.imgCurrent);
+        txt = findViewById(R.id.txt);
 
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
@@ -198,8 +200,10 @@ public class AirInfoActivity extends AppCompatActivity {
 
                     if (avg >= 3){
                         imgCurrent.setImageResource(R.drawable.air_bad);
+                        txt.setText("나쁨, 오늘은 활동하기 좋지않은거같아요..");
                     }else {
                         imgCurrent.setImageResource(R.drawable.air_good);
+                        txt.setText("좋음, 오늘은 야외활동하기 좋아요!");
                     }
 
                 } catch (JSONException e) {
