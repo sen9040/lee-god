@@ -177,6 +177,7 @@ public class ListActivity extends AppCompatActivity {
                 for(int i = 0; i<10000; i++){
                     publishProgress(i);
 
+
                 }
             return true;
 
