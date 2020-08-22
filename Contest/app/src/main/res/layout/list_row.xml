@@ -116,7 +116,7 @@
                 android:layout_weight="1"
                 android:padding="3dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/star_off" />
+                app:srcCompat="@drawable/heart_off" />
 
         </LinearLayout>
 
