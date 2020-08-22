@@ -139,7 +139,9 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                         double natureLng = Double.parseDouble(natureInfo.getY());
                         url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
                         getParkingData(url);
-                    } else {
+                    } else if(key == 3){
+
+                    }else if(key == 4){
 
                     }
 

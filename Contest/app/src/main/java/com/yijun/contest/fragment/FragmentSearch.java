@@ -39,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nightonke.boommenu.BoomMenuButton;
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.MainActivity;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
@@ -119,7 +120,10 @@ public class FragmentSearch extends Fragment {
         if (gps.isGetLocation()) {
             lat = gps.getLatitude();
             lng = gps.getLongitude();
-            Log.i("AAA", "lat : " + lat + " lng : " + lng);
+            Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+        }else {
+            gps.showSettingsAlert();
         }
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
@@ -168,40 +172,46 @@ public class FragmentSearch extends Fragment {
         });
 
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        btnSearch.setOnClickListener(new DebouncedOnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onDebouncedClick(View v) {
+                if (gps.isGetLocation()) {
+                    lat = gps.getLatitude();
+                    lng = gps.getLongitude();
+                    Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
+
+                }else {
+                    gps.showSettingsAlert();
+                }
 
                 CheckTypesTask task = new CheckTypesTask();
                 task.execute();
                 offset = 0;
-            keyword = editSearch.getText().toString().trim();
-            if (keyword.equals("") || keyword.isEmpty()){
-                Toast.makeText(getActivity(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+                keyword = editSearch.getText().toString().trim();
+                if (keyword.equals("") || keyword.isEmpty()){
+                    Toast.makeText(getActivity(), "검색어를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                        if (radioGroup.getCheckedRadioButtonId() == R.id.radioSport){
-                            event = "sport";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
-                            url = baseUrl+"&offset="+offset;
-                            Log.i("AAA","search url : "+url);
-                            getSportInfo(url,offset,getActivity(),recyclerView);
-                        }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
-                            event = "nature";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
-                            url = baseUrl+"&offset="+offset;
-                            getNatureInfo(url,offset,getActivity(),recyclerView);
-                            Log.i("AAA","search nature : "+url);
-                        }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
-                            event = "way";
-                            baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
-                            url = baseUrl+"&offset="+offset;
-                            getWayInfo(url,offset,getActivity(),recyclerView);
-                        }
-                        Log.i("AAA","search radio event: "+event);
-
-
+                if (radioGroup.getCheckedRadioButtonId() == R.id.radioSport){
+                    event = "sport";
+                    baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/sportsearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
+                    url = baseUrl+"&offset="+offset;
+                    Log.i("AAA","search url : "+url);
+                    getSportInfo(url,offset,getActivity(),recyclerView);
+                }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioNature){
+                    event = "nature";
+                    baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
+                    url = baseUrl+"&offset="+offset;
+                    getNatureInfo(url,offset,getActivity(),recyclerView);
+                    Log.i("AAA","search nature : "+url);
+                }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
+                    event = "way";
+                    baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
+                    url = baseUrl+"&offset="+offset;
+                    getWayInfo(url,offset,getActivity(),recyclerView);
+                }
+                Log.i("AAA","search radio event: "+event);
             }
         });
 

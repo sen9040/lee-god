@@ -31,7 +31,6 @@ public class MoveRecord extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MoveRecord.this));
 
-
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(MoveRecord.this,bmb);

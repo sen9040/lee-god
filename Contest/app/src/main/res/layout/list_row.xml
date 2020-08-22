@@ -25,7 +25,7 @@
             android:layout_height="150dp"
 
             android:scaleType="centerCrop"
-            tools:srcCompat="@drawable/noImage" />
+            tools:srcCompat="@drawable/no_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,13 +35,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtSvcNm"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="5dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/nanumeb"
@@ -52,8 +53,9 @@
 
                 <TextView
                     android:id="@+id/txtPlaceNm"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/nanumeb"
@@ -65,6 +67,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -106,12 +110,13 @@
 
             <ImageView
                 android:id="@+id/imgFavorite"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:padding="3dp"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/heart_off" />
 
         </LinearLayout>
 

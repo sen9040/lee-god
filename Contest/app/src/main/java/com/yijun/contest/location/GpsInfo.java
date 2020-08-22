@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -98,6 +99,7 @@ public class GpsInfo extends Service implements LocationListener {
                             // 위도 경도 저장
                             lat = location.getLatitude();
                             lon = location.getLongitude();
+                            Log.i("AAA"," gps lon 1: "+lon);
                         }
                     }
                 }
@@ -114,6 +116,7 @@ public class GpsInfo extends Service implements LocationListener {
                             if (location != null) {
                                 lat = location.getLatitude();
                                 lon = location.getLongitude();
+                                Log.i("AAA"," gps lon 2: "+lon);
                             }
                         }
                     }

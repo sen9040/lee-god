@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
@@ -62,9 +63,9 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             holder.address.setText(address);
             holder.price.setText(price);
             holder.time.setText(time);
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
+            holder.imgFavorite.setImageResource(android.R.drawable.star_on);
         }else{
-            holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);
+            holder.imgFavorite.setImageResource(android.R.drawable.star_off);
         }
     }
 
@@ -93,14 +94,18 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             price = itemView.findViewById(R.id.price);
             time = itemView.findViewById(R.id.time);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
-            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+
+            cardView.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-
-
-                    return false;
+                public void onDebouncedClick(View v) {
+                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
+                    Intent intent = new Intent(context,ViewDetailsActivity.class);
+                    intent.putExtra("sports",favorite);
+                    intent.putExtra("key",4);
+                    context.startActivity(intent);
                 }
             });
+
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

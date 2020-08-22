@@ -13,11 +13,13 @@
         android:id="@+id/currentLocationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="현재 위치"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/mainfont"
+        android:gravity="center"
+        android:text="현재 위치"
+        android:textColor="#000000"
+        android:textSize="40sp" />
 
     <ImageView
         android:id="@+id/currentWeatherImg"
@@ -31,14 +33,16 @@
         android:id="@+id/currentWeatherTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="현재 날씨 및 온도 습도 "
         android:layout_below="@+id/currentWeatherImg"
         android:layout_centerHorizontal="true"
-        android:textSize="30sp"
-        />
+        android:fontFamily="@font/nanumeb"
+        android:gravity="center"
+        android:text="현재 날씨 및 온도 습도 "
+        android:textColor="#000000"
+        android:textSize="25sp" />
     <LinearLayout
         android:id="@+id/linearLayoutH"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
