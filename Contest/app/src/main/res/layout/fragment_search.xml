@@ -10,11 +10,11 @@
 
     <EditText
         android:id="@+id/editSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="20dp"
         android:fontFamily="@font/nanumeb"
         android:hint="검색어를 입력하세요"
         android:textColor="#000000"
@@ -26,16 +26,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/editSearch"
-        android:background="#FFF8C4"
+        android:background="@drawable/button"
+        android:fontFamily="@font/nanumeb"
         android:text="검색"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textSize="17sp" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editSearch"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
         android:orientation="horizontal"
         >
 
@@ -43,20 +45,25 @@
             android:id="@+id/radioSport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumeb"
             android:text="스포츠"
-        />
+            android:textSize="18sp" />
+
         <RadioButton
             android:id="@+id/radioNature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumeb"
             android:text="공원"
-            />
+            android:textSize="18sp" />
+
         <RadioButton
             android:id="@+id/radioWay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumeb"
             android:text="둘레길"
-            />
+            android:textSize="18sp" />
 
     </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView

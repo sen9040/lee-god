@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class BoomMenu {
                 HamButton.Builder builder = new HamButton.Builder()
                         .normalImageRes(R.drawable.butterfly)
                         .normalTextRes(R.string.weather)
-                        .subNormalTextRes(R.string.weather_content);
+                        .subNormalTextRes(R.string.weather_content).unableColor(Color.BLACK);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
