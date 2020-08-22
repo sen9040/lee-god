@@ -1,13 +1,16 @@
 package com.yijun.contest.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -75,7 +78,8 @@ public class FragmentFavorite extends Fragment {
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
-
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
         idByANDROID_ID =
                 Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID).trim();
         sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
@@ -120,6 +124,10 @@ public class FragmentFavorite extends Fragment {
                                 Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            if (cnt == 0 && favoriteArrayList1.size() == 0){
+                                // todo  즐겨찾기 없을시
+                            }
+                            Log.i("가져와", response.toString());
                             try {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
@@ -131,6 +139,7 @@ public class FragmentFavorite extends Fragment {
                                     String PlaceNm = jsonObject.getString("PLACENM");
                                     String PaYaTnm = jsonObject.getString("PAYATNM");
                                     String SvcStaTnm = jsonObject.getString("SVCSTATNM");
+                                    String pageUrl = jsonObject.getString("SVCURL");
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -138,9 +147,9 @@ public class FragmentFavorite extends Fragment {
                                         is_favorite = items.getJSONObject(i).getInt("isFavorite");
                                     }
 
-                                    Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite);
+
+                                    Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm, PaYaTnm, SvcStaTnm, is_favorite,pageUrl);
                                     favoriteArrayList1.add(favorite);
                                 }
                                 sportFavoriteRecyclerViewAdapter = new SportFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList1);
@@ -191,6 +200,10 @@ public class FragmentFavorite extends Fragment {
                                 Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            if (cnt == 0 && favoriteArrayList2.size() == 0){
+                                // todo  즐겨찾기 없을시
+                            }
+                            Log.i("가져와", response.toString());
                             try {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
@@ -202,6 +215,11 @@ public class FragmentFavorite extends Fragment {
                                     String pAddr = jsonObject.getString("P_ADDR");
                                     String pName = jsonObject.getString("P_NAME");
                                     String pAdmintel = jsonObject.getString("P_ADMINTEL");
+                                    String templateUrl = jsonObject.getString("TEMPLATE_URL");
+                                    if (templateUrl.equals("")){
+                                        templateUrl = "http://parks.seoul.go.kr/";
+                                    }
+
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -211,7 +229,7 @@ public class FragmentFavorite extends Fragment {
 
                                     Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite);
+                                    Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite,templateUrl);
                                     favoriteArrayList2.add(favorite);
                                 }
                                 natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList2);
@@ -261,6 +279,9 @@ public class FragmentFavorite extends Fragment {
                                 Toast.makeText(getActivity(), "success가 false입니다.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            if (cnt == 0 && favoriteArrayList3.size() == 0){
+                                // todo  즐겨찾기 없을시
+                            }
                             try {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
@@ -271,6 +292,7 @@ public class FragmentFavorite extends Fragment {
                                     String detailCourse = jsonObject.getString("DETAIL_COURSE");
                                     String distance = jsonObject.getString("DISTANCE");
                                     String leadTime = jsonObject.getString("LEAD_TIME");
+                                    String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
                                         is_favorite = 0;
@@ -280,7 +302,7 @@ public class FragmentFavorite extends Fragment {
 
                                     Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite);
+                                    Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite,pageUrl);
                                     favoriteArrayList3.add(favorite);
                                 }
                                 wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList3);
@@ -521,5 +543,42 @@ public class FragmentFavorite extends Fragment {
                 }
         );
         Volley.newRequestQueue(context).add(request);
+    }
+    class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
+        ProgressDialog asyncDialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중..");
+            asyncDialog.show();
+            asyncDialog.setCancelable(false);// 바꿔야됨
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... strings) {
+
+            for (int i = 0; i < 10000; i++) {
+                publishProgress(i);
+
+            }
+            return true;
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+
+            asyncDialog.dismiss();
+            super.onPostExecute(s);
+        }
+
+
+        @Override
+        protected void onCancelled(Boolean s) {
+            super.onCancelled(s);
+        }
+
     }
 }

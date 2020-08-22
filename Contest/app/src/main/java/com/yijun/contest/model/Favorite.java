@@ -11,12 +11,13 @@ public class Favorite implements Serializable {
     private String price;
     private String time;
     private int isFavorite;
+    private String pageUrl;
 
     public Favorite(){
 
     }
 
-    public Favorite(int id, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite) {
+    public Favorite(int id, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite, String pageUrl) {
         this.id = id;
         this.idx = idx;
         this.imgUrl = imgUrl;
@@ -25,6 +26,15 @@ public class Favorite implements Serializable {
         this.price = price;
         this.time = time;
         this.isFavorite = isFavorite;
+        this.pageUrl = pageUrl;
+    }
+
+    public String getPageUrl() {
+        return pageUrl;
+    }
+
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
     }
 
     public int getId() {

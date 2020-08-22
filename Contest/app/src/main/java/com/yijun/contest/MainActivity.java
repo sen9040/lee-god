@@ -25,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.fragment.FragmentHome;
 import com.yijun.contest.fragment.FragmentSearch;
+import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent i = new Intent(MainActivity.this,LodingActivity.class);
+        startActivity(i);
 
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -64,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        Intent i = new Intent(MainActivity.this,LodingActivity.class);
-        startActivity(i);
+
 
     }
 
