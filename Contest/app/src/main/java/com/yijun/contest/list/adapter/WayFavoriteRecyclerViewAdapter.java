@@ -54,6 +54,7 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
             holder.address.setText(address);
             holder.price.setText(price);
             holder.time.setText(time);
+            holder.img.setImageResource(R.drawable.walk);
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
         }else{
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_off);

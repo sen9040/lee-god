@@ -52,6 +52,8 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         holder.txtPlaceNm.setText(detailCourse);
         holder.txtPaYaTnm.setText(distance);
         holder.txtTime.setText(leadTime);
+        holder.imgSvc.setImageResource(R.drawable.walk);
+
 
         if (wayInfo.getIsFavorite() == 1){
             holder.imgFavorite.setImageResource(android.R.drawable.btn_star_big_on);
