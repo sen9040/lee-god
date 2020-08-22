@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
         Android:layout_height="wrap_content"
         Android:layout_width="wrap_content">
 
@@ -23,6 +24,7 @@
             android:layout_alignParentBottom="true"
             app:bmb_buttonEnum="ham"
             app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+            app:bmb_normalColor="#000000"
             app:bmb_piecePlaceEnum="piecePlace_ham_3" />
 
     </FrameLayout>
@@ -44,7 +46,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
         android:layout_centerVertical="true"
         android:layout_marginTop="30dp"
