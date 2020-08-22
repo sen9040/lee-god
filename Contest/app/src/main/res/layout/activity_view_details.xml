@@ -119,7 +119,7 @@
                     android:id="@+id/txtExm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanumeb"
+                    android:fontFamily="@font/riud"
                     android:text="상세설명"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -150,14 +150,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
+
         <com.nightonke.boommenu.BoomMenuButton
             android:id="@+id/bmb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bmb_buttonEnum="ham"
-            app:bmb_piecePlaceEnum="piecePlace_ham_3"
             app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
-            />
+            app:bmb_piecePlaceEnum="piecePlace_ham_3"
+            map:bmb_normalColor="#000000" />
 
     </FrameLayout>
 

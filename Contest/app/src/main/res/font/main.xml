@@ -11,4 +11,10 @@
         android:fontWeight="900"
         android:font="@font/nanumeb"/>
 
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="900"
+        android:font="@font/riud"/>
+
 </font-family>

@@ -131,7 +131,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(i);
 
 
@@ -157,7 +158,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
 
@@ -183,6 +185,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -207,6 +211,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -231,6 +237,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
 
@@ -256,6 +264,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -280,6 +290,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -304,6 +316,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -328,6 +342,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -352,6 +368,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -376,6 +394,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -400,6 +420,8 @@ public class FragmentHome extends Fragment {
                     Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -418,6 +440,12 @@ public class FragmentHome extends Fragment {
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "공원");
                 a.putExtra("key", 3);
+                if (lat == 0 || lng == 0) {
+                    Toast.makeText(getActivity(), "Gps가 불안정합니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                CheckTypesTask task = new CheckTypesTask();
+                task.execute();
                 startActivity(a);
 
             }
@@ -435,7 +463,7 @@ public class FragmentHome extends Fragment {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             asyncDialog.setMessage("로딩중..");
             asyncDialog.show();
-            asyncDialog.setCancelable(false);
+            asyncDialog.setCancelable(false);// 바꿔야됨
             super.onPreExecute();
         }
 
