@@ -32,6 +32,7 @@ public class MoveRecord extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MoveRecord.this));
 
 
+<<<<<<< Updated upstream
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(MoveRecord.this,bmb);
@@ -55,5 +56,7 @@ public class MoveRecord extends AppCompatActivity {
         // 어댑터를 연결해야지 화면에 표시가 됨.
         recyclerViewAdapter = new RecyclerViewAdapter(MoveRecord.this, moveRecordArrayList);
         recyclerView.setAdapter(recyclerViewAdapter);
+=======
+>>>>>>> Stashed changes
     }
 }
