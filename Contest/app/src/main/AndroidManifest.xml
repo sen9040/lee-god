@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LodingActivity"></activity>
+        <activity android:name=".devActivity"></activity>
+        <activity android:name=".LodingActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,7 +37,7 @@
         <activity
             android:name=".viewdetails.ViewDetailsActivity"
             android:label="@string/title_activity_view_details" />
-        <activity android:name=".moverecord.MoveRecord"/>
+        <activity android:name=".moverecord.MoveRecord" />
         <activity android:name=".airInfo.AirInfoActivity" />
         <activity android:name=".list.ListActivity" />
         <activity android:name=".ranking.RankingActivity" />

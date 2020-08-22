@@ -35,7 +35,7 @@ import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.fragment.FragmentSearch;
-import com.yijun.contest.list.adapter.FavoriteRecyclerViewAdapter;
+
 import com.yijun.contest.list.adapter.NatureRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
@@ -67,7 +67,7 @@ public class ListActivity extends AppCompatActivity {
     String natureTestUrl = "http://openapi.seoul.go.kr:8088/474f4e6f42746b6436386354566d65/json/SearchParkInfoService/1/25/";
 
 
-    int list_total_count;
+
     RecyclerViewAdapter adapter;
     NatureRecyclerViewAdapter natureAdapter;
     WayRecyclerViewAdapter wayAdapter;
@@ -174,8 +174,9 @@ public class ListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... strings){
 
-                for(int i = 0; i<20000; i++){
+                for(int i = 0; i<10000; i++){
                     publishProgress(i);
+
 
                 }
             return true;
@@ -550,7 +551,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                natureTestUrl + "/api/v1/favorite",
+                Utils.SERVER_BASE_URL + "/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -588,7 +589,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "localhost:5776/api/v1/favorite",
+                Utils.SERVER_BASE_URL +"/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -630,7 +631,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL +"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -643,7 +644,7 @@ public class ListActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                    Log.i("AAA","sport delete error : "+error);
                     }
                 }
         );
@@ -667,7 +668,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL +"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -704,7 +705,7 @@ public class ListActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL +"/api/v1/favorite/delete",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
