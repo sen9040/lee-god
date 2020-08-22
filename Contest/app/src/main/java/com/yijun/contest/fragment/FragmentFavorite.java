@@ -3,6 +3,7 @@ package com.yijun.contest.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +51,7 @@ public class FragmentFavorite extends Fragment {
     NatureFavoriteRecyclerViewAdapter natureFavoriteRecyclerViewAdapter;
     WayFavoriteRecyclerViewAdapter wayFavoriteRecyclerViewAdapter;
 
-    RecyclerViewAdapter recyclerViewAdapter;
-    NatureRecyclerViewAdapter natureRecyclerViewAdapter;
-    WayRecyclerViewAdapter wayRecyclerViewAdapter;
+
 
     ArrayList<Favorite> favoriteArrayList1 = new ArrayList<>();
     ArrayList<Favorite> favoriteArrayList2 = new ArrayList<>();
@@ -60,6 +59,10 @@ public class FragmentFavorite extends Fragment {
 
     int offset = 0;
     int cnt;
+    private String idByANDROID_ID;
+    private String parkUrl;
+    private String sportUrl;
+    private String wayUrl;
 
 
     public FragmentFavorite(){
@@ -73,6 +76,8 @@ public class FragmentFavorite extends Fragment {
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
 
+        idByANDROID_ID =
+                Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID).trim();
         sportRecyclerView = view.findViewById(R.id.sportRecyclerView);
         sportRecyclerView.setHasFixedSize(true);
         sportRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
@@ -99,10 +104,10 @@ public class FragmentFavorite extends Fragment {
     public void getSportFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-
+        sportUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/sport?id="+idByANDROID_ID+"&offset="+offset;
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite/sport",
+                Request.Method.GET,sportUrl
+                ,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -170,10 +175,10 @@ public class FragmentFavorite extends Fragment {
     public void getParkFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-
+        parkUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/park?id="+idByANDROID_ID+"&offset="+offset;
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite/park",
+                Request.Method.GET,parkUrl
+                ,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -240,10 +245,10 @@ public class FragmentFavorite extends Fragment {
     public void getWayFavoriteData() {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-
+        wayUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/way?id="+idByANDROID_ID+"&offset="+offset;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite/way",
+                wayUrl,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -305,112 +310,216 @@ public class FragmentFavorite extends Fragment {
         Volley.newRequestQueue(getActivity()).add(request);
     }
 
+        // 스포츠
+    public void addSportFavorite(String idx, String id, final Context context){
 
-//    // 스포츠 즐겨찾기 삭제
-//    public void deleteSportFavorite(final int position){
-//        Favorite favorite = favoriteArrayList1.get(position);
-//
-//        // 서버에 보내기 위해서 필요
-//        String idx = favorite.getIdx();
-//
-//        JSONObject body = new JSONObject();
-//        try {
-//            body.put("idx", idx);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JsonObjectRequest request = new JsonObjectRequest(
-//                Request.Method.POST,
-//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
-//                body,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Favorite favorite = favoriteArrayList1.get(position);
-//                        favorite.setIsFavorite(0);
-//                        sportFavoriteRecyclerViewAdapter.notifyDataSetChanged();
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }
-//        );
-//        Volley.newRequestQueue(getActivity()).add(request);
-//    }
-//
-//    // 공원 즐겨찾기 삭제
-//    public void deleteNatureFavorite(final int position){
-//        Favorite favorite = favoriteArrayList2.get(position);
-//
-//        // 서버에 보내기 위해서 필요
-//        String idx = favorite.getIdx();
-//
-//        JSONObject body = new JSONObject();
-//        try {
-//            body.put("idx", idx);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JsonObjectRequest request = new JsonObjectRequest(
-//                Request.Method.POST,
-//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
-//                body,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Favorite favorite = favoriteArrayList2.get(position);
-//                        favorite.setIsFavorite(0);
-//                        natureFavoriteRecyclerViewAdapter.notifyDataSetChanged();
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }
-//        );
-//        Volley.newRequestQueue(getActivity()).add(request);
-//    }
-//
-//    // 두드림길 즐겨찾기 삭제
-//    public void deleteWayFavorite(final int position){
-//        Favorite favorite = favoriteArrayList3.get(position);
-//
-//        // 서버에 보내기 위해서 필요
-//        String idx = favorite.getIdx();
-//
-//        JSONObject body = new JSONObject();
-//        try {
-//            body.put("idx", idx);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JsonObjectRequest request = new JsonObjectRequest(
-//                Request.Method.POST,
-//                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
-//                body,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Favorite favorite = favoriteArrayList3.get(position);
-//                        favorite.setIsFavorite(0);
-//                        natureFavoriteRecyclerViewAdapter.notifyDataSetChanged();
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }
-//        );
-//        Volley.newRequestQueue(getActivity()).add(request);
-//    }
+        Log.i("AAA","idx : "+idx+", id "+id);
+
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("isFavorite", 1);
+            body.put("id",id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Toast.makeText(context, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("AAA"," delete error : "+error);
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    // 공원 즐겨찾기 삭제
+    public void addNatureFavorite(String idx, String id, final Context context){
+
+
+        // 서버에 보내기 위해서 필요
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("id",id);
+            body.put("isFavorite", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(context, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    // 두드림길 즐겨찾기 삭제
+    public void addWayFavorite(String idx, String id, final Context context){
+
+
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("id",id);
+            body.put("isFavorite", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    // 스포츠 즐겨찾기 삭제
+    public void deleteSportFavorite(String idx, String id, final Context context){
+
+        Log.i("AAA","idx : "+idx+", id "+id);
+
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("id",id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("AAA"," delete error : "+error);
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    // 공원 즐겨찾기 삭제
+    public void deleteNatureFavorite(String idx, String id, final Context context){
+
+
+        // 서버에 보내기 위해서 필요
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("id",id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                       Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
+
+    // 두드림길 즐겨찾기 삭제
+    public void deleteWayFavorite(String idx, String id, final Context context){
+
+
+
+
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", idx);
+            body.put("id",id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        Volley.newRequestQueue(context).add(request);
+    }
 }

@@ -1,7 +1,10 @@
 package com.yijun.contest.list.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,15 +86,43 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
             time = itemView.findViewById(R.id.time);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+
+                    return false;
+                }
+            });
+
             imgFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Favorite favorite = favoriteArrayList.get(getAdapterPosition());
-//                    int isFavorite = favorite.getIsFavorite();
-//                    if (isFavorite == 1){
-//                        FragmentFavorite fragmentFavorite = new FragmentFavorite();
-//                        fragmentFavorite.deleteWayFavorite(getAdapterPosition());
-//                    }
+                    final int position = getAdapterPosition();
+                    Favorite favorite = favoriteArrayList.get(position);
+                    int isFavorite = favorite.getIsFavorite();
+                    if (isFavorite == 1){
+                        final String id =
+                                Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
+
+                        final String idx = favoriteArrayList.get(position).getIdx();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.setTitle("즐겨찾기 삭제");
+                        alert.setMessage("즐겨찾기 목록에서 삭제 하시겠습니까?");
+                        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FragmentFavorite frag = new FragmentFavorite();
+                                (frag).deleteWayFavorite(idx,id,context);
+                                favoriteArrayList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        });
+                        alert.setNegativeButton("No",null);
+                        alert.setCancelable(false);
+                        alert.show();
+
+                    }
 
                 }
             });
