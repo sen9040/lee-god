@@ -2,15 +2,16 @@
     <string name="app_name">Public Sports</string>
 
     <!--     boom menu String-->
+
     <string name="weather">날씨</string>
     <string name="air_Info">대기 정보</string>
     <string name="moverecord">홈페이지 이동 기록</string>
-    <string name="test3">test</string>
+    <string name="ranking">랭킹</string>
 
-    <string name="weather_content">Weather content</string>
-    <string name="air_Info_content">Air Info content</string>
-    <string name="moverecord_content">MoveRecord_content</string>
-    <string name="test3_content">test3_content</string>
+    <string name="weather_content">현재 날씨와 6일간의 예보</string>
+    <string name="air_Info_content">현재 대기 정보</string>
+    <string name="moverecord_content">홈페이지 이동기록</string>
+    <string name="ranking_content">랭킹 페이지</string>
     <string name="title_activity_view_details">Map</string>
 
 </resources>

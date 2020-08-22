@@ -1,6 +1,7 @@
 package com.yijun.contest.list.adapter;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 
@@ -219,6 +220,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                   i.putExtra("sports",sportsInfo);
                   i.putExtra("key",1);
                   context.startActivity(i);
+
               }
           });
         }

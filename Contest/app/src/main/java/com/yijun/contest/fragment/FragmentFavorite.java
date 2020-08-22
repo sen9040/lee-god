@@ -307,6 +307,8 @@ public class FragmentFavorite extends Fragment {
                                     String distance = jsonObject.getString("DISTANCE");
                                     String leadTime = jsonObject.getString("LEAD_TIME");
                                     String content = jsonObject.getString("CONTENT");
+                                    String x = jsonObject.getString("X");
+                                    String y = jsonObject.getString("Y");
                                     String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
                                     int is_favorite;
                                     if (items.getJSONObject(i).isNull("isFavorite")){
@@ -315,8 +317,8 @@ public class FragmentFavorite extends Fragment {
                                         is_favorite = items.getJSONObject(i).getInt("isFavorite");
                                     }
                                     // 임시 서울 시청
-                                    String lat = "37.554862899999996";
-                                    String lng = "126.97461089999997";
+                                    String lat = x;
+                                    String lng = y;
 
                                     Log.i("가져와", response.toString());
 

@@ -1,5 +1,6 @@
 package com.yijun.contest.list.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -103,6 +104,7 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
                     intent.putExtra("sports",favorite);
                     intent.putExtra("key",4);
                     context.startActivity(intent);
+
                 }
             });
 

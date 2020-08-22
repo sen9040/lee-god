@@ -155,6 +155,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
                         double natureLat = Double.parseDouble(favorite.getLat());
                         double natureLng = Double.parseDouble(favorite.getLng());
                         url = parkingBaseUrl + "/location?lat=" + natureLat + "&lng=" + natureLng + "&offset=0";
+
                         getParkingData(url);
                     }else {
                         finish();
@@ -283,7 +284,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
             x = favorite.getLat();
             y = favorite.getLng();
             svcNm = favorite.getTitle();
-            Log.i("AAA","lat lng details :"+lat+lng);
+            Log.i("AAA","lat lng details :"+x+y);
         }else {
             x = "37.554862899999996";
             y = "126.97461089999997";

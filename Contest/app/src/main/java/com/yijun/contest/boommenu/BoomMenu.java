@@ -100,24 +100,34 @@ public class BoomMenu {
                     }
                 });
                 bmb.addBuilder(builder);
-            }else if(i == 3){
+            }else if (i == 3) {
+                if (key == 1) {
+                    Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.bee)
-                        .normalTextRes(R.string.test3)
-                        .normalTextRes(R.font.nanumround);
+                        .normalImageRes(R.drawable.butterfly)
+                        .normalTextRes(R.string.ranking);
+
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
-                        Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
+
+
+                        Intent intent = new Intent(context, WeatherActivity.class);
+
+                        intent.putExtra("lat", lat);
+                        intent.putExtra("lng", lng);
+                        Toast.makeText(context, "click" + index, Toast.LENGTH_SHORT).show();
+                        context.startActivity(intent);
+
                     }
                 });
                 bmb.addBuilder(builder);
+
             }
-
-        }
-
-
-
+            }
 
     }
 
