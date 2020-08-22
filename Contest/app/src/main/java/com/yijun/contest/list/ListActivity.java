@@ -174,8 +174,9 @@ public class ListActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... strings){
 
-                for(int i = 0; i<20000; i++){
+                for(int i = 0; i<10000; i++){
                     publishProgress(i);
+
 
                 }
             return true;
