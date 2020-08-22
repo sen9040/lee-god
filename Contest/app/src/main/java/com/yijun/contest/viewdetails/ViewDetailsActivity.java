@@ -397,6 +397,8 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         } else {
             Glide.with(ViewDetailsActivity.this).load(imgUrl).into(imgSvc);
         }
+
+
         String removeStr = null;
         try {
             removeStr = removeTag(dtlCont);
@@ -469,8 +471,10 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
     }
     // html 제거
     public String removeTag (String html) throws Exception {
-        html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-        return html = html.replaceAll("&nbsp;", "");
+
+         html =  html.replaceAll("&nbsp;", "");
+         html = html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+        return html;
 
     }
 
@@ -520,5 +524,7 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         );
         requestQueue.add(jsonObjectRequest);
     }
+
+
 
 }
