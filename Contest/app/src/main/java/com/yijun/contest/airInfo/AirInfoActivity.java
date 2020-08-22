@@ -52,6 +52,7 @@ public class AirInfoActivity extends AppCompatActivity {
     ImageView imgSo2;
     ImageView imgPm10;
     ImageView imgPm25;
+    ImageView imgCurrent;
 
     private String date ;
     private String msrste_nm;
@@ -81,6 +82,7 @@ public class AirInfoActivity extends AppCompatActivity {
         imgSo2 = findViewById(R.id.imgSo2);
         imgPm10 = findViewById(R.id.imgPm10);
         imgPm25 = findViewById(R.id.imgPm25);
+        imgCurrent = findViewById(R.id.imgCurrent);
 
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
@@ -143,48 +145,61 @@ public class AirInfoActivity extends AppCompatActivity {
 
                     mBarChart.startAnimation();
 
-                    txtNo2.setText("이산화질소 농도 : "+no2+" ppm");
-                    txtO3.setText("오존 농도 : "+o3+" ppm");
-                    txtCo.setText("일산화탄소 농도 : "+co+" ppm");
-                    txtSo2.setText("이산화질소 농도 : "+so2+" ppm");
-                    txtPm10.setText("미세먼지 : "+pm10+" ㎍/㎥");
-                    txtPm25.setText("초미세먼지 : "+pm25+" ㎍/㎥");
+                    txtNo2.setText(+no2+" ppm");
+                    txtO3.setText(o3+" ppm");
+                    txtCo.setText(+co+" ppm");
+                    txtSo2.setText(+so2+" ppm");
+                    txtPm10.setText(+pm10+" ㎍/㎥");
+                    txtPm25.setText(+pm25+" ㎍/㎥");
 
+                    int avg = 0;
                     if(no2 >0.06){
                         // 나쁨
+                        avg = avg +1;
                         imgNo2.setImageResource(R.drawable.air_bad);
                     }else {
                         imgNo2.setImageResource(R.drawable.air_good);
                     }
                     if(o3 >0.06){
                         // 나쁨
+                        avg = avg +1;
                         imgO3.setImageResource(R.drawable.air_bad);
                     }else{
                         imgO3.setImageResource(R.drawable.air_good);
                     }
                     if(co >9){
                         // 나쁨
+                        avg = avg +1;
                         imgCo.setImageResource(R.drawable.air_bad);
                     }else {
                         imgCo.setImageResource(R.drawable.air_good);
                     }
                     if(so2 >0.05){
                         // 나쁨
+                        avg = avg +1;
                         imgSo2.setImageResource(R.drawable.air_bad);
                     }else {
                         imgSo2.setImageResource(R.drawable.air_good);
                     }
                     if(pm10 >50){
                         // 나쁨
+                        avg = avg +1;
                         imgPm10.setImageResource(R.drawable.air_bad);
                     }else {
                         imgPm10.setImageResource(R.drawable.air_good);
                     }
                     if(pm25 >35){
                         // 나쁨
+                        avg = avg +1;
                         imgPm25.setImageResource(R.drawable.air_bad);
                     }else {
                         imgPm25.setImageResource(R.drawable.air_good);
+                    }
+
+                    if (avg >= 3){
+                        imgCurrent.setImageResource(R.drawable.air_bad);
+                    }else {
+                        imgCurrent.setImageResource(R.drawable.air_good);
                     }
 
                 } catch (JSONException e) {
