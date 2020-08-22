@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class FragmentHome extends Fragment {
     ImageButton btn_gym;
     ImageButton btn_dulle;
     ImageButton btn_park;
+    TextView textView2;
 
     private double lat ;
     private double lng ;
@@ -108,6 +110,15 @@ public class FragmentHome extends Fragment {
         btn_gym = view.findViewById(R.id.btn_gym);
         btn_dulle = view.findViewById(R.id.btn_dulle);
         btn_park = view.findViewById(R.id.btn_park);
+        textView2= view.findViewById(R.id.textView2);
+
+        textView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), com.yijun.contest.devActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         btnSoccer.setOnClickListener(new View.OnClickListener() {
