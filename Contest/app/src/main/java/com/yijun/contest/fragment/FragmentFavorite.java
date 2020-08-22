@@ -328,7 +328,7 @@ public class FragmentFavorite extends Fragment {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -347,7 +347,7 @@ public class FragmentFavorite extends Fragment {
         Volley.newRequestQueue(context).add(request);
     }
 
-    // 공원 즐겨찾기 삭제
+    // 공원 즐겨찾기 추가
     public void addNatureFavorite(String idx, String id, final Context context){
 
 
@@ -365,7 +365,7 @@ public class FragmentFavorite extends Fragment {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                Utils.SERVER_BASE_URL+"/api/v1/favorite/delete",
+                Utils.SERVER_BASE_URL+"/api/v1/favorite",
                 body,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -383,7 +383,7 @@ public class FragmentFavorite extends Fragment {
         Volley.newRequestQueue(context).add(request);
     }
 
-    // 두드림길 즐겨찾기 삭제
+    // 두드림길 즐겨찾기추가
     public void addWayFavorite(String idx, String id, final Context context){
 
 
@@ -476,7 +476,7 @@ public class FragmentFavorite extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                       Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                       Toast.makeText(context, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
