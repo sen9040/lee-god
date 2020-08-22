@@ -12,8 +12,9 @@
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:weightSum="10"
-        android:layout_height="wrap_content">
+
+        android:layout_above="@+id/btnhiper1"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -135,33 +136,24 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/button"
         android:fontFamily="@font/nanumround"
         android:text="해당 홈페이지로 이동"
-        android:weightSum="1" />
+        />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/btnhiper1"
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        app:bmb_buttonEnum="ham"
+        android:layout_above="@id/btnhiper1"
+        android:layout_alignParentRight="true"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+        app:bmb_piecePlaceEnum="piecePlace_ham_3"
+        map:bmb_normalColor="#000000" />
 
-        <com.nightonke.boommenu.BoomMenuButton
-            android:id="@+id/bmb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bmb_buttonEnum="ham"
-            app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
-            app:bmb_piecePlaceEnum="piecePlace_ham_3"
-            map:bmb_normalColor="#000000" />
 
-    </FrameLayout>
 
 
 

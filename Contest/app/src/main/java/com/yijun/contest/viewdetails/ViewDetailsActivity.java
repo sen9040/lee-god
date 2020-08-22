@@ -106,8 +106,8 @@ public class ViewDetailsActivity extends FragmentActivity implements OnMapReadyC
         BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb);
-        final FrameLayout frameLayout = findViewById(R.id.frameLayout);
-        frameLayout.bringChildToFront(bmb);
+        bmb.bringToFront();
+        btnhiper.bringToFront();
 
         // gps class
         gps = new GpsInfo(getBaseContext());

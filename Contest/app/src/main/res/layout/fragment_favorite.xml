@@ -103,26 +103,18 @@
         </RelativeLayout>
     </ScrollView>
 
-    <FrameLayout
-        Android:layout_width="match_parent"
-        Android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+
 
         <com.nightonke.boommenu.BoomMenuButton
             android:id="@+id/bmb"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            Android:layout_gravity="bottom|center"
             app:bmb_buttonEnum="ham"
             app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
             app:bmb_normalColor="#000000"
             app:bmb_piecePlaceEnum="piecePlace_ham_3" />
 
-    </FrameLayout>
+
 </RelativeLayout>

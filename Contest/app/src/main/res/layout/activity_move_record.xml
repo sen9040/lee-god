@@ -27,12 +27,7 @@
         android:layout_margin="10dp"
         android:layout_height="match_parent" />
 
-    <FrameLayout
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+
 
         <com.nightonke.boommenu.BoomMenuButton
             android:id="@+id/bmb"
@@ -44,6 +39,6 @@
             app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
             app:bmb_normalColor="#000000"
             app:bmb_piecePlaceEnum="piecePlace_ham_3" />
-    </FrameLayout>
+
 
 </RelativeLayout>

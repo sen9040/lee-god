@@ -78,6 +78,7 @@ public class FragmentFavorite extends Fragment {
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
+        bmb.bringToFront();
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
         idByANDROID_ID =
