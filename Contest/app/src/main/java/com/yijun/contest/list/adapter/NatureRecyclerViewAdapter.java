@@ -10,17 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -94,9 +97,13 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final int position = getAdapterPosition();
                     final String id =
                             Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
@@ -140,13 +147,18 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
                         alert.show();
 
                     }
-
                 }
             });
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+
                     Intent i = new Intent(context, ViewDetailsActivity.class);
                     NatureInfo natureInfo =  natureInfoArrayList.get(getAdapterPosition());
 

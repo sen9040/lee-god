@@ -36,6 +36,7 @@ import com.yijun.contest.list.adapter.WayFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.utils.Utils;
 
 import org.json.JSONArray;
@@ -75,6 +76,11 @@ public class FragmentFavorite extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        if(!CheckNetwork.isNetworkAvailable(getActivity())){
+            Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        }
+
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);

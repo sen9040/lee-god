@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +20,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.model.AirInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
 
@@ -89,6 +91,11 @@ public class AirInfoActivity extends AppCompatActivity {
         imgCurrent = findViewById(R.id.imgCurrent);
         txt = findViewById(R.id.txt);
 
+        if(!CheckNetwork.isNetworkAvailable(AirInfoActivity.this)){
+            Toast.makeText(AirInfoActivity.this, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(AirInfoActivity.this,bmb);

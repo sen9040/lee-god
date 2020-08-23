@@ -8,8 +8,8 @@ var firstProjection =
 var secondProjection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
 // #1. 변환한 위도 경도 값 저장
 var lonAndLat1 = proj4(firstProjection, secondProjection, [
-  211380.5791,
-  446815.9156,
+  212796.5744,
+  451823.5078,
 ]);
 
 console.log(lonAndLat1);

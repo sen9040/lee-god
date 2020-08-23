@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,10 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
+import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.NatureInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -99,6 +102,10 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             cardView.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
                 public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Favorite favorite = favoriteArrayList.get(getAdapterPosition());
                     Intent intent = new Intent(context,ViewDetailsActivity.class);
                     intent.putExtra("sports",favorite);
@@ -108,10 +115,14 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
                 }
             });
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
-                   final int position = getAdapterPosition();
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    final int position = getAdapterPosition();
                     Favorite favorite = favoriteArrayList.get(position);
                     int isFavorite = favorite.getIsFavorite();
                     if (isFavorite == 1){

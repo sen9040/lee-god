@@ -5,16 +5,27 @@ public class MoveRecord {
     private String title;
     private String address;
     private String url;
-
+    private String date;
     public MoveRecord(){
 
     }
 
-    public MoveRecord(int id, String title, String address,String url) {
+    public MoveRecord(int id, String title, String address, String url, String date) {
         this.id = id;
         this.title = title;
         this.address = address;
         this.url = url;
+        this.date = date;
+    }
+
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getId() {

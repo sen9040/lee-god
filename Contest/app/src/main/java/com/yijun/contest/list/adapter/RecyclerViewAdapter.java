@@ -29,12 +29,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import org.json.JSONException;
@@ -161,9 +163,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final int position = getAdapterPosition();
                     final String id =
                             Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
@@ -214,6 +220,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
           cardView.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
+                  if(!CheckNetwork.isNetworkAvailable(context)){
+                      Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                      return;
+                  }
                   Intent i = new Intent(context, ViewDetailsActivity.class);
                   SportsInfo sportsInfo =  sportInfosList.get(getAdapterPosition());
 

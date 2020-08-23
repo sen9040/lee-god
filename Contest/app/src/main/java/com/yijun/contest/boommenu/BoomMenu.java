@@ -16,6 +16,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.moverecord.MoveRecord;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.weather.WeatherActivity;
 import com.yijun.contest.weather.model.Weather;
 
@@ -45,7 +46,7 @@ public class BoomMenu {
             if (i == 0){
 
                 HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.butterfly)
+                        .normalImageRes(R.drawable.eagle)
                         .normalTextRes(R.string.weather);
                 builder.listener(new OnBMClickListener() {
                     @Override
@@ -59,7 +60,7 @@ public class BoomMenu {
 
                         intent.putExtra("lat",lat);
                         intent.putExtra("lng",lng);
-                        Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
+
                         context.startActivity(intent);
                     }
                 });
@@ -71,13 +72,13 @@ public class BoomMenu {
                     return;
                 }
                 HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.bat)
+                        .normalImageRes(R.drawable.bee)
                         .normalTextRes(R.string.air_Info);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
                         Intent intent = new Intent(context, AirInfoActivity.class);
-                        Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
+
                         context.startActivity(intent);
                     }
                 });
@@ -89,13 +90,13 @@ public class BoomMenu {
                     return;
                 }
                 HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.bear)
+                        .normalImageRes(R.drawable.butterfly)
                         .normalTextRes(R.string.moverecord);
                 builder.listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
                         Intent i = new Intent(context, MoveRecord.class);
-                        Toast.makeText(context, "click" +index, Toast.LENGTH_SHORT).show();
+
                         context.startActivity(i);
                     }
                 });
@@ -105,9 +106,13 @@ public class BoomMenu {
                     Toast.makeText(context, "동일한 화면 입니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(!CheckNetwork.isNetworkAvailable(context)){
+                    Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 HamButton.Builder builder = new HamButton.Builder()
-                        .normalImageRes(R.drawable.butterfly)
+                        .normalImageRes(R.drawable.bat)
                         .normalTextRes(R.string.ranking);
 
                 builder.listener(new OnBMClickListener() {
@@ -119,7 +124,7 @@ public class BoomMenu {
 
                         intent.putExtra("lat", lat);
                         intent.putExtra("lng", lng);
-                        Toast.makeText(context, "click" + index, Toast.LENGTH_SHORT).show();
+
                         context.startActivity(intent);
 
                     }

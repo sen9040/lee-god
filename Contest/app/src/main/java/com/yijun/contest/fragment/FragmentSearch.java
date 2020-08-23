@@ -51,6 +51,7 @@ import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.model.NatureInfo;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
 
@@ -182,6 +183,10 @@ public class FragmentSearch extends Fragment {
 
                 }else {
                     gps.showSettingsAlert();
+                }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 CheckTypesTask task = new CheckTypesTask();

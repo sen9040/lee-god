@@ -40,6 +40,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.location.GpsInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.utils.Utils;
 import com.yijun.contest.weather.WeatherActivity;
 
@@ -140,6 +141,12 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent i = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 i.putExtra("sports", "축구");
                 i.putExtra("key", 1);
@@ -166,6 +173,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "야구");
                 a.putExtra("key", 1);
@@ -196,6 +208,11 @@ public class FragmentHome extends Fragment {
                     gps.showSettingsAlert();
                 }
 
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "족구");
                 a.putExtra("key", 1);
@@ -223,6 +240,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "테니스");
                 a.putExtra("key", 1);
@@ -250,6 +272,10 @@ public class FragmentHome extends Fragment {
 
                 }else {
                     gps.showSettingsAlert();
+                }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
@@ -280,6 +306,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("lat", lat);
                 a.putExtra("lng", lng);
@@ -307,6 +338,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "다목적");
                 a.putExtra("key", 1);
@@ -334,6 +370,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "골프");
                 a.putExtra("lat", lat);
@@ -360,6 +401,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "배드민턴");
                 a.putExtra("key", 1);
@@ -386,6 +432,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "운동장");
                 a.putExtra("key", 1);
@@ -412,6 +463,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "체육관");
                 a.putExtra("lat", lat);
@@ -438,6 +494,11 @@ public class FragmentHome extends Fragment {
                 }else {
                     gps.showSettingsAlert();
                 }
+                if(!CheckNetwork.isNetworkAvailable(getActivity())){
+                    Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent a = new Intent(getActivity(), com.yijun.contest.list.ListActivity.class);
                 a.putExtra("sports", "둘레길");
                 a.putExtra("key", 2);

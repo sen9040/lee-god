@@ -10,16 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WayInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -88,9 +91,13 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
             txtTime = itemView.findViewById(R.id.txtTime);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final int position = getAdapterPosition();
 
                     int is_favorite = wayInfoArrayList.get(position).getIsFavorite();
@@ -144,17 +151,21 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
                 }
             });
 
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(context, ViewDetailsActivity.class);
-                    WayInfo wayInfo =  wayInfoArrayList.get(getAdapterPosition());
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!CheckNetwork.isNetworkAvailable(context)) {
+                                Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Intent i = new Intent(context, ViewDetailsActivity.class);
+                            WayInfo wayInfo = wayInfoArrayList.get(getAdapterPosition());
 
-                    i.putExtra("sports",wayInfo);
-                    i.putExtra("key",3);
-                    context.startActivity(i);
-                }
-            });
+                            i.putExtra("sports", wayInfo);
+                            i.putExtra("key", 3);
+                            context.startActivity(i);
+                        }
+                    });
         }
     }
 }
