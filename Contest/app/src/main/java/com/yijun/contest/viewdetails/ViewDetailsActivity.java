@@ -122,7 +122,7 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
 
         requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
 
-
+        
         BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb);
@@ -676,6 +676,8 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
         txtPaYaTnm.setText(paYaTnm);
         txtTime.setText(svcStaTnm);
         imgSvc.setImageResource(R.drawable.walk);
+
+
         String removeStr = null;
         try {
             removeStr = removeTag(content);
