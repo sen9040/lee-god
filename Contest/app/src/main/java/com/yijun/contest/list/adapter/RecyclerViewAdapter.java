@@ -37,6 +37,7 @@ import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.Parking;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.network.CheckNetwork;
+import com.yijun.contest.ranking.RankingActivity;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import org.json.JSONException;
@@ -52,10 +53,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     ArrayList<SportsInfo> sportInfosList;
 
-
-    public ArrayList<SportsInfo> getSportInfosList() {
-        return sportInfosList;
-    }
 
     public RecyclerViewAdapter(Context context, ArrayList<SportsInfo> sportInfosList){
         Log.i("AAA","recyclerView create : ");

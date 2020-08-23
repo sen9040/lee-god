@@ -155,8 +155,8 @@
         app:bmb_buttonEnum="ham"
         android:layout_above="@id/btnhiper1"
         android:layout_alignParentRight="true"
-        app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
-        app:bmb_piecePlaceEnum="piecePlace_ham_3"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
+        app:bmb_piecePlaceEnum="piecePlace_ham_4"
         map:bmb_normalColor="#000000" />
 
 

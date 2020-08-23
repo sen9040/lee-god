@@ -1,59 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardBackgroundColor="#000000"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="20dp">
+        android:layout_margin="5dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            >
 
-            <TextView
-                android:id="@+id/title"
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="오금공원"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="주소"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/txtSvcNm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/nanumeb"
+                        android:maxLines="1"
+                        android:text="시설물 명"
+                        android:textColor="#000000"
+                        android:textSize="24sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
 
-            <TextView
-                android:id="@+id/priceTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="가격/이용가능시간"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+
+
+
+                        <TextView
+                            android:id="@+id/txtPlaceNm"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:layout_weight="8"
+                            android:fontFamily="@font/nanumeb"
+                            android:maxLines="2"
+                            android:text="가격"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/txtPaYaTnm"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/nanumeb"
+                            android:maxLines="1"
+                            android:text="주소"
+                            android:layout_gravity="right"
+                            android:textColor="#000000"
+                            android:textSize="24sp" />
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:fontFamily="@font/nanumeb"-->
+<!--                            android:maxLines="2"-->
+<!--                            android:text=" / "-->
+<!--                            android:textColor="#000000"-->
+<!--                            android:textSize="18sp" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/txtTime"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:fontFamily="@font/nanumeb"-->
+<!--                            android:maxLines="1"-->
+<!--                            android:text="이용 시간"-->
+<!--                            android:textColor="#000000"-->
+<!--                            android:textSize="18sp" />-->
+
+                    </LinearLayout>
+                </LinearLayout>
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imgFavorite"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="right"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:padding="30dp"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    app:srcCompat="@drawable/heart_off" />-->
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

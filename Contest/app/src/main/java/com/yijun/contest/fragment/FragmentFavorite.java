@@ -542,7 +542,7 @@ public class FragmentFavorite extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                       Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
