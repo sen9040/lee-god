@@ -155,7 +155,7 @@
                             android:layout_weight="1"
                             android:background="#FFFFFF"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/tennis" />
+                            app:srcCompat="@drawable/icon4" />
 
                         <TextView
                             android:id="@+id/textView20"
