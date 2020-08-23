@@ -65,9 +65,9 @@ public class NatureRecyclerViewAdapter extends RecyclerView.Adapter<NatureRecycl
         holder.txtTime.setText(pAdmintel);
 
         if (natureInfo.getIsFavorite() == 1){
-            holder.imgFavorite.setImageResource(android.R.drawable.star_on);
+            holder.imgFavorite.setImageResource(R.drawable.heart_on);
         }else {
-            holder.imgFavorite.setImageResource(android.R.drawable.star_off);
+            holder.imgFavorite.setImageResource(R.drawable.heart_off);
         }
     }
 

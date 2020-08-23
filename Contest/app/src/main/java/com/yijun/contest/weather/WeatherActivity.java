@@ -134,6 +134,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+
+
     private  class CheckTypesTask extends AsyncTask<Void, Integer, Boolean> {
         ProgressDialog asyncDialog = new ProgressDialog(WeatherActivity.this);
 
