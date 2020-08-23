@@ -694,6 +694,7 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
         String add = favorite.getAddress();
         String imgUrl = favorite.getImgUrl();
         String content = favorite.getContent();
+
         if (imgUrl == null || imgUrl.equals("")){
             imgSvc.setImageResource(R.drawable.no_image);
         }else {
