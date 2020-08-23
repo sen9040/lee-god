@@ -16,4 +16,5 @@ public class Utils {
     public static final String KEY_TITLE = "title";
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_URL = "url";
+    public static final String KEY_DATE = "date";
 }

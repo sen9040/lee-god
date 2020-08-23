@@ -469,9 +469,10 @@ public class ListActivity extends AppCompatActivity {
                                 String cpiContent = object.getString("CPI_CONTENT");
                                 int isFavorite = object.getInt("isFavorite");
                                 String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
+                                double curDistance = object.getDouble("distance");
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite,pageUrl);
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite,pageUrl,curDistance);
                                 wayInfoArrayList.add(wayInfo);
                             }
                             if (offset_cnt == 0){

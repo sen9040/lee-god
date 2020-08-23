@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,6 +23,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -52,10 +54,13 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
         int isFavorite = favorite.getIsFavorite();
 
         if (isFavorite == 1){
+            double cd = favorite.getCurDistance();
+            double distanceNum = Math.round(cd*100)/100.0;
+
             holder.title.setText(title);
             holder.address.setText(address);
             holder.price.setText(price);
-            holder.time.setText(time);
+            holder.time.setText(time+"+"+distanceNum+"Km");
             holder.img.setImageResource(R.drawable.walk);
             holder.imgFavorite.setImageResource(R.drawable.heart_on);
         }else{
@@ -98,9 +103,13 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
                 }
             });
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final int position = getAdapterPosition();
                     Favorite favorite = favoriteArrayList.get(position);
                     int isFavorite = favorite.getIsFavorite();
@@ -126,13 +135,16 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
                         alert.show();
 
                     }
-
                 }
             });
 
             cardView.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
                 public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Favorite favorite = favoriteArrayList.get(getAdapterPosition());
                     Intent intent = new Intent(context,ViewDetailsActivity.class);
                     intent.putExtra("sports",favorite);

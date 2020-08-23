@@ -44,9 +44,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         MoveRecord moveRecord = moveRecordArrayList.get(position);
         String title = moveRecord.getTitle();
         String address = moveRecord.getAddress();
+        String date = moveRecord.getDate();
 
         holder.name.setText(title);
         holder.address.setText(address);
+        holder.txtDate.setText(date);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView address;
         public ImageView img_delete;
         public Button btn_url;
-
+                TextView txtDate;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -68,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             address = itemView.findViewById(R.id.address);
             img_delete = itemView.findViewById(R.id.img_delete);
             btn_url = itemView.findViewById(R.id.btn_url);
-
+            txtDate = itemView.findViewById(R.id.txtDate);
             btn_url.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
                 public void onDebouncedClick(View v) {

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -27,6 +28,7 @@ import com.yijun.contest.fragment.FragmentFavorite;
 import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.SportsInfo;
+import com.yijun.contest.network.CheckNetwork;
 import com.yijun.contest.viewdetails.ViewDetailsActivity;
 
 import java.util.ArrayList;
@@ -56,12 +58,16 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
         String time = favorite.getTime();
         String imgUrl = favorite.getImgUrl();
         int isFavorite = favorite.getIsFavorite();
+        double cd = favorite.getCurDistance();
+
+
 
         if (isFavorite == 1){
             holder.title.setText(title);
             holder.address.setText(address);
             holder.price.setText(price);
-            holder.time.setText(time);
+            double distanceNum = Math.round(cd*100)/100.0;
+            holder.time.setText("+"+distanceNum+"Km");
             holder.imgFavorite.setImageResource(R.drawable.heart_on);
 
             if (imgUrl == null || imgUrl.equals("")){
@@ -101,9 +107,13 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             time = itemView.findViewById(R.id.time);
             imgFavorite = itemView.findViewById(R.id.imgFavorite);
 
-            imgFavorite.setOnClickListener(new View.OnClickListener() {
+            imgFavorite.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     final int position = getAdapterPosition();
                     final String id =
                             Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID).trim();
@@ -121,7 +131,7 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
                                 (frag).deleteSportFavorite(idx,id,context);
                                 favoriteArrayList.remove(position);
                                 notifyDataSetChanged();
-                        }
+                            }
                         });
                         alert.setNegativeButton("No",null);
                         alert.setCancelable(false);
@@ -134,6 +144,10 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
             cardView.setOnClickListener(new DebouncedOnClickListener() {
                 @Override
                 public void onDebouncedClick(View v) {
+                    if(!CheckNetwork.isNetworkAvailable(context)){
+                        Toast.makeText(context, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Favorite favorite = favoriteArrayList.get(getAdapterPosition());
                     Intent intent = new Intent(context,ViewDetailsActivity.class);
                     intent.putExtra("sports",favorite);

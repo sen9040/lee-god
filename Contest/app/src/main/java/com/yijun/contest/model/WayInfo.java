@@ -27,12 +27,12 @@ public class WayInfo implements Serializable {
     private String cpiContent;
     private int isFavorite;
     private String pageUrl;
-
+    private double curDistance;
     public WayInfo(){
 
     }
 
-    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent, int isFavorite, String pageUrl) {
+    public WayInfo(String courseCategory, String courseCategoryNm, String southNorthDiv, String southNorthDivNm, String areaGu, String distance, String leadTime, String courseLevel, String voteCnt, String relateSubway, String trafficInfo, String content, String pdfFilePath, String courseName, String regDate, String detailCourse, String cpiIdx, String cpiName, String x, String y, String cpiContent, int isFavorite, String pageUrl, double curDistance) {
         this.courseCategory = courseCategory;
         this.courseCategoryNm = courseCategoryNm;
         this.southNorthDiv = southNorthDiv;
@@ -56,6 +56,15 @@ public class WayInfo implements Serializable {
         this.cpiContent = cpiContent;
         this.isFavorite = isFavorite;
         this.pageUrl = pageUrl;
+        this.curDistance = curDistance;
+    }
+
+    public double getCurDistance() {
+        return curDistance;
+    }
+
+    public void setCurDistance(double curDistance) {
+        this.curDistance = curDistance;
     }
 
     public String getPageUrl() {

@@ -49,6 +49,7 @@ import com.yijun.contest.list.ListActivity;
 import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.model.SportsInfo;
 import com.yijun.contest.model.WeatherDaily;
+import com.yijun.contest.network.CheckNetwork;
 
 
 import org.eazegraph.lib.charts.ValueLineChart;
@@ -98,7 +99,11 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-
+        if(!CheckNetwork.isNetworkAvailable(WeatherActivity.this)){
+            Toast.makeText(WeatherActivity.this, "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(WeatherActivity.this,bmb);

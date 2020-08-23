@@ -28,7 +28,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "(" + Utils.KEY_ID + " integer primary key autoincrement, " +
                 Utils.KEY_TITLE + " text, " +
                 Utils.KEY_ADDRESS + " text, " +
-                Utils.KEY_URL + " text )";
+                Utils.KEY_URL + " text, "+
+                Utils.KEY_DATE + " text )";
         // create table contacts
         // (id integer not null autoincrement primary key,
         // name text,
@@ -58,6 +59,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(Utils.KEY_TITLE, moveRecord.getTitle());
         values.put(Utils.KEY_ADDRESS, moveRecord.getAddress());
         values.put(Utils.KEY_URL, moveRecord.getUrl());
+        values.put(Utils.KEY_DATE, moveRecord.getDate());
         // 3. db 에 실제로 저장한다.
         db.insert(Utils.TABLE_NAME, null, values);
         db.close();
@@ -81,13 +83,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 String selectedTitle = cursor.getString(1);
                 String selectedAddress = cursor.getString(2);
                 String selectedUrl = cursor.getString(3);
-
+                String selectedDate = cursor.getString(4);
                 // db 에서 읽어온 데이터를, 자바 클래스로 처리한다.
                 MoveRecord moveRecord = new MoveRecord();
                 moveRecord.setId(selectedId);
                 moveRecord.setTitle(selectedTitle);
                 moveRecord.setAddress(selectedAddress);
                 moveRecord.setUrl(selectedUrl);
+                moveRecord.setDate(selectedDate);
 
                 // 4. 위의 빈 어레이리스트에 하나씩 추가를 시킨다.
                 moveRecordArrayList.add(moveRecord);
