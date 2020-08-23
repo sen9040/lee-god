@@ -50,10 +50,11 @@ public class WayRecyclerViewAdapter extends RecyclerView.Adapter<WayRecyclerView
         String detailCourse = wayInfo.getDetailCourse();
         String distance = wayInfo.getDistance();
         String leadTime = wayInfo.getLeadTime();
-
+        double cd = wayInfo.getCurDistance();
+        double distanceNum = Math.round(cd*100)/100.0;
         holder.txtSvcNm.setText(cpiName);
         holder.txtPlaceNm.setText(detailCourse);
-        holder.txtPaYaTnm.setText(distance);
+        holder.txtPaYaTnm.setText(distance+"+"+distanceNum+"km");
         holder.txtTime.setText(leadTime);
         holder.imgSvc.setImageResource(R.drawable.walk);
 

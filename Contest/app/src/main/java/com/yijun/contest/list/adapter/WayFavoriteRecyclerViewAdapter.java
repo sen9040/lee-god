@@ -54,10 +54,13 @@ public class WayFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<WayFavo
         int isFavorite = favorite.getIsFavorite();
 
         if (isFavorite == 1){
+            double cd = favorite.getCurDistance();
+            double distanceNum = Math.round(cd*100)/100.0;
+
             holder.title.setText(title);
             holder.address.setText(address);
             holder.price.setText(price);
-            holder.time.setText(time);
+            holder.time.setText(time+"+"+distanceNum+"Km");
             holder.img.setImageResource(R.drawable.walk);
             holder.imgFavorite.setImageResource(R.drawable.heart_on);
         }else{

@@ -158,7 +158,7 @@ public class FragmentSearch extends Fragment {
                             event = "nature";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/parksearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
                             url = baseUrl+"&offset="+offset;
-                            getNatureInfo(url,offset,getActivity(),recyclerView);
+                            getNatureInfo(url,offset ,getActivity(),recyclerView);
                         }else if (radioGroup.getCheckedRadioButtonId() == R.id.radioWay){
                             event = "way";
                             baseUrl =Utils.SERVER_BASE_URL +"/api/v1/search/waysearch"+ "?keyword=" + keyword+"&lat="+lat+"&lng="+lng+"&id="+idByANDROID_ID;
@@ -271,9 +271,10 @@ public class FragmentSearch extends Fragment {
                                 String cpiContent = object.getString("CPI_CONTENT");
                                 int isFavorite = object.getInt("isFavorite");
                                 String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
+                                double curDistance = object.getDouble("distance");
                                 WayInfo wayInfo = new WayInfo(courseCategory,courseCategoryNm,southNorthDiv,southNorthDivNm,
                                         areaGu,distance,leadTime,courseLevel,voteCnt,relateSubway,trafficInfo,content,pdfFilePath,
-                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite,pageUrl);
+                                        courseName,regDate,detailCourse,cpiIdx,cpiName,x,y,cpiContent, isFavorite,pageUrl,curDistance);
                                 wayInfoArrayList.add(wayInfo);
                             }
                             if (offset_cnt == 0){

@@ -99,7 +99,10 @@
                 android:paddingBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_below="@id/wayRecyclerView"
+                android:layout_height="700dp"/>
         </RelativeLayout>
     </ScrollView>
 

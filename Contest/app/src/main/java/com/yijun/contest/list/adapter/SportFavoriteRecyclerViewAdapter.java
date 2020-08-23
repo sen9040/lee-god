@@ -58,12 +58,16 @@ public class SportFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Sport
         String time = favorite.getTime();
         String imgUrl = favorite.getImgUrl();
         int isFavorite = favorite.getIsFavorite();
+        double cd = favorite.getCurDistance();
+
+
 
         if (isFavorite == 1){
             holder.title.setText(title);
             holder.address.setText(address);
             holder.price.setText(price);
-            holder.time.setText(time);
+            double distanceNum = Math.round(cd*100)/100.0;
+            holder.time.setText("+"+distanceNum+"Km");
             holder.imgFavorite.setImageResource(R.drawable.heart_on);
 
             if (imgUrl == null || imgUrl.equals("")){

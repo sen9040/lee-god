@@ -3,7 +3,7 @@ package com.yijun.contest.model;
 import java.io.Serializable;
 
 public class Favorite implements Serializable {
-    private int id;
+    private double curDistance;
     private String idx;
     private String imgUrl;
     private String title;
@@ -19,8 +19,8 @@ public class Favorite implements Serializable {
 
     }
 
-    public Favorite(int id, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite, String pageUrl, String lat, String lng, String content) {
-        this.id = id;
+    public Favorite(double curDistance, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite, String pageUrl, String lat, String lng, String content) {
+        this.curDistance = curDistance;
         this.idx = idx;
         this.imgUrl = imgUrl;
         this.title = title;
@@ -33,6 +33,7 @@ public class Favorite implements Serializable {
         this.lng = lng;
         this.content = content;
     }
+
 
     public String getContent() {
         return content;
@@ -66,13 +67,15 @@ public class Favorite implements Serializable {
         this.pageUrl = pageUrl;
     }
 
-    public int getId() {
-        return id;
+    public double getCurDistance() {
+        return curDistance;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCurDistance(double curDistance) {
+        this.curDistance = curDistance;
     }
+
+
 
     public String getIdx() {
         return idx;

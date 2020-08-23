@@ -34,6 +34,7 @@ import com.yijun.contest.list.adapter.RecyclerViewAdapter;
 import com.yijun.contest.list.adapter.SportFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayFavoriteRecyclerViewAdapter;
 import com.yijun.contest.list.adapter.WayRecyclerViewAdapter;
+import com.yijun.contest.location.GpsInfo;
 import com.yijun.contest.model.Favorite;
 import com.yijun.contest.model.WayInfo;
 import com.yijun.contest.network.CheckNetwork;
@@ -67,7 +68,9 @@ public class FragmentFavorite extends Fragment {
     private String parkUrl;
     private String sportUrl;
     private String wayUrl;
-
+    private GpsInfo gps;
+    private double lat;
+    private double lng;
 
     public FragmentFavorite(){
     }
@@ -78,9 +81,18 @@ public class FragmentFavorite extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         if(!CheckNetwork.isNetworkAvailable(getActivity())){
             Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            Intent intent = new Intent(getActivity(),FragmentHome.class);
         }
+        gps = new GpsInfo(getContext());
+        if (gps.isGetLocation()) {
+            lat = gps.getLatitude();
+            lng = gps.getLongitude();
+            Log.i("AAA", "lat home: " + lat + " lng home: " + lng);
 
+        }else {
+            gps.showSettingsAlert();
+
+        }
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
         boomMenu.getBoomMenu(getActivity(),bmb);
@@ -93,29 +105,30 @@ public class FragmentFavorite extends Fragment {
         sportRecyclerView.setHasFixedSize(true);
         sportRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
-        getSportFavoriteData();
+        getSportFavoriteData(lat,lng);
 
         parkRecyclerView = view.findViewById(R.id.parkRecyclerView);
         parkRecyclerView.setHasFixedSize(true);
         parkRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
-        getParkFavoriteData();
+        getParkFavoriteData(lat,lng);
 
         wayRecyclerView = view.findViewById(R.id.wayRecyclerView);
         wayRecyclerView.setHasFixedSize(true);
         wayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false));
 
-        getWayFavoriteData();
+        getWayFavoriteData(lat,lng);
 
 
         return view;
     }
 
     // 스포츠 즐겨찾기데이터 전부 가져오기
-    public void getSportFavoriteData() {
+    public void getSportFavoriteData(Double lat, Double lng) {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-        sportUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/sport?id="+idByANDROID_ID+"&offset="+offset;
+        sportUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/sport?id="+idByANDROID_ID+"&offset="+offset+"&lat="+lat+"&lng="+lng;
+        Log.i("AAA","Favorite : " + sportUrl);
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,sportUrl
                 ,
@@ -139,8 +152,8 @@ public class FragmentFavorite extends Fragment {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
                                     JSONObject jsonObject = items.getJSONObject(i);
-                                    int id = jsonObject.getInt("id");
-                                    String idx = jsonObject.getString("idx");
+                                    double curDistance = jsonObject.getDouble("distance");
+                                    String idx = jsonObject.getString("SVCID");
                                     String imgUrl = jsonObject.getString("IMGURL");
                                     String SvcNm = jsonObject.getString("SVCNM");
                                     String PlaceNm = jsonObject.getString("PLACENM");
@@ -161,7 +174,7 @@ public class FragmentFavorite extends Fragment {
 
 
 
-                                    Favorite favorite = new Favorite(id, idx, imgUrl, SvcNm, PlaceNm,
+                                    Favorite favorite = new Favorite(curDistance, idx, imgUrl, SvcNm, PlaceNm,
                                             PaYaTnm, SvcStaTnm, is_favorite,pageUrl,lat,lng,content);
                                     favoriteArrayList1.add(favorite);
                                 }
@@ -194,10 +207,10 @@ public class FragmentFavorite extends Fragment {
     }
 
     // 공원 즐겨찾기데이터 전부 가져오기
-    public void getParkFavoriteData() {
+    public void getParkFavoriteData(Double lat, Double lng) {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-        parkUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/park?id="+idByANDROID_ID+"&offset="+offset;
+        parkUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/park?id="+idByANDROID_ID+"&offset="+offset+"&lat="+lat+"&lng="+lng;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,parkUrl
                 ,
@@ -221,8 +234,8 @@ public class FragmentFavorite extends Fragment {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
                                     JSONObject jsonObject = items.getJSONObject(i);
-                                    int id = jsonObject.getInt("id");
-                                    String idx = jsonObject.getString("idx");
+                                    double curDistance = jsonObject.getDouble("distance");
+                                    String idx = jsonObject.getString("P_IDX");
                                     String pImg = jsonObject.getString("P_IMG");
                                     String pPark = jsonObject.getString("P_PARK");
                                     String pAddr = jsonObject.getString("P_ADDR");
@@ -231,7 +244,7 @@ public class FragmentFavorite extends Fragment {
                                     String templateUrl = jsonObject.getString("TEMPLATE_URL");
                                     String lat = jsonObject.getString("LATITUDE");
                                     String lng = jsonObject.getString("LONGITUDE");
-                                    String content1 = jsonObject.getString("P_LISTCONTENT");
+                                    String content1 = jsonObject.getString("P_LIST_CONTENT");
                                     String content2 = jsonObject.getString("MAIN_PLANTS");
                                     if (templateUrl.equals("")){
                                         templateUrl = "http://parks.seoul.go.kr/";
@@ -249,7 +262,7 @@ public class FragmentFavorite extends Fragment {
 
 
 
-                                    Favorite favorite = new Favorite(id, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite,templateUrl,lat,lng,content);
+                                    Favorite favorite = new Favorite(curDistance, idx, pImg, pPark, pAddr, pName, pAdmintel, is_favorite,templateUrl,lat,lng,content);
                                     favoriteArrayList2.add(favorite);
                                 }
                                 natureFavoriteRecyclerViewAdapter = new NatureFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList2);
@@ -280,10 +293,10 @@ public class FragmentFavorite extends Fragment {
     }
 
     // 두드림길 즐겨찾기데이터 전부 가져오기
-    public void getWayFavoriteData() {
+    public void getWayFavoriteData(Double lat, Double lng) {
 
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
-        wayUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/way?id="+idByANDROID_ID+"&offset="+offset;
+        wayUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/way?id="+idByANDROID_ID+"&offset="+offset+"&lat="+lat+"&lng="+lng;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 wayUrl,
@@ -306,8 +319,8 @@ public class FragmentFavorite extends Fragment {
                                 JSONArray items = response.getJSONArray("items");
                                 for (int i = 0; i < items.length(); i++) {
                                     JSONObject jsonObject = items.getJSONObject(i);
-                                    int id = jsonObject.getInt("id");
-                                    String idx = jsonObject.getString("idx");
+                                    double curDistance = jsonObject.getDouble("distance");
+                                    String idx = jsonObject.getString("CPI_NAME");
                                     String cpiName = jsonObject.getString("CPI_NAME");
                                     String detailCourse = jsonObject.getString("DETAIL_COURSE");
                                     String distance = jsonObject.getString("DISTANCE");
@@ -328,7 +341,7 @@ public class FragmentFavorite extends Fragment {
 
                                     Log.i("가져와", response.toString());
 
-                                    Favorite favorite = new Favorite(id, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite,pageUrl,lat,lng,content);
+                                    Favorite favorite = new Favorite(curDistance, idx, null, cpiName, detailCourse, distance, leadTime, is_favorite,pageUrl,lat,lng,content);
                                     favoriteArrayList3.add(favorite);
                                 }
                                 wayFavoriteRecyclerViewAdapter = new WayFavoriteRecyclerViewAdapter(getActivity(), favoriteArrayList3);

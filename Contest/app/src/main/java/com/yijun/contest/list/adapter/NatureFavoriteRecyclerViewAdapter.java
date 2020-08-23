@@ -66,7 +66,9 @@ public class NatureFavoriteRecyclerViewAdapter extends RecyclerView.Adapter<Natu
             holder.title.setText(title);
             holder.address.setText(address);
             holder.price.setText(price);
-            holder.time.setText(time);
+            double cd = favorite.getCurDistance();
+            double distanceNum = Math.round(cd*100)/100.0;
+            holder.time.setText("+"+distanceNum+"Km");
             holder.imgFavorite.setImageResource(R.drawable.heart_on);
         }else{
             holder.imgFavorite.setImageResource(R.drawable.heart_off);
