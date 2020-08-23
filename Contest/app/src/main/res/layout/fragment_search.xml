@@ -65,6 +65,13 @@
             android:fontFamily="@font/nanumeb"
             android:text="공원"
             android:textSize="18sp" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/radioParking"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/nanumeb"-->
+<!--            android:text="주차장"-->
+<!--            android:textSize="18sp" />-->
 
         <RadioButton
             android:id="@+id/radioWay"

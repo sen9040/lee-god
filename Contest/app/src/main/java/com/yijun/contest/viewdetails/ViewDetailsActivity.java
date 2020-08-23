@@ -718,7 +718,14 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
 
          html =  html.replaceAll("&nbsp;", "");
          html = html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-        return html;
+         html = html.replaceAll("<!--StartFragment-->","");
+         html = html.replaceAll("<div class=","");
+        html = html.replaceAll("style=","");
+        html = html.replaceAll("<span style","");
+
+         return html;
+
+
 
     }
 
