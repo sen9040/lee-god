@@ -15,7 +15,11 @@ android {
     }
 
     buildTypes {
+        debug{
+            resValue("string","google_maps_key", "디버그용")
+        }
         release {
+            resValue("string","google_maps_key", "릴리즈용")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
