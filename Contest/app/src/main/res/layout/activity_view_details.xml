@@ -9,133 +9,133 @@
     tools:context=".viewdetails.ViewDetailsActivity">
 
 
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="20dp"
+        tools:context=".viewdetails.ViewDetailsActivity" />
+
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map"
         android:layout_above="@+id/btnhiper1"
-        android:layout_height="match_parent">
+        >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="10"
             android:orientation="vertical">
-
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_marginBottom="20dp"
-                tools:context=".viewdetails.ViewDetailsActivity" />
 
             <ImageView
                 android:id="@+id/imgSvc1"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_below="@+id/map"
-                android:scaleType="centerCrop"
-                 />
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_below="@+id/imgSvc1"
-                android:orientation="vertical">
+                android:layout_gravity="right"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txtSvcNm1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="6"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/nanumeb"
-                        android:maxLines="1"
-                        android:text="시설물 명"
-                        android:textColor="#000000"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/txtPlaceNm1"
+                    android:id="@+id/txtPaYaTnm1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="@font/nanumeb"
                     android:maxLines="1"
-                    android:text="주소"
+                    android:text="가격"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/txtPaYaTnm1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/nanumeb"
-                        android:maxLines="1"
-                        android:text="가격"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/nanumeb"
-                        android:maxLines="1"
-                        android:text=" / "
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/txtTime1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/nanumeb"
-                        android:maxLines="1"
-                        android:text="이용 시간"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
                 <TextView
-                    android:id="@+id/txtExm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanumround"
-                    android:text="상세설명"
-                    android:maxLines="24"
                     android:ellipsize="end"
+                    android:fontFamily="@font/nanumeb"
+                    android:maxLines="1"
+                    android:text=" / "
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    />
-
+                    android:id="@+id/txtTime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/nanumeb"
+                    android:maxLines="1"
+                    android:text="이용 시간"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
 
             </LinearLayout>
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtExm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/nanumround"
+                android:maxLines="24"
+                android:text="상세설명"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtSvcNm1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/nanumeb"
+                    android:maxLines="1"
+                    android:text="시설물 명"
+                    android:textColor="#000000"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtPlaceNm1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/nanumeb"
+                android:maxLines="1"
+                android:text="주소"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+        </LinearLayout>
     </ScrollView>
+
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bmb_buttonEnum="ham"
+        android:layout_above="@+id/btnhiper1"
+        android:layout_alignParentRight="true"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
+        app:bmb_piecePlaceEnum="piecePlace_ham_4"
+        map:bmb_normalColor="#000000" />
 
     <Button
         android:id="@+id/btnhiper1"
@@ -148,16 +148,7 @@
         />
 
 
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:bmb_buttonEnum="ham"
-        android:layout_above="@id/btnhiper1"
-        android:layout_alignParentRight="true"
-        app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
-        app:bmb_piecePlaceEnum="piecePlace_ham_4"
-        map:bmb_normalColor="#000000" />
+
 
 
 
