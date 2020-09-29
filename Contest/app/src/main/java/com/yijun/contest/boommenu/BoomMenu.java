@@ -17,6 +17,7 @@ import com.yijun.contest.R;
 import com.yijun.contest.airInfo.AirInfoActivity;
 import com.yijun.contest.moverecord.MoveRecord;
 import com.yijun.contest.network.CheckNetwork;
+import com.yijun.contest.ranking.RankingActivity;
 import com.yijun.contest.weather.WeatherActivity;
 import com.yijun.contest.weather.model.Weather;
 
@@ -120,7 +121,7 @@ public class BoomMenu {
                     public void onBoomButtonClick(int index) {
 
 
-                        Intent intent = new Intent(context, WeatherActivity.class);
+                        Intent intent = new Intent(context, RankingActivity.class);
 
                         intent.putExtra("lat", lat);
                         intent.putExtra("lng", lng);

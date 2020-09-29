@@ -19,6 +19,15 @@ public class Favorite implements Serializable {
 
     }
 
+    public Favorite(double curDistance, String imgUrl, String title,  String price, String pageUrl, String content) {
+        this.curDistance = curDistance;
+        this.imgUrl = imgUrl;
+        this.title = title;
+        this.price = price;
+        this.pageUrl = pageUrl;
+        this.content = content;
+    }
+
     public Favorite(double curDistance, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite, String pageUrl, String lat, String lng, String content) {
         this.curDistance = curDistance;
         this.idx = idx;

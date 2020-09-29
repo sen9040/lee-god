@@ -98,9 +98,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             app:bmb_buttonEnum="ham"
-            app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
+            app:bmb_buttonPlaceEnum="buttonPlace_ham_4"
             app:bmb_normalColor="#000000"
-            app:bmb_piecePlaceEnum="piecePlace_ham_3" />
+            app:bmb_piecePlaceEnum="piecePlace_ham_4" />
 
 
 

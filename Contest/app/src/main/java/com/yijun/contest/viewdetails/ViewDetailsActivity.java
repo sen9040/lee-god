@@ -198,7 +198,8 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
                         String svcUrl = sportInfo.getSvcUrl();
                         String svcStaTnm = sportInfo.getSvcStaTnm();
 
-
+                        String rankingId = sportInfo.getSvcId();
+                        addRanking(rankingId,1);
                          Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(svcUrl));
                          startActivity(i);
 
@@ -218,7 +219,8 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
                         String pPark = natureInfo.getpPark();
                         String pAddr = natureInfo.getpAddr();
                         String tempUrl = natureInfo.getTemplateUrl();
-
+                        String rankingId = natureInfo.getpIdx();
+                        addRanking(rankingId,2);
                         moveRecord.setTitle(pPark);
                         moveRecord.setAddress(pAddr);
                         moveRecord.setUrl(tempUrl);
@@ -238,6 +240,9 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
                         moveRecord.setAddress(pAddr);
                         moveRecord.setUrl(tempUrl);
                         moveRecord.setDate(dateStr);
+                        String rankingId = wayInfo.getCpiIdx();
+
+                        addRanking(rankingId,3);
                         DatabaseHandler db = new DatabaseHandler(ViewDetailsActivity.this);
                         db.addMoveRecord(moveRecord);
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(tempUrl));
@@ -248,6 +253,8 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
                         String pPark = favorite.getTitle();
                         String pAddr = favorite.getAddress();
                         String tempUrl = favorite.getPageUrl();
+
+
 
                         moveRecord.setTitle(pPark);
                         moveRecord.setAddress(pAddr);
@@ -268,7 +275,39 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
 
         }
 
+    private void addRanking(String rankingId , int event) {
 
+        requestQueue = Volley.newRequestQueue(ViewDetailsActivity.this);
+        JSONObject body = new JSONObject();
+        try {
+            body.put("idx", rankingId);
+            body.put("event",event);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Utils.SERVER_BASE_URL+"/api/v1/ranking/add",
+                body,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                       Log.i("AAA","ranking");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        Volley.newRequestQueue(ViewDetailsActivity.this).add(request);
+
+
+
+    }
 
 
     /**
@@ -692,6 +731,7 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
         String add = favorite.getAddress();
         String imgUrl = favorite.getImgUrl();
         String content = favorite.getContent();
+
         if (imgUrl == null || imgUrl.equals("")){
             imgSvc.setImageResource(R.drawable.no_image);
         }else {
@@ -776,5 +816,7 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
         );
         requestQueue.add(jsonObjectRequest);
     }
+
+
 
 }

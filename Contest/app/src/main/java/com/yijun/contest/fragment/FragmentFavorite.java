@@ -123,9 +123,14 @@ public class FragmentFavorite extends Fragment {
         return view;
     }
 
+
+
+
     // 스포츠 즐겨찾기데이터 전부 가져오기
     public void getSportFavoriteData(Double lat, Double lng) {
-
+        favoriteArrayList1.clear();
+        favoriteArrayList2.clear();
+        favoriteArrayList3.clear();
 //        Utils.BASEURL + "/api/v1/favorite" +"?offset="+offset+"&limit="+limit
         sportUrl = Utils.SERVER_BASE_URL+"/api/v1/favorite/sport?id="+idByANDROID_ID+"&offset="+offset+"&lat="+lat+"&lng="+lng;
         Log.i("AAA","Favorite : " + sportUrl);
@@ -537,7 +542,7 @@ public class FragmentFavorite extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                       Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
