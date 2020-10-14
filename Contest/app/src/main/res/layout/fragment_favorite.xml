@@ -99,6 +99,18 @@
                 android:paddingBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+            <com.google.android.gms.ads.AdView
+                android:layout_gravity="center_horizontal"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="FULL_BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            </com.google.android.gms.ads.AdView>
+            <!--    ca-app-pub-9203796598278667/1555711989-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_below="@id/wayRecyclerView"

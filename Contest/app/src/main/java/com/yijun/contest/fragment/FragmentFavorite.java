@@ -24,6 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.R;
 import com.yijun.contest.boommenu.BoomMenu;
@@ -71,7 +73,7 @@ public class FragmentFavorite extends Fragment {
     private GpsInfo gps;
     private double lat;
     private double lng;
-
+    private AdView mAdView;
     public FragmentFavorite(){
     }
 
@@ -79,6 +81,9 @@ public class FragmentFavorite extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         if(!CheckNetwork.isNetworkAvailable(getActivity())){
             Toast.makeText(getActivity(), "네트워크 연결을 확인해 주세요", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(),FragmentHome.class);

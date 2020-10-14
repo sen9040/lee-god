@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.yijun.contest.model.Loading;
 
 public class LodingActivity extends AppCompatActivity {
@@ -17,6 +20,7 @@ public class LodingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loding);
+
 
         init(); // 핸들러 시작
 

@@ -38,6 +38,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.yijun.contest.DebouncedOnClickListener;
 import com.yijun.contest.MainActivity;
@@ -76,7 +78,7 @@ public class FragmentSearch extends Fragment {
     private NatureRecyclerViewAdapter natureAdapter;
     private GpsInfo gps;
     private String idByANDROID_ID;
-
+    private AdView mAdView;
     public FragmentSearch(){
 
     }
@@ -104,6 +106,9 @@ public class FragmentSearch extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         editSearch = view.findViewById(R.id.editSearch);
         btnSearch = view.findViewById(R.id.btnSearch);
         radioSport = view.findViewById(R.id.radioSport);
