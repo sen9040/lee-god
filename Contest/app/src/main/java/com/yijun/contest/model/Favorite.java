@@ -15,8 +15,22 @@ public class Favorite implements Serializable {
     private String lat;
     private String lng;
     private String content;
+    private String category;
+    private int cnt;
+
     public Favorite(){
 
+    }
+
+    public Favorite(String idx ,String address, String title,String imgUrl, String pageUrl,String category, int cnt){
+
+        this.idx = idx;
+        this.address = address;
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.pageUrl = pageUrl;
+        this.category = category;
+        this.cnt = cnt;
     }
 
     public Favorite(double curDistance, String imgUrl, String title,  String price, String pageUrl, String content) {
@@ -27,6 +41,8 @@ public class Favorite implements Serializable {
         this.pageUrl = pageUrl;
         this.content = content;
     }
+
+
 
     public Favorite(double curDistance, String idx, String imgUrl, String title, String address, String price, String time, int isFavorite, String pageUrl, String lat, String lng, String content) {
         this.curDistance = curDistance;
@@ -43,6 +59,22 @@ public class Favorite implements Serializable {
         this.content = content;
     }
 
+
+    public int getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(int cnt) {
+        this.cnt = cnt;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getContent() {
         return content;

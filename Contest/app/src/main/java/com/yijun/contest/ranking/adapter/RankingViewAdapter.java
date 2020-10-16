@@ -36,13 +36,15 @@ public class RankingViewAdapter extends RecyclerView.Adapter<RankingViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull RankingViewAdapter.ViewHolder holder, int position) {
         Favorite favorite = favoriteArrayList.get(position);
+        String id = favorite.getIdx();
         String title = favorite.getTitle();
-        String content = favorite.getContent();
-        double cnt =Math.round(favorite.getCurDistance()) ;
+        String add = favorite.getAddress();
+
+        int cnt =favorite.getCnt() ;
 
 
         holder.txtSvcNm.setText(title);
-        holder.txtPlaceNm.setText(content);
+        holder.txtPlaceNm.setText(add);
         holder.txtPaYaTnm.setText(cnt+"점");
     }
 

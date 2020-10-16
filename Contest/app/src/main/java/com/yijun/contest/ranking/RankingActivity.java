@@ -76,7 +76,7 @@ public class RankingActivity extends AppCompatActivity implements RankingActivit
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         url_maps = new HashMap<String, String>();
-        url_maps.put("Ranking ","https://yeyak.seoul.go.kr/fileDownload.web?p=/TB_SVCIMG/2020/07/26/S200508085807880647&n=gxj5NouvYjy2Q1HQIb5gBc14bAt1e6&on=방배.jpg");
+
 
 
 
@@ -90,94 +90,55 @@ public class RankingActivity extends AppCompatActivity implements RankingActivit
                     public void onResponse(JSONObject response) {
                         try {
                             Log.i("RRR", "volley :" + response);
-                            JSONArray cntArr = response.getJSONArray("cnt");
-                            JSONObject cntOj = cntArr.getJSONObject(0);
-                            int sumSport = cntOj.getInt("sport");
-                            int sumPark = cntOj.getInt("park");
-                            int sumWay = cntOj.getInt("way");
 
 
-                            JSONArray sportArr = response.getJSONArray("sport");
+                            JSONArray array = response.getJSONArray("rows");
 
-                            for (int i = 0; i < sportArr.length(); i++) {
-                                JSONObject jsonObject = sportArr.getJSONObject(i);
-                                int scnt = jsonObject.getInt("scnt");
-                                String imgUrl = jsonObject.getString("IMGURL");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject jsonObject = array.getJSONObject(i);
+                                String id = jsonObject.getString("SVCID");
+                                String areaNm = jsonObject.getString("AREANM");
                                 String svcNm = jsonObject.getString("SVCNM");
-                                String placeNm = jsonObject.getString("PLACENM");
-                                String pageUrl = jsonObject.getString("SVCURL");
-                                String content = jsonObject.getString("DTLCONT");
+                                String imgUrl = jsonObject.getString("IMGURL");
+                                String svcUrl = jsonObject.getString("SVCURL");
+                                String category = jsonObject.getString("Category");
+                                int cnt = jsonObject.getInt("CNT");
 
-                                if (imgUrl == null  || imgUrl.equals("")){
-                                    imgUrl = "https://yeyak.seoul.go.kr/fileDownload.web?p=/TB_SVCIMG/2020/07/26/S200508085807880647&n=gxj5NouvYjy2Q1HQIb5gBc14bAt1e6&on=방배.jpg";
-                                    url_maps.put(svcNm,imgUrl);
-                                }else {
-                                    url_maps.put(svcNm,imgUrl);
+                                if (category.equals("sport")){
+                                    if (imgUrl.equals("")){
+                                        imgUrl = "https://yeyak.seoul.go.kr/fileDownload.web?p=/TB_SVCIMG/2020/07/26/S200508085807880647&n=gxj5NouvYjy2Q1HQIb5gBc14bAt1e6&on=방배.jpg";
+                                    }
+                                    if (svcUrl.equals("")){
+                                        svcUrl = "http://yeyak.seoul.go.kr/main.web";
+                                    }
+
+                                }else if (category.equals("park")){
+                                    if (imgUrl.equals("")){
+                                        imgUrl = "http://parks.seoul.go.kr/file/info/view.do?fIdx=19411";
+                                    }
+                                    if (svcUrl.equals("")){
+                                        svcUrl = "http://parks.seoul.go.kr/";
+                                    }
+                                }else if (category.equals("way")){
+                                    if (imgUrl.equals("")){
+                                        imgUrl = "http://parks.seoul.go.kr/file/info/view.do?fIdx=1473";
+                                    }
+                                    if (svcUrl.equals("")){
+                                        svcUrl = "http://gil.seoul.go.kr/walk/index.jsp";
+                                    }
                                 }
 
-                                Log.i("RRR","SvcNm : "+svcNm+" Url : "+imgUrl);
+                                url_maps.put(svcNm,imgUrl);
 
-
-
-
-                                Favorite favorite = new Favorite(scnt, imgUrl, svcNm, placeNm,
-                                       pageUrl,content);
-                                favoriteArrayList.add(favorite);
-                            }
-
-                            JSONArray parkArr = response.getJSONArray("park");
-                            for (int i = 0; i < parkArr.length(); i++) {
-                                JSONObject jsonObject = parkArr.getJSONObject(i);
-                                int scnt = jsonObject.getInt("pcnt");
-                                String imgUrl = jsonObject.getString("P_IMG");
-                                String svcNm = jsonObject.getString("P_PARK");
-                                String placeNm = jsonObject.getString("P_ADDR");
-                                String pageUrl = jsonObject.getString("TEMPLATE_URL");
-                                String content = jsonObject.getString("P_LIST_CONTENT");
-                                if (pageUrl.equals("")){
-                                    pageUrl = "http://parks.seoul.go.kr/";
-                                }
-                                if (imgUrl == null  || imgUrl.equals("")){
-                                    imgUrl = "http://parks.seoul.go.kr/file/info/view.do?fIdx=1473";
-                                    url_maps.put(svcNm,imgUrl);
-                                }else {
-                                    url_maps.put(svcNm,imgUrl);
-                                }
-
-                                Log.i("RRR","SvcNm : "+svcNm+" Url : "+imgUrl);
-
-
-
-
-                                Favorite favorite = new Favorite(scnt, imgUrl, svcNm, placeNm,
-                                        pageUrl,content);
+                                Favorite favorite = new Favorite(id,areaNm,svcNm,imgUrl,svcUrl,category,cnt);
                                 favoriteArrayList.add(favorite);
                             }
 
 
-                           JSONArray wayARR =  response.getJSONArray("way");
-
-                            for (int i = 0; i < wayARR.length(); i++) {
-                                JSONObject jsonObject = wayARR.getJSONObject(i);
-                                int scnt = jsonObject.getInt("wcnt");
-                                String imgUrl = "http://parks.seoul.go.kr/file/info/view.do?fIdx=19411";
-                                String svcNm = jsonObject.getString("COURSE_NAME");
-                                String placeNm = jsonObject.getString("AREA_GU");
-                                String pageUrl = "http://gil.seoul.go.kr/walk/index.jsp";
-                                String content = jsonObject.getString("CONTENT");
-                               content= content +"\n"+jsonObject.getString("CPI_CONTENT");
-
-                                Log.i("RRR","SvcNm : "+svcNm+" Url : "+imgUrl);
-
-
-
-
-                                Favorite favorite = new Favorite(scnt, imgUrl, svcNm, placeNm,
-                                        pageUrl,content);
-                                favoriteArrayList.add(favorite);
-                            }
                             rankingViewAdapter = new RankingViewAdapter(RankingActivity.this,favoriteArrayList);
                             recyclerView.setAdapter(rankingViewAdapter);
+
                             for (String name : url_maps.keySet()) {
                                 textSliderView = new TextSliderView(RankingActivity.this);
                                 // initialize a SliderLayout
