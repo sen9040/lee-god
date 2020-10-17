@@ -106,7 +106,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(WeatherActivity.this,bmb);
+        boomMenu.getBoomMenu(WeatherActivity.this,bmb,true);
         bmb.bringToFront();
         linearLayoutH = findViewById(R.id.linearLayoutH);
 

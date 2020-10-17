@@ -98,7 +98,7 @@ public class AirInfoActivity extends AppCompatActivity {
         }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(AirInfoActivity.this,bmb);
+        boomMenu.getBoomMenu(AirInfoActivity.this,bmb,true);
         bmb.bringToFront();
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");

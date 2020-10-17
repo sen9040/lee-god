@@ -133,7 +133,7 @@ public class FragmentSearch extends Fragment {
         }
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(getActivity(),bmb);
+        boomMenu.getBoomMenu(getActivity(),bmb,false);
         bmb.bringToFront();
         radioSport.setChecked(true);
 

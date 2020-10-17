@@ -1,5 +1,6 @@
 package com.yijun.contest.boommenu;
 
+import android.app.Activity;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,7 +37,7 @@ public class BoomMenu {
 
 
 
-    public void getBoomMenu(final Context context, BoomMenuButton bmb){
+    public void getBoomMenu(final Context context, BoomMenuButton bmb , final boolean check){
         if(context == null){
             return;
         }
@@ -63,6 +64,11 @@ public class BoomMenu {
                         intent.putExtra("lng",lng);
 
                         context.startActivity(intent);
+                        if (check){
+                            ((Activity)context).finish();
+                        }
+
+
                     }
                 });
                 bmb.addBuilder(builder);
@@ -81,6 +87,10 @@ public class BoomMenu {
                         Intent intent = new Intent(context, AirInfoActivity.class);
 
                         context.startActivity(intent);
+                        if (check){
+                            ((Activity)context).finish();
+                        }
+
                     }
                 });
                 bmb.addBuilder(builder);
@@ -99,6 +109,10 @@ public class BoomMenu {
                         Intent i = new Intent(context, MoveRecord.class);
 
                         context.startActivity(i);
+                        if (check){
+                            ((Activity)context).finish();
+                        }
+
                     }
                 });
                 bmb.addBuilder(builder);
@@ -127,6 +141,10 @@ public class BoomMenu {
                         intent.putExtra("lng", lng);
 
                         context.startActivity(intent);
+                        if (check){
+                            ((Activity)context).finish();
+                        }
+
 
                     }
                 });

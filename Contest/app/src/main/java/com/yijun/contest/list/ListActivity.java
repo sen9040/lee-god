@@ -115,7 +115,7 @@ public class ListActivity extends AppCompatActivity {
         }
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(ListActivity.this,bmb);
+        boomMenu.getBoomMenu(ListActivity.this,bmb,true);
         bmb.bringToFront();
         getSettingUrl(lat,lng);
 

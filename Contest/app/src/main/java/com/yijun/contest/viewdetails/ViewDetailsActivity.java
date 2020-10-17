@@ -125,7 +125,7 @@ public class ViewDetailsActivity extends FragmentActivity implements  OnMapReady
         
         BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb);
+        boomMenu.getBoomMenu(ViewDetailsActivity.this, bmb,true);
         bmb.bringToFront();
         btnhiper.bringToFront();
 

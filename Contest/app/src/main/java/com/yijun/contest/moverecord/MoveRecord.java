@@ -33,7 +33,7 @@ public class MoveRecord extends AppCompatActivity {
 
         BoomMenuButton bmb = (BoomMenuButton)findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(MoveRecord.this,bmb);
+        boomMenu.getBoomMenu(MoveRecord.this,bmb,true);
         bmb.bringToFront();
 //        DatabaseHandler db = new DatabaseHandler(MoveRecord.this);
 //        moveRecordArrayList = db.getAllRecord();

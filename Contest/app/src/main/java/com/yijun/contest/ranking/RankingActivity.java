@@ -68,7 +68,7 @@ public class RankingActivity extends AppCompatActivity implements RankingActivit
 
         BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(RankingActivity.this, bmb);
+        boomMenu.getBoomMenu(RankingActivity.this, bmb,true);
         bmb.bringToFront();
         recyclerView = findViewById(R.id.recyclerViewRanking);
         recyclerView.setHasFixedSize(false);

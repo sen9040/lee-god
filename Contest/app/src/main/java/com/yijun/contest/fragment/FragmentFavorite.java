@@ -100,7 +100,7 @@ public class FragmentFavorite extends Fragment {
         }
         BoomMenuButton bmb = (BoomMenuButton)view.findViewById(R.id.bmb);
         BoomMenu boomMenu = new BoomMenu();
-        boomMenu.getBoomMenu(getActivity(),bmb);
+        boomMenu.getBoomMenu(getActivity(),bmb,false);
         bmb.bringToFront();
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
