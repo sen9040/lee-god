@@ -1,13 +1,7 @@
-공지 사항 
+공지 사항
 
-현재 하고있는 파트 표시 
+version 1 배포중 :  https://play.google.com/store/apps/details?id=com.yijun.contest
 
-sin : 날씨 , 검색
-lee : 홈
-lj : 즐찾,산
-
-사용한 라이브러리 
-Volley
-BoomMenu
-Glide
-
+version 2 수정 사항 
+1) 서버의 스포츠 , 두드림길, 공원의 각각의 쿼르를 통합 
+2) 바뀐 쿼리에 맞게 안드로이드 수정 
